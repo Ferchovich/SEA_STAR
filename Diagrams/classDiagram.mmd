@@ -1,6 +1,105 @@
 classDiagram
-    class Navio{
-        -int CodigoNavio
-        -String NombreNavio
-        -float Altura
+    class Navio {
+        -int codigoNavio
+        -float altura
+        -float eslora
+        -float manga
+        -float desplazamiento
+        -float autonomiaViaje
+        -int cantidadCamarotes
+        -int maxCantidadPasajeros
+        -int cantidadMotores
+        -int cantidadTripulantes
+        -String clasificacion
+        -Tripulante ListaHistoriales
+
+        +getTripulantes()
+    }
+
+    class Cubierta {
+        -int numeroUbicacion
+        -Encargado encargado
+        -String descripcionCubierta
+        -Camarote camarote
+    }
+
+    class Camarote {
+        -TipoCamarote tipoCamarote
+        -UbicacionCamarote ubicacionCamarote
+        -int numeroCamarote
+    }
+
+    class TipoCamarote {
+        -String nombreTipoCamarote
+        -String descripcionTipoCamarote
+    }
+
+    class UbicacionCamarote {
+        -String nombreUbicacionCamarote
+        -String descripcionUbicacionCamarote
+    }
+
+    class Tripulante {
+        -String nombreTripulante
+        -String legajo
+        -Navio navioAsignado
+        -Puesto puestoTripulante
+        -String nombreJefe
+    }
+
+    class Historial {
+        -Tripulante tripulante
+        -datetime fechaHoraInicio
+        -datetime fechaHoraFin
+
+        +isActual()
+    }
+
+    class Puesto {
+        -String nombrePuesto
+        -String descripcionPuesto
+    }
+
+    class Viaje {
+
+    }
+
+    class Puerto {
+
+    }
+
+    class Pasajero {
+        -String tipoDocumento
+        -int numeroDocumento
+        -String nombre
+        -Pais paisOrigen
+        -Ciudad ciudadOrigen
+
+    }
+
+    class DetalleViaje {
+
+    }
+
+    class Estado {
+        -String nobreEstado
+        -String descripcionEstado
+    }
+
+    class Categoria {
+        -String nombreCategoria
+        -String descripcionCategoria
+    }
+
+    class Pais {
+        -String nombrePais
+        -String descripcionPais
+        -String moneda
+        -String idioma
+    }
+
+    class Ciudad {
+        -String nombreCiudad
+        -String descripcionCiudad
+        -Pais pais
     }
