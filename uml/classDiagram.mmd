@@ -1,6 +1,7 @@
 classDiagram
     class Navio {
         -int codigoNavio
+        -String nombreNavio
         -float altura
         -float eslora
         -float manga
@@ -10,33 +11,52 @@ classDiagram
         -int maxCantidadPasajeros
         -int cantidadMotores
         -int cantidadTripulantes
-        -String clasificacion
-        -Tripulante ListaHistoriales
+        -Categoria clasificacion
+        -Tripulante listaTripulantes
+        -Cubierta listaCubiertas
 
-        +getTripulantes()
+        +new()
+        +conocerTripulantes()
+        +conocerEstado()
+        +conocerCategoria()
+        +conocerCubierta()
+        +conocerViaje()
     }
 
     class Cubierta {
-        -int numeroUbicacion
+        -int numeroCubierta
+        -Ubicacion ubicacionCubierta
         -Encargado encargado
         -String descripcionCubierta
         -Camarote camarote
+    
+        +new()
+        +conocerCamarote()
+        +conocerUbicacion()
     }
 
     class Camarote {
         -TipoCamarote tipoCamarote
-        -UbicacionCamarote ubicacionCamarote
+        -Ubicacion ubicacionCamarote
         -int numeroCamarote
+    
+        +new()
+        +conocerTipoCamarote()
+        +conocerUbicacion()
     }
 
     class TipoCamarote {
         -String nombreTipoCamarote
         -String descripcionTipoCamarote
+    
+        +new()
     }
 
-    class UbicacionCamarote {
-        -String nombreUbicacionCamarote
-        -String descripcionUbicacionCamarote
+    class Ubicacion {
+        -String nombreUbicacion
+        -String descripcionUbicacion
+    
+        +new()
     }
 
     class Tripulante {
@@ -45,27 +65,34 @@ classDiagram
         -Navio navioAsignado
         -Puesto puestoTripulante
         -String nombreJefe
-    }
-
-    class Historial {
-        -Tripulante tripulante
-        -datetime fechaHoraInicio
-        -datetime fechaHoraFin
-
-        +isActual()
+    
+        +new()
+        +conocerPuerto()
     }
 
     class Puesto {
         -String nombrePuesto
         -String descripcionPuesto
+    
+        +new()
     }
 
     class Viaje {
-
+        -Itinerario itinerarioRealizado
+        -Navio navioDelViaje
+        -datetime fechaViaje
+        -float duracionViaje
+        -Pasajero listaPasajerosReservados
+        -Pasajero listaPasajerosPresentes
+    
+        +new()
     }
 
     class Puerto {
-
+        -String nombrePuerto
+        -String descripcionPuerto
+    
+        +new()
     }
 
     class Pasajero {
@@ -74,21 +101,25 @@ classDiagram
         -String nombre
         -Pais paisOrigen
         -Ciudad ciudadOrigen
-
-    }
-
-    class DetalleViaje {
-
+        -Viaje viajeRealizado
+        -Camarote camaroteAlojado
+    
+        +new()
+        +conocerPais()
     }
 
     class Estado {
         -String nobreEstado
         -String descripcionEstado
+    
+        +new()
     }
 
     class Categoria {
         -String nombreCategoria
         -String descripcionCategoria
+    
+        +new()
     }
 
     class Pais {
@@ -96,14 +127,53 @@ classDiagram
         -String descripcionPais
         -String moneda
         -String idioma
+
+        +new()
+        +conocerCiudad()
+
+        +setNombrePais()
+        +getNombrePais()
+        +setDescripcionPais()
+        +getDescripcionPais()
+        +setMoneda()
+        +getMoneda()
+        +setIdioma()
+        +getIdioma()
     }
 
     class Ciudad {
         -String nombreCiudad
         -String descripcionCiudad
         -Pais pais
+
+        +new()
     }
 
     class Itinerario {
+        -Puerto listaPuertos
+        -int numeroEscala
+        -Categoria categoriaItinerario
 
+        +new()
+        +conocerNavio()
+        +conocerPuerto()
+        +conocerCategoria()
     }
+
+    Itinerario --> Navio
+    Navio --> Viaje
+    Tripulante --|> Pasajero
+    Camarote --> TipoCamarote
+    Navio --> Cubierta
+    Cubierta --> Camarote
+    Navio --> Tripulante
+    Itinerario --> Categoria
+    Pasajero --> Pais
+    Pasajero --> Ciudad
+    Pais --> Ciudad
+    Navio --> Estado
+    Tripulante --> Puesto
+    Cubierta --> Ubicacion
+    Camarote --> Ubicacion
+    Itinerario --> Puerto
+    Navio --> Categoria
