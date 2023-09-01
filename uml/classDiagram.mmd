@@ -160,20 +160,20 @@ classDiagram
         +conocerCategoria()
     }
 
-    Itinerario --> Navio
-    Navio --> Viaje
+    Itinerario --> "1" Navio
+    Navio --> "1..*" Viaje
     Tripulante --|> Pasajero
-    Camarote --> TipoCamarote
-    Navio --> Cubierta
-    Cubierta --> Camarote
-    Navio --> Tripulante
-    Itinerario --> Categoria
-    Pasajero --> Pais
-    Pasajero --> Ciudad
-    Pais --> Ciudad
-    Navio --> Estado
-    Tripulante --> Puesto
-    Cubierta --> Ubicacion
-    Camarote --> Ubicacion
-    Itinerario --> Puerto
-    Navio --> Categoria
+    Camarote --> "1" TipoCamarote
+    Navio --> "1..*" Cubierta
+    Cubierta --> "1..*" Camarote
+    Navio --> "1..*" Tripulante
+    Itinerario --> "1" Categoria
+    Pasajero --> "1" Pais
+    Pasajero --> "1" Ciudad
+    Pais --> "1..*" Ciudad
+    Navio --> "1" Estado
+    Tripulante --> "1" Puesto
+    Cubierta --> "1" Ubicacion
+    Camarote --> "1" Ubicacion
+    Itinerario --> "1..*" Puerto
+    Navio --> "1" Categoria
