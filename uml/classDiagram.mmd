@@ -26,7 +26,7 @@ classDiagram
     class Cubierta {
         -int numeroCubierta
         -Ubicacion ubicacionCubierta
-        -Encargado encargado
+        -Tripulante encargado
         -String descripcionCubierta
         -Camarote camarote
     
@@ -67,7 +67,7 @@ classDiagram
         -String nombreJefe
     
         +new()
-        +conocerPuerto()
+        +conocerPuesto()
     }
 
     class Puesto {
@@ -85,6 +85,17 @@ classDiagram
         -Pasajero listaPasajerosReservados
         -Pasajero listaPasajerosPresentes
     
+        +new()
+    }
+
+    class DetalleViaje {
+        -Viaje viaje
+        -Pasajero ListaPasajerosOcupandoCamarote
+        -Camarote camaroteOcupado
+        -Tripulante tripulanteEncargado
+        -Puerto ultimoPuerto
+        -Puerto proximoPuerto
+
         +new()
     }
 
@@ -106,6 +117,8 @@ classDiagram
     
         +new()
         +conocerPais()
+        +conocerViaje()
+        +isViajando()
     }
 
     class Estado {
@@ -160,9 +173,16 @@ classDiagram
         +conocerCategoria()
     }
 
-    Itinerario --> "1" Navio
     Navio --> "1..*" Viaje
+    Tripulante --> "1..*" Viaje
+    Itinerario --> "1..*" Viaje
+    Pasajero --> "1..*" Viaje
+    DetalleViaje --|> Viaje
+    Camarote --> "1..*" DetalleViaje
+    Pasajero --> "1..*" Camarote
+    Itinerario --> "1" Navio
     Tripulante --|> Pasajero
+    Puesto "1" <-- Tripulante 
     Camarote --> "1" TipoCamarote
     Navio --> "1..*" Cubierta
     Cubierta --> "1..*" Camarote
@@ -172,7 +192,6 @@ classDiagram
     Pasajero --> "1" Ciudad
     Pais --> "1..*" Ciudad
     Navio --> "1" Estado
-    Tripulante --> "1" Puesto
     Cubierta --> "1" Ubicacion
     Camarote --> "1" Ubicacion
     Itinerario --> "1..*" Puerto
