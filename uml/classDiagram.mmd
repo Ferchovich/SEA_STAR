@@ -11,7 +11,7 @@ classDiagram
         -int maxCantidadPasajeros
         -int cantidadMotores
         -int cantidadTripulantes
-        -Categoria clasificacion
+        -CategoriaNavio clasificacion
         -Tripulante listaTripulantes
         -Cubierta listaCubiertas
 
@@ -25,7 +25,7 @@ classDiagram
 
     class Cubierta {
         -int numeroCubierta
-        -Ubicacion ubicacionCubierta
+        -String ubicacionCubierta
         -Tripulante encargado
         -String descripcionCubierta
         -Camarote camarote
@@ -37,7 +37,7 @@ classDiagram
 
     class Camarote {
         -TipoCamarote tipoCamarote
-        -Ubicacion ubicacionCamarote
+        -int ubicacionCamarote
         -int numeroCamarote
     
         +new()
@@ -52,19 +52,23 @@ classDiagram
         +new()
     }
 
-    class Ubicacion {
-        -String nombreUbicacion
-        -String descripcionUbicacion
-    
-        +new()
-    }
-
     class Tripulante {
         -String nombreTripulante
         -String legajo
         -Navio navioAsignado
         -Puesto puestoTripulante
         -String nombreJefe
+    
+        +new()
+        +conocerPuesto()
+    }
+
+    class HistorialTripulante {
+        -Tripulante tripulanteCambiado
+        -Puesto nuevoPuestoTripulante
+        -String nuevoNombreJefe
+        -Navio nuevoNavioAsignado
+        -datetime fechaCambio
     
         +new()
         +conocerPuesto()
@@ -115,20 +119,41 @@ classDiagram
         -Viaje viajeRealizado
         -Camarote camaroteAlojado
     
-        +new()
+        +new()Ubicacion
         +conocerPais()
         +conocerViaje()
         +isViajando()
     }
 
-    class Estado {
-        -String nobreEstado
-        -String descripcionEstado
+    class EstadoNavio {
+        -String nobreEstadoNavio
+        -String descripcionEstadoNavio
     
         +new()
     }
 
-    class Categoria {
+    class EstadoCamarote {
+        -String nobreEstadoCamarote
+        -String descripcionEstadoCamarote
+    
+        +new()
+    }
+
+    class CambioEstadoNavio {
+        -String nobreEstadoNavio
+        -datetime fechaCambioEstado
+
+        +new()
+    }
+
+    class CategoriaNavio {
+        -String nombreCategoria
+        -String descripcionCategoria
+    
+        +new()
+    }
+
+    class CategoriaRecorrido {
         -String nombreCategoria
         -String descripcionCategoria
     
@@ -162,10 +187,10 @@ classDiagram
         +new()
     }
 
-    class Itinerario {
+    class Recorrido {
         -Puerto listaPuertos
         -int numeroEscala
-        -Categoria categoriaItinerario
+        -CategoriaRecorrido categoriaRecorrido
 
         +new()
         +conocerNavio()
@@ -173,26 +198,45 @@ classDiagram
         +conocerCategoria()
     }
 
+    class CambioPuerto {
+        -Puerto puertoSalida
+        -Puerto puertoLlegada
+
+        +new()
+        +conocerPuerto()
+    }
+
+    class SolicitudViaje {
+        -Pasajero pasajero
+        -Camarote camaroteAsignado
+
+        +new()
+    }
+
     Navio --> "1..*" Viaje
     Tripulante --> "1..*" Viaje
-    Itinerario --> "1..*" Viaje
+    Recorrido --> "1..*" Viaje
     Pasajero --> "1..*" Viaje
     DetalleViaje --|> Viaje
     Camarote --> "1..*" DetalleViaje
-    Pasajero --> "1..*" Camarote
-    Itinerario --> "1" Navio
+    Recorrido --> "1" Navio
     Tripulante --|> Pasajero
     Puesto "1" <-- Tripulante 
     Camarote --> "1" TipoCamarote
+    SolicitudViaje --> "1" EstadoCamarote
+    Camarote --> "1" EstadoCamarote
     Navio --> "1..*" Cubierta
     Cubierta --> "1..*" Camarote
-    Navio --> "1..*" Tripulante
-    Itinerario --> "1" Categoria
+    Recorrido --> "1" CategoriaRecorrido
     Pasajero --> "1" Pais
     Pasajero --> "1" Ciudad
+    Pasajero --> "1" SolicitudViaje
+    SolicitudViaje --> "1" Camarote
     Pais --> "1..*" Ciudad
-    Navio --> "1" Estado
-    Cubierta --> "1" Ubicacion
-    Camarote --> "1" Ubicacion
-    Itinerario --> "1..*" Puerto
-    Navio --> "1" Categoria
+    Navio --> "1..*" CambioEstadoNavio
+    CambioEstadoNavio --> "1" EstadoNavio
+    Recorrido --> "1..*" CambioPuerto
+    CambioPuerto --> "1..*" Puerto
+    Navio --> "1" CategoriaNavio
+    Tripulante --> "1..*" HistorialTripulante
+    HistorialTripulante "1..*" --> Navio
