@@ -42,6 +42,13 @@ class Camarote(models.Model):
     tipo_camarote = models.CharField(max_length=100)
     ubicacion_camarote = models.IntegerField()
     numero_camarote = models.IntegerField()
+    
+class Cubierta(models.Model):
+    numeroCubierta = models.IntegerField()
+    ubicacionCubierta = models.CharField(max_length=100)
+    descripcionCubierta = models.CharField(max_length=200)
+    encargado = models.ForeignKey(Tripulante, on_delete=models.CASCADE)
+    camarote = models.ForeignKey(Camarote, on_delete=models.CASCADE)
 
 class Pasajero(models.Model):
     tipo_documento = models.CharField(max_length=100)
