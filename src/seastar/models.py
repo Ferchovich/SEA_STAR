@@ -37,8 +37,6 @@ class Ciudad(models.Model):
     descripcion_ciudad = models.TextField()
     pais = models.ForeignKey(Pais, on_delete=models.CASCADE)
 
-class Viaje(models.Model): ...
-
 class Camarote(models.Model):
     tiposdecamarotes = ...
     tipo_camarote = models.CharField(max_length=100)
@@ -51,5 +49,4 @@ class Pasajero(models.Model):
     nombre = models.CharField(max_length=100)
     pais_origen = models.ForeignKey(Pais, on_delete=models.CASCADE)
     ciudad_origen = models.ForeignKey(Ciudad, on_delete=models.CASCADE)
-    viaje_realizado = models.ForeignKey(Viaje, on_delete=models.CASCADE)
     camarote_alojado = models.ForeignKey(Camarote, on_delete=models.CASCADE)
