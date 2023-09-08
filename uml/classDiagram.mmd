@@ -1,4 +1,35 @@
 classDiagram
+    class Itinerario {
+        -String nombreItinerario
+        -String descripcionItinerario
+        -Puerto listaPuertos
+        -CategoriaItinerario categoriaItinerario
+
+        +new()
+        +conocerCategoriaItinerario()
+    }
+
+    class SolicitudViaje {
+        -Pasajero pasajero
+        -Camarote camaroteAsignado
+
+        +new()
+    }
+
+    class Recorrido {
+        -Puerto listaPuertos
+        -int numeroEscala
+        -Itinerario itinerarioRealizado
+        -Navio navioDelViaje
+        -datetime fechaViaje
+        -float duracionViaje
+        -Pasajero listaPasajeros
+
+        +new()
+        +conocerNavio()
+        +conocerCambioPuerto()
+    }
+
     class Navio {
         -int codigoNavio
         -String nombreNavio
@@ -16,11 +47,11 @@ classDiagram
         -Cubierta listaCubiertas
 
         +new()
+        +conocerHistorialTripulantes()
         +conocerTripulantes()
-        +conocerEstado()
-        +conocerCategoria()
+        +conocerEstadoNavio()
+        +conocerCategoriaNavio()
         +conocerCubierta()
-        +conocerViaje()
     }
 
     class Cubierta {
@@ -32,7 +63,6 @@ classDiagram
     
         +new()
         +conocerCamarote()
-        +conocerUbicacion()
     }
 
     class Camarote {
@@ -42,14 +72,7 @@ classDiagram
     
         +new()
         +conocerTipoCamarote()
-        +conocerUbicacion()
-    }
-
-    class TipoCamarote {
-        -String nombreTipoCamarote
-        -String descripcionTipoCamarote
-    
-        +new()
+        +conocerEstadoCamarote()
     }
 
     class Tripulante {
@@ -61,6 +84,7 @@ classDiagram
     
         +new()
         +conocerPuesto()
+        +conocerHistorialTripulante()
     }
 
     class HistorialTripulante {
@@ -81,28 +105,6 @@ classDiagram
         +new()
     }
 
-    class Viaje {
-        -Itinerario itinerarioRealizado
-        -Navio navioDelViaje
-        -datetime fechaViaje
-        -float duracionViaje
-        -Pasajero listaPasajerosReservados
-        -Pasajero listaPasajerosPresentes
-    
-        +new()
-    }
-
-    class DetalleViaje {
-        -Viaje viaje
-        -Pasajero ListaPasajerosOcupandoCamarote
-        -Camarote camaroteOcupado
-        -Tripulante tripulanteEncargado
-        -Puerto ultimoPuerto
-        -Puerto proximoPuerto
-
-        +new()
-    }
-
     class Puerto {
         -String nombrePuerto
         -String descripcionPuerto
@@ -119,9 +121,9 @@ classDiagram
         -Viaje viajeRealizado
         -Camarote camaroteAlojado
     
-        +new()Ubicacion
+        +new()
         +conocerPais()
-        +conocerViaje()
+        +conocerCiudad()
         +isViajando()
     }
 
@@ -133,8 +135,16 @@ classDiagram
     }
 
     class EstadoCamarote {
-        -String nobreEstadoCamarote
-        -String descripcionEstadoCamarote
+        -Pasajero ListaPasajerosOcupandoCamarote
+        -Camarote camaroteOcupado
+        -Tripulante tripulanteEncargado
+    
+        +new()
+    }
+
+    class TipoCamarote {
+        -String nombreTipoCamarote
+        -String descripcionTipoCamarote
     
         +new()
     }
@@ -144,6 +154,7 @@ classDiagram
         -datetime fechaCambioEstado
 
         +new()
+        +conocerEstadoNavio()
     }
 
     class CategoriaNavio {
@@ -153,7 +164,7 @@ classDiagram
         +new()
     }
 
-    class CategoriaRecorrido {
+    class CategoriaItinerario {
         -String nombreCategoria
         -String descripcionCategoria
     
@@ -187,47 +198,27 @@ classDiagram
         +new()
     }
 
-    class Recorrido {
-        -Puerto listaPuertos
-        -int numeroEscala
-        -CategoriaRecorrido categoriaRecorrido
-
-        +new()
-        +conocerNavio()
-        +conocerPuerto()
-        +conocerCategoria()
-    }
-
     class CambioPuerto {
-        -Puerto puertoSalida
-        -Puerto puertoLlegada
+        -Puerto puertoActual
+        -Puerto puertoAnterior
+        -Puerto puertoFuturo
+        -datetime fechaHoraLlegada
 
         +new()
         +conocerPuerto()
     }
 
-    class SolicitudViaje {
-        -Pasajero pasajero
-        -Camarote camaroteAsignado
-
-        +new()
-    }
-
-    Navio --> "1..*" Viaje
-    Tripulante --> "1..*" Viaje
-    Recorrido --> "1..*" Viaje
-    Pasajero --> "1..*" Viaje
-    DetalleViaje --|> Viaje
-    Camarote --> "1..*" DetalleViaje
+    Itinerario --> "1..*" Recorrido
     Recorrido --> "1" Navio
     Tripulante --|> Pasajero
-    Puesto "1" <-- Tripulante 
-    Camarote --> "1" TipoCamarote
+    Tripulante --> "1" Puesto
+    Puesto "1..*" <-- HistorialTripulante
+    TipoCamarote "1" <-- Camarote
     SolicitudViaje --> "1" EstadoCamarote
     Camarote --> "1" EstadoCamarote
     Navio --> "1..*" Cubierta
     Cubierta --> "1..*" Camarote
-    Recorrido --> "1" CategoriaRecorrido
+    Itinerario --> "1" CategoriaItinerario
     Pasajero --> "1" Pais
     Pasajero --> "1" Ciudad
     Pasajero --> "1" SolicitudViaje
@@ -239,4 +230,4 @@ classDiagram
     CambioPuerto --> "1..*" Puerto
     Navio --> "1" CategoriaNavio
     Tripulante --> "1..*" HistorialTripulante
-    HistorialTripulante "1..*" --> Navio
+    HistorialTripulante "1..*" <-- Navio
