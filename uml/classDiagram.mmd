@@ -118,7 +118,6 @@ classDiagram
         -String nombre
         -Pais paisOrigen
         -Ciudad ciudadOrigen
-        -Viaje viajeRealizado
         -Camarote camaroteAlojado
     
         +new()
@@ -128,7 +127,7 @@ classDiagram
     }
 
     class EstadoNavio {
-        -String nobreEstadoNavio
+        -String nombreEstadoNavio
         -String descripcionEstadoNavio
     
         +new()
@@ -142,6 +141,13 @@ classDiagram
         +new()
     }
 
+    class ReservaCamarote {
+        -datetime fechaReseva
+        -Camarote listaCamarotes
+    
+        +new()
+    }
+
     class TipoCamarote {
         -String nombreTipoCamarote
         -String descripcionTipoCamarote
@@ -150,7 +156,7 @@ classDiagram
     }
 
     class CambioEstadoNavio {
-        -String nobreEstadoNavio
+        -String nombreEstadoNavio
         -datetime fechaCambioEstado
 
         +new()
@@ -208,21 +214,22 @@ classDiagram
         +conocerPuerto()
     }
 
+    Itinerario --> "1..*" SolicitudViaje
     Itinerario --> "1..*" Recorrido
+    Itinerario --> "1..*" Puerto
     Recorrido --> "1" Navio
     Tripulante --|> Pasajero
-    Tripulante --> "1" Puesto
     Puesto "1..*" <-- HistorialTripulante
     TipoCamarote "1" <-- Camarote
-    SolicitudViaje --> "1" EstadoCamarote
     Camarote --> "1" EstadoCamarote
     Navio --> "1..*" Cubierta
     Cubierta --> "1..*" Camarote
     Itinerario --> "1" CategoriaItinerario
     Pasajero --> "1" Pais
-    Pasajero --> "1" Ciudad
+    Puerto --> "1" Pais
     Pasajero --> "1" SolicitudViaje
-    SolicitudViaje --> "1" Camarote
+    SolicitudViaje --> "1" ReservaCamarote
+    ReservaCamarote --> "1" Camarote
     Pais --> "1..*" Ciudad
     Navio --> "1..*" CambioEstadoNavio
     CambioEstadoNavio --> "1" EstadoNavio
