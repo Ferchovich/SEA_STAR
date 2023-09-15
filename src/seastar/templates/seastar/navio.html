@@ -1,0 +1,19 @@
+{%  extends 'seastar/base.html' %}
+
+{% block content %}
+    <ul>
+        <head>
+            
+        </head>
+        <body>
+            {% for navio in navios %}
+                <li style="color: blue">Nombre: {{ navio.nombreNavio }} - Código: $ {{ navio.codigoNavio }} 
+                    - Altura: $ {{ navio.altura }} - Eslora: $ {{ navio.eslora }} 
+                    - Manga: $ {{ navio.manga }} - Desplazamiento: $ {{ navio.desplazamiento }} 
+                    - Autonomía de Viajes: $ {{ navio.autonomiaViaje }} - Cantidad de Camarotes: $ {{ navio.cantidadCamarotes }} 
+                    - Cantidad máxima de Pasajeros: $ {{ navio.maxCantidadPasajeros }} - Cantidad de Motores: $ {{ navio.cantidadMotores }} 
+                    - Cantidad de Tripulantes: $ {{ navio.cantidadTripulantes }}</li>
+            {% endfor %}  
+        </body>
+    </ul>
+{% endblock %}
