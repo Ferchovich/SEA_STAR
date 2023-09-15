@@ -1,15 +1,16 @@
-{% load static %}
 <!DOCTYPE = html>
 <html lang="en">
-    <head>  
+  <head>  
+      {% load static %}
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.css' %}"  media="screen,projection"/>
+        <link rel="stylesheet" href="{% static 'css/global.css' %}">
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title> Hola buenos días </title>
 
-        <nav>
+        <nav class="nav-bar">
             <div class="nav-wrapper">
-              <a href="#" class="brand-logo">Logo</a>
+              <a href="#" class="brand-logo logotipo">SEA STAR</a>
               <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a href="sass.html">Sass</a></li>
                 <li><a href="badges.html">Components</a></li>
