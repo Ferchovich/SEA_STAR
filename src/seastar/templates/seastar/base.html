@@ -6,7 +6,6 @@
         <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.css' %}"  media="screen,projection"/>
         <link rel="stylesheet" href="{% static 'css/global.css' %}">
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title> Hola buenos días </title>
 
         <nav class="nav-bar">
             <div class="nav-wrapper">
@@ -18,12 +17,19 @@
               </ul>
             </div>
         </nav>
+
     </head>
 
     <body>
         <p>Funciona :,D</p>
+
+        {% block title %}
+        <title> Hola buenos días </title>
+        {% endblock %}
+
         {% block content %}
         {% endblock %}
+        
         <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
     </body>
 </html>
