@@ -15,9 +15,15 @@ class Navio (models.Model):
     cantidadMotores = models.IntegerField("Cantidad de Motores")
     cantidadTripulantes = models.IntegerField("Cantidad de Tripulantes")
 
+    def __str__(self) -> str:
+        return self.nombreNavio
+
 class Puesto(models.Model):
     nombre_puesto = models.CharField(max_length=100)
     descripcion_puesto = models.TextField()
+
+    def __str__(self) -> str:
+        return self.nombre_puesto
 
 class Tripulante(models.Model):
     nombre_tripulante = models.CharField(max_length=100)
@@ -26,22 +32,34 @@ class Tripulante(models.Model):
     puesto_tripulante = models.ForeignKey(Puesto, on_delete=models.CASCADE)
     nombre_jefe = models.CharField(max_length=100)
 
+    def __str__(self) -> str:
+        return self.nombre_tripulante
+
 class Pais(models.Model):
     nombre_pais = models.CharField(max_length=100)
     descripcion_pais = models.TextField()
     moneda = models.CharField(max_length=50)
     idioma = models.CharField(max_length=50)
 
+    def __str__(self) -> str:
+        return self.nombre_pais
+
 class Ciudad(models.Model):
     nombre_ciudad = models.CharField(max_length=100)
     descripcion_ciudad = models.TextField()
     pais = models.ForeignKey(Pais, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return self.nombre_ciudad
 
 class Camarote(models.Model):
     tiposdecamarotes = ...
     tipo_camarote = models.CharField(max_length=100)
     ubicacion_camarote = models.IntegerField()
     numero_camarote = models.IntegerField()
+
+    def __str__(self) -> str:
+        return self.numero_camarote
     
 class Cubierta(models.Model):
     numeroCubierta = models.IntegerField()
@@ -50,6 +68,9 @@ class Cubierta(models.Model):
     encargado = models.ForeignKey(Tripulante, on_delete=models.CASCADE)
     camarote = models.ForeignKey(Camarote, on_delete=models.CASCADE)
 
+    def __str__(self) -> str:
+        return self.numeroCubierta
+
 class Pasajero(models.Model):
     tipo_documento = models.CharField(max_length=100)
     numero_documento = models.IntegerField()
@@ -57,3 +78,6 @@ class Pasajero(models.Model):
     pais_origen = models.ForeignKey(Pais, on_delete=models.CASCADE)
     ciudad_origen = models.ForeignKey(Ciudad, on_delete=models.CASCADE)
     camarote_alojado = models.ForeignKey(Camarote, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return self.nombre
