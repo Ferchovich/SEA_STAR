@@ -67,7 +67,7 @@ classDiagram
 
     class Camarote {
         -TipoCamarote tipoCamarote
-        -int ubicacionCamarote
+        -String ubicacionCamarote
         -int numeroCamarote
     
         +new()
@@ -215,7 +215,7 @@ classDiagram
     }
 
     Itinerario --> "1..*" SolicitudViaje
-    Itinerario --> "1..*" Recorrido
+    Itinerario "1" <-- Recorrido
     Itinerario --> "1..*" Puerto
     Recorrido --> "1" Navio
     Tripulante --|> Pasajero
