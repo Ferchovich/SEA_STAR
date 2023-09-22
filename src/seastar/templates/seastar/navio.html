@@ -1,18 +1,20 @@
 {%  extends 'seastar/base.html' %}
 
 {% block title %}
-<title> Hola PESIMOS días </title>
+<title> Hola PESIMOS días</title>
 {% endblock %}
 
 {% block content %}
     <ul>
         {% for navio in navios %}
-            <li style="color: blue">Nombre: {{ navio.nombreNavio }} - Código: $ {{ navio.codigoNavio }} 
-                - Altura: $ {{ navio.altura }} - Eslora: $ {{ navio.eslora }} 
-                - Manga: $ {{ navio.manga }} - Desplazamiento: $ {{ navio.desplazamiento }} 
-                - Autonomía de Viajes: $ {{ navio.autonomiaViaje }} - Cantidad de Camarotes: $ {{ navio.cantidadCamarotes }} 
-                - Cantidad máxima de Pasajeros: $ {{ navio.maxCantidadPasajeros }} - Cantidad de Motores: $ {{ navio.cantidadMotores }} 
-                - Cantidad de Tripulantes: $ {{ navio.cantidadTripulantes }}</li>
+            <p6>{{ navio.nombreNavio }}<br   /></p6>
+            <img src="../static/img/navio.png" alt="Icono Navio"  style="width:95px;height:80px;">
+            <li style="color: blue">- Código: {{ navio.codigoNavio }}
+                <br   />- Altura: {{ navio.altura }} <br   />- Eslora: {{ navio.eslora }} 
+                <br   />- Manga: {{ navio.manga }} <br   />- Desplazamiento: {{ navio.desplazamiento }} 
+                <br   />- Autonomía de Viajes: {{ navio.autonomiaViaje }} <br   />- Cantidad de Camarotes: {{ navio.cantidadCamarotes }} 
+                <br   />- Cantidad máxima de Pasajeros: {{ navio.maxCantidadPasajeros }} <br   />- Cantidad de Motores: {{ navio.cantidadMotores }} 
+                <br   />- Cantidad de Tripulantes: {{ navio.cantidadTripulantes }}<br   /><br   /></li>
         {% endfor %}  
     </ul>
 {% endblock %}

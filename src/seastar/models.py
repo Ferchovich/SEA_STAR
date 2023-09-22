@@ -51,12 +51,18 @@ class Ciudad(models.Model):
 
     def __str__(self) -> str:
         return self.nombre_ciudad
+    
+class TipoCamarote(models.Model):
+    nombreTipoCamarote = models.CharField("Tipo de Camarote", max_length=255)
+    descripcionTipoCamarote = models.TextField("Descripción del Tipo de Camarote")
+
+    def __str__(self) -> str:
+        return self.nombreTipoCamarote
 
 class Camarote(models.Model):
-    tiposdecamarotes = ...
-    tipo_camarote = models.CharField("Tipo de Camarote", max_length=100)
-    ubicacion_camarote = models.IntegerField("Ubicación Camarote")
+    ubicacion_camarote = mo, on_delete=models.CASCADEdels.IntegerField("Ubicación Camarote")
     numero_camarote = models.IntegerField("Número Camarote")
+    tipo_camarote = models.ForeignKey(TipoCamarote, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return self.numero_camarote
@@ -83,67 +89,66 @@ class Pasajero(models.Model):
         return self.nombre
 
 class Puerto(models.Model):
-    nombrePuerto = models.CharField(max_length=255)
-    descripcionPuerto = models.TextField()
+    nombrePuerto = models.CharField("Nombre del Puerto", max_length=255)
+    descripcionPuerto = models.TextField("Descripción del Puerto")
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.nombrePuerto
 
 class CategoriaItinerario(models.Model):
-    nombreCategoria = models.CharField(max_length=255)
-    descripcionCategoria = models.TextField()
+    nombreCategoria = models.CharField("Nombre de la Categoría", max_length=255)
+    descripcionCategoria = models.TextField("Descripción de la Categoría")
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.nombreCategoria
 
 class Itinerario(models.Model):
-    nombreItinerario = models.CharField(max_length=255)
-    descripcionItinerario = models.TextField()
+    nombreItinerario = models.CharField("Nombre del Itinerario", max_length=255)
+    descripcionItinerario = models.TextField("Descripción del Itinerario")
     listaPuertos = models.ManyToManyField(Puerto)
     categoriaItinerario = models.ForeignKey(CategoriaItinerario, on_delete=models.CASCADE)
 
     def conocerCategoriaItinerario(self):
         pass
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.nombreItinerario
     
 class CategoriaNavio(models.Model):
-    nombreCategoria = models.CharField(max_length=255)
-    descripcionCategoria = models.TextField()
+    nombreCategoria = models.CharField("Nombre de la Categoría", max_length=255)
+    descripcionCategoria = models.TextField("Descripción de la Categoría")
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.nombreCategoria
     
 class CambioPuerto(models.Model):
-    puertoActual = models.ForeignKey(Puerto,on_delete=models.CASCADE)
-    puertoAnterior = models.ForeignKey(Puerto,on_delete=models.CASCADE)
-    puertoFuturo = models.ForeignKey(Puerto,on_delete=models.CASCADE)
+    puertoActual = models.ForeignKey(Puerto, related_name='Puerto_Actual',on_delete=models.CASCADE)
+    puertoAnterior = models.ForeignKey(Puerto, related_name='Puerto_Anterior',on_delete=models.CASCADE)
+    puertoFuturo = models.ForeignKey(Puerto, related_name='Puerto_Futuro',on_delete=models.CASCADE)
     fechaHoraLlegada = models.DateTimeField()
+
+    def __str__(self) -> str:
+        return f'{self.puertoAnterior} -> {self.puertoActual} -> {self.puertoFuturo}'
 
     def conocerPuerto(self):
         pass
 
 class CambioEstadoNavio(models.Model):
-    nombreEstadoNavio = models.CharField(max_length=255)
-    fechaCambioEstado = models.DateTimeField()
+    nombreEstadoNavio = models.CharField("Estado del Navio", max_length=255)
+    fechaCambioEstado = models.DateTimeField("Fecha del Cambio de Estado")
+
+    def __str__(self) -> str:
+        return self.nombreEstadoNavio
 
     def conocerEstadoNavio(self):
         pass
-
-class TipoCamarote(models.Model):
-    nombreTipoCamarote = models.CharField(max_length=255)
-    descripcionTipoCamarote = models.TextField()
-
-    def __str__(self):
-        return self.nombreTipoCamarote
     
 class ReservaCamarote(models.Model):
-    fechaReserva = models.DateTimeField()
+    fechaReserva = models.DateTimeField("Fecha de la reserva")
     listaCamarotes = models.ManyToManyField(Camarote)
 
-    def __str__(self):
-        return f'Reserva #{self.id}'
+    def __str__(self) -> str:
+        return f'Reservas de la fecha {self.fechaReserva}'
 
     def agregarCamarote(self, camarote):
         self.listaCamarotes.add(camarote)
@@ -153,34 +158,40 @@ class EstadoCamarote(models.Model):
     camaroteOcupado = models.OneToOneField(Camarote, on_delete=models.CASCADE)
     tripulanteEncargado = models.ForeignKey(Tripulante, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return f'Estado del Camarote #{self.id}'
+    def __str__(self) -> str:
+        return f'Estado del Camarote #{self.camaroteOcupado}'
     
 class EstadoNavio(models.Model):
-    nombreEstadoNavio = models.CharField(max_length=255)
-    descripcionEstadoNavio = models.TextField()
+    nombreEstadoNavio = models.CharField("Estado del Navío", max_length=255)
+    descripcionEstadoNavio = models.TextField("Descripción del Estado del Navío")
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.nombreEstadoNavio
 
 class HistorialTripulante(models.Model):
     tripulanteCambiado = models.ForeignKey(Tripulante, on_delete=models.CASCADE)
     nuevoPuestoTripulante = models.ForeignKey(Puesto, on_delete=models.CASCADE)
-    nuevoNombreJefe = models.CharField(max_length=255)
+    nuevoNombreJefe = models.CharField("Nuevo Jefe", max_length=255)
     nuevoNavioAsignado = models.ForeignKey(Navio, on_delete=models.CASCADE)
-    fechaCambio = models.DateTimeField()
+    fechaCambio = models.DateTimeField("Fecha del cambio")
+
+    def __str__(self) -> str:
+        return f'{self.tripulanteCambiado} movído a {self.nuevoNavioAsignado}'
 
     def conocerPuesto(self):
         pass
 
 class Recorrido(models.Model):
     listaPuertos = models.ManyToManyField(Puerto)
-    numeroEscala = models.IntegerField()
+    numeroEscala = models.IntegerField("Numero Escala")
     itinerarioRealizado = models.ForeignKey(Itinerario, on_delete=models.CASCADE)
     navioDelViaje = models.ForeignKey(Navio, on_delete=models.CASCADE)
-    fechaViaje = models.DateTimeField()
-    duracionViaje = models.FloatField()
+    fechaViaje = models.DateTimeField("Fecha de Inicio del viaje")
+    duracionViaje = models.FloatField("Duración aproximada del viaje")
     listaPasajeros = models.ManyToManyField(Pasajero)
+
+    def __str__(self) -> str:
+        return f'Recorrido del Navío {self.navioDelViaje} en la fecha {self.fechaViaje}'
 
     def conocerNavio(self):
         pass
@@ -192,7 +203,7 @@ class SolicitudViaje(models.Model):
     pasajero = models.ForeignKey(Pasajero, on_delete=models.CASCADE)
     camaroteAsignado = models.ForeignKey(Camarote, on_delete=models.CASCADE)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'Solicitud de Viaje de {self.pasajero}'
 
     def asignarCamarote(self, camarote):
