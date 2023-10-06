@@ -60,7 +60,7 @@ class TipoCamarote(models.Model):
         return self.nombreTipoCamarote
 
 class Camarote(models.Model):
-    ubicacion_camarote = mo, on_delete=models.CASCADEdels.IntegerField("Ubicación Camarote")
+    ubicacion_camarote = models.IntegerField("Ubicación Camarote")
     numero_camarote = models.IntegerField("Número Camarote")
     tipo_camarote = models.ForeignKey(TipoCamarote, on_delete=models.CASCADE)
 

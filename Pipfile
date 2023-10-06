@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 django = "*"
 django-jazzmin = "*"
+django-bootstrap4 = "*"
 
 [dev-packages]
 
