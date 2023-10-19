@@ -2,6 +2,15 @@
     {% load static %}
 
     {% block content %}
+        <script type="text/javascript">
+            function hideShow(p) {
+                if (document.getElementById(p).style.display=='none') {
+                    document.getElementById(p).style.display='inline';
+                } else {
+                    document.getElementById(p).style.display='none';
+                }
+            }
+        </script>
         <section class="page-section about-heading">
             <div class="container">
                 <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="{% static 'static/img/about.jpg'%}" alt="..." />
@@ -32,14 +41,19 @@
                             <div class="carousel-item">
                         {% endif %}
                                 <img src="{% static 'img/itinerario.png' %}" class="d-block w-100" alt="Barco"  style="height:500px;">
-                                <div class="carousel-caption d-none d-md-block" style="margin-bottom:180px;">
+                                <div class="carousel-caption d-none d-md-block card" style="color:black">
                                     <h5>{{ itinerario.nombreItinerario }}</h5>
-                                    <li style="color: white">- Descripción del Itinerario: {{ itinerario.descripcionItinerario }} <br/>
-                                        - Puertos: 
+                                    <li class="text-start" style="margin-left:20px">- Descripción del Itinerario: {{ itinerario.descripcionItinerario }} <br/>
+                                        - Categoría: {{ itinerario.categoriaItinerario }} <br/>                                        
+                                        - Puertos: <br/> </li>
                                             {% for puerto in itinerario.listaPuertos.all%}
-                                                + {{ puerto.nombrePuerto }} <br/>
+                                                <button class="btn btn-link" onclick=hideShow('{{ puerto.id }}')>
+                                                    + {{puerto.nombrePuerto}}
+                                                </button><br/>
+                                                <div style="display:none" id="{{puerto.id}}">
+                                                    * Descripcion del Puerto: {{puerto.descripcionPuerto}} <br/>
+                                                </div>
                                             {% endfor %}
-                                        - Categoría: {{ itinerario.categoriaItinerario }} <br/></li>
                                 </div>
                             </div>
                     {% endfor %}
