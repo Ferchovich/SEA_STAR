@@ -10,21 +10,48 @@
                         <div class="col-xl-9 col-lg-10 mx-auto">
                             <div class="bg-faded rounded p-5">
                                 <h2 class="section-heading mb-4">
-                                    <span class="section-heading-upper">Strong Coffee, Strong Roots</span>
-                                    <span class="section-heading-lower">About Our Cafe</span>
+                                    <span class="section-heading-upper">Planes de viaje</span>
+                                    <span class="section-heading-lower">Nuestros itinerarios</span>
                                 </h2>
-                                <p>Founded in 1987 by the Hernandez brothers, our establishment has been serving up rich coffee sourced from artisan farmers in various regions of South and Central America. We are dedicated to travelling the world, finding the best coffee, and bringing back to you here in our cafe.</p>
-                                <p class="mb-0">
-                                    We guarantee that you will fall in
-                                    <em>lust</em>
-                                    with our decadent blends the moment you walk inside until you finish your last sip. Join us for your daily routine, an outing with friends, or simply just to enjoy some alone time.
-                                </p>
+                                <p>Aqui puede ver una lista de todos los itinerarios que tenemos disponibles.</p>
+                                <p class="mb-0">Para más información, inicie sesión.</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        <footer class="footer text-faded text-center py-5">
-            <div class="container"><p class="m-0 small">Copyright &copy; Your Website 2023</p></div>
+
+        <section>
+            <div id="carouselExample" class="carousel slide" style="margin-top:15px;width:500px;height:500px;margin:auto;">
+                <div class="carousel-inner">
+                    {% for itinerario in itinerarios %}
+                        {% if forloop.first %}
+                            <div class="carousel-item active">
+                        {% else %}
+                            <div class="carousel-item">
+                        {% endif %}
+                                <img src="{% static 'img/itinerario.png' %}" class="d-block w-100" alt="Barco"  style="height:500px;">
+                                <div class="carousel-caption d-none d-md-block" style="margin-bottom:180px;">
+                                    <h5>{{ itinerario.nombreItinerario }}</h5>
+                                    <li style="color: white">- Descripción del Itinerario: {{ itinerario.descripcionItinerario }} <br/>
+                                        - Puertos: 
+                                            {% for puerto in itinerario.listaPuertos.all%}
+                                                + {{ puerto.nombrePuerto }} <br/>
+                                            {% endfor %}
+                                        - Categoría: {{ itinerario.categoriaItinerario }} <br/></li>
+                                </div>
+                            </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </section>
 {% endblock %}

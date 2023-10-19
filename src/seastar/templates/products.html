@@ -8,14 +8,14 @@
                     <div class="product-item-title d-flex">
                         <div class="bg-faded p-5 d-flex ms-auto rounded">
                             <h2 class="section-heading mb-0">
-                                <span class="section-heading-upper">Blended to Perfection</span>
-                                <span class="section-heading-lower">Coffees & Teas</span>
+                                <span class="section-heading-upper">Equipados a su Medida</span>
+                                <span class="section-heading-lower">Navio & Tripulación</span>
                             </h2>
                         </div>
                     </div>
-                    <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="{% static 'img/products-01.jpg'%}" alt="..." />
+                    <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="{% static 'img/tripulantes.jpg'%}" alt="..." />
                     <div class="product-item-description d-flex me-auto">
-                        <div class="bg-faded p-5 rounded"><p class="mb-0">We take pride in our work, and it shows. Every time you order a beverage from us, we guarantee that it will be an experience worth having. Whether it's our world famous Venezuelan Cappuccino, a refreshing iced herbal tea, or something as simple as a cup of speciality sourced black coffee, you will be coming back for more.</p></div>
+                        <div class="bg-faded p-5 rounded"><p class="mb-0">Cada uno de nuestros navios esta equipado por camarotes, a los que se les encarga un tripulante.</p></div>
                     </div>
                 </div>
             </div>
@@ -26,38 +26,29 @@
                     <div class="product-item-title d-flex">
                         <div class="bg-faded p-5 d-flex me-auto rounded">
                             <h2 class="section-heading mb-0">
-                                <span class="section-heading-upper">Delicious Treats, Good Eats</span>
-                                <span class="section-heading-lower">Bakery & Kitchen</span>
+                                <span class="section-heading-upper">Con todos los Lujos</span>
+                                <span class="section-heading-lower">Camarotes</span>
                             </h2>
                         </div>
                     </div>
-                    <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="{% static 'img/products-02.jpg'%}" alt="..." />
+                    <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="{% static 'img/camarote.jpg'%}" alt="..." />
                     <div class="product-item-description d-flex ms-auto">
-                        <div class="bg-faded p-5 rounded"><p class="mb-0">Our seasonal menu features delicious snacks, baked goods, and even full meals perfect for breakfast or lunchtime. We source our ingredients from local, oragnic farms whenever possible, alongside premium vendors for specialty goods.</p></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="page-section">
-            <div class="container">
-                <div class="product-item">
-                    <div class="product-item-title d-flex">
-                        <div class="bg-faded p-5 d-flex ms-auto rounded">
-                            <h2 class="section-heading mb-0">
-                                <span class="section-heading-upper">From Around the World</span>
-                                <span class="section-heading-lower">Bulk Speciality Blends</span>
-                            </h2>
-                        </div>
-                    </div>
-                    <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="{% static 'img/products-03.jpg'%}" alt="..." />
-                    <div class="product-item-description d-flex me-auto">
-                        <div class="bg-faded p-5 rounded"><p class="mb-0">Travelling the world for the very best quality coffee is something take pride in. When you visit us, you'll always find new blends from around the world, mainly from regions in Central and South America. We sell our blends in smaller to large bulk quantities. Please visit us in person for more details.</p></div>
+                        <div class="bg-faded p-5 rounded"><p class="mb-0">Nuestros camarotes ofrecen comodidad absoluta y nuestros tripulantes estan a su servicio, garantizando que usted pueda disfrutar su viaje sin preocuparse por ninguna necesidad.</p></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <div class="card-group" style="width:200ipx;height:90px;margin-bottom:350px;margin-top:15px" >
+        <div class="col-xl-9 col-lg-10 mx-auto">
+            <div class="bg-faded rounded p-5">
+                <h2 class="section-heading mb-4">
+                    <span class="section-heading-lower">Navíos disponibles</span>
+                </h2>
+                <p>Aqui puede ver una lista de todos los navios en los que podrá viajar:</p>
+            </div>
+        </div>
+
+        <div class="card-group" style="width:200ipx;height:90px;margin-bottom:350px;margin-top:50px;margin-left:50px;margin-right:50px" >
             {% for navio in navios %}
             <div class="card">
               <img src="{% static 'img/navio.png' %}" class="card-img-top" alt="Barco" style="width:95px;height:80px;">
@@ -72,6 +63,6 @@
               </div>
             </div>
             {% endfor %} 
-          </div>
+        </div>
     {% endblock %}
 
