@@ -21,3 +21,4 @@ def login(request):
     login = Navio.objects.all()
     return render(request, "./login.html", { "login" : login })
 
+
