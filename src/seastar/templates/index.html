@@ -38,6 +38,17 @@
                 </div>
             </div>
         </nav>
+        <div>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin-left:500px;margin-right:500px;margin-top:20px">{{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
         {% block content %}
         <section class="page-section clearfix">
             <div class="container">

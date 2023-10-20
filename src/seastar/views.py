@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import  messages
 from seastar.models import Navio, Itinerario, Puerto
 # Create your views here.
 
@@ -17,7 +19,17 @@ def products(request):
 def store(request):
     return render(request, "./store.html")
 
-def login(request):
-    login = Navio.objects.all()
-    return render(request, "./login.html", { "login" : login })
+def login_user(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
 
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('./store.html')  
+        else:
+            messages.success(request,("Sos malisimo"))
+            return redirect('./login.html')
+    else:
+        return render(request, './login.html', {})
