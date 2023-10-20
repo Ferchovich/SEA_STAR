@@ -26,5 +26,6 @@ urlpatterns = [
     path("itinerarios.html", views.about, name="itinerarios"),
     path("navios.html", views.products, name="navios"),
     path("store.html", views.store, name="store"),
-    path("login.html", views.login_user, name="login")
+    path("login.html", views.login_user, name="login"),
+    path("signup.html", views.signup, name="signup")
 ]

@@ -1,0 +1,45 @@
+{% extends "index.html" %}
+    {% load static %}
+
+    {% block content %}
+        <section>
+            <div class="card" style="margin: auto;max-width: 450px; margin-top: 50px; margin-bottom: 250px">
+                <div style="margin: auto;max-width: 450px;">
+                    <h1 style="margin: auto; margin-bottom: 25px;margin-top: 25px" class="h3 mb-3 font-weight-normal">Crear una cuenta</h1>
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Create A Username (use only letters and numbers)" Required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fname">First Name</label>
+                            <input type="text" class="form-control" id="fname" name="fname" placeholder="Enter Your First Name" Required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lname">Last Name</label>
+                            <input type="text" class="form-control" id="lname" name="lname" placeholder="Enter Your Last Name" Required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter Your Email Address" Required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pass1">Password</label>
+                            <input type="password" class="form-control" id="pass1" name="pass1" placeholder="Create Your Password" Required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pass2">Confirm Password</label>
+                            <input type="password" class="form-control" id="pass2" name="pass2" placeholder="Confirm Your Password" Required>
+                        </div>
+                        <div style="margin: auto;margin-top: 15px">
+                            <input type="submit" value="Sign Up" class="btn btn-primary btn-block">
+                        </div>
+                    </form>
+                    <div style="margin: auto; margin-bottom: 20px;margin-top: 15px">
+                        <a class="btn-link" href="/login.html">¿Ya tienes una cuenta? Inicie Sesión</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock %}
