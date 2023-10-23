@@ -1,11 +1,9 @@
-.navbar-nav {
+.barra {
     position: relative;
-    width: 100%;
+    width: 100vw;
+    place-content: center;
 }
-
 .loginbtn {
-    position: absolute;
-    top: 0px;
-    right: -100px;
-
+    position: absolute; 
+    right: -60px;
 }
