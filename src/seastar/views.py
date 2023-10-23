@@ -63,7 +63,7 @@ def signup(request):
         myuser = User.objects.create_user(username, email, pass1)
         myuser.first_name = fname
         myuser.last_name = lname
-        myuser.is_active = False
+        myuser.is_active = True
         myuser.save()
         messages.success(request, "Su cuenta fue creada con éxito.")
         

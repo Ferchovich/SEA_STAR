@@ -65,17 +65,17 @@ class Camarote(models.Model):
     tipo_camarote = models.ForeignKey(TipoCamarote, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
-        return self.numero_camarote
+        return f'{self.numero_camarote}'
     
 class Cubierta(models.Model):
     numeroCubierta = models.IntegerField("Numero Cubierta")
     ubicacionCubierta = models.CharField("Ubicación Cubierta", max_length=100)
     descripcionCubierta = models.CharField("Descripción Cubierta", max_length=200)
     encargado = models.ForeignKey(Tripulante, on_delete=models.CASCADE)
-    camarote = models.ForeignKey(Camarote, on_delete=models.CASCADE)
+    camarote = models.ManyToManyField(Camarote)
 
     def __str__(self) -> str:
-        return self.numeroCubierta
+        return f'{self.numeroCubierta}'
 
 class Pasajero(models.Model):
     tipo_documento = models.CharField("Tipo de Documento", max_length=100)
