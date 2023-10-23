@@ -1,13 +1,147 @@
 erDiagram
+    // Entidades
+    Itinerario }|..|{ SolicitudViaje : "1"  
+    Itinerario }|..|{ Recorrido : "1"
+    Itinerario }|..|{ Puerto : "1"
+    Recorrido }|..|{ Navio : "1"
+    Tripulante }|--|{ Pasajero : "1"
+    Puesto }|..|{ HistorialTripulante : "1"
+    TipoCamarote }|--|{ Camarote : "1"
+    Camarote }|--|{ EstadoCamarote : "1"
+    Navio }|..|{ Cubierta : "1"
+    Cubierta }|..|{ Camarote : "1"
+    Itinerario }|..|{ CategoriaItinerario : "1"
+    Pasajero }|..|{ Pais : "1"
+    Puerto }|..|{ Pais : "1"
+    Pasajero }|..|{ SolicitudViaje : "1"
+    SolicitudViaje }|..|{ ReservaCamarote : "1"
+    ReservaCamarote }|..|{ Camarote : "1"
+    Pais }|..|{ Ciudad : "1"
+    Navio }|..|{ CambioEstadoNavio : "1"
+    CambioEstadoNavio }|..|{ EstadoNavio : "1"
+    Recorrido }|..|{ CambioPuerto : "1"
+    CambioPuerto }|..|{ Puerto : "1"
+    Navio }|..|{ CategoriaNavio : "1"
+    Tripulante }|..|{ HistorialTripulante : "1"
+
+    // Atributos
     Itinerario {
-
+        -String nombreItinerario
+        -String descripcionItinerario
+        -Puerto listaPuertos
+        -CategoriaItinerario categoriaItinerario    
     }
-
-    SolicitudViaje {
-
-    }
-
     Recorrido {
-
+        -Puerto listaPuertos
+        -int numeroEscala
+        -Itinerario itinerarioRealizado
+        -Navio navioDelViaje
+        -datetime fechaViaje
+        -float duracionViaje
+        -Pasajero listaPasajeros
+    }
+    Navio {
+        -int codigoNavio
+        -String nombreNavio
+        -float altura
+        -float eslora
+        -float manga
+        -float desplazamiento
+        -float autonomiaViaje
+        -int cantidadCamarotes
+        -int maxCantidadPasajeros
+        -int cantidadMotores
+        -int cantidadTripulantes
+        -CategoriaNavio clasificacion
+        -Tripulante listaTripulantes
+        -Cubierta listaCubiertas
+    }
+    Cubierta {
+        -int numeroCubierta
+        -String ubicacionCubierta
+        -Tripulante encargado
+        -String descripcionCubierta
+        -Camarote camarote
+    }
+    Camarote {
+        -TipoCamarote tipoCamarote
+        -String ubicacionCamarote
+        -int numeroCamarote
+    }
+    Tripulante {
+        -String nombreTripulante
+        -String legajo
+        -Navio navioAsignado
+        -Puesto puestoTripulante
+        -String nombreJefe
+    }
+    HistorialTripulante {
+        -Tripulante tripulanteCambiado
+        -Puesto nuevoPuestoTripulante
+        -String nuevoNombreJefe
+        -Navio nuevoNavioAsignado
+        -datetime fechaCambio
+    }
+    Puesto {
+        -String nombrePuesto
+        -String descripcionPuesto
+    }
+    Puerto {
+        -String nombrePuerto
+        -String descripcionPuerto
+    }
+    Pasajero {
+        -String tipoDocumento
+        -int numeroDocumento
+        -String nombre
+        -Pais paisOrigen
+        -Ciudad ciudadOrigen
+        -Camarote camaroteAlojado
+    }
+    EstadoNavio {
+        -String nombreEstadoNavio
+        -String descripcionEstadoNavio
+    }
+    EstadoCamarote {
+        -Pasajero ListaPasajerosOcupandoCamarote
+        -Camarote camaroteOcupado
+        -Tripulante tripulanteEncargado    
+    }
+    ReservaCamarote {
+        -datetime fechaReseva
+        -Camarote listaCamarotes
+    }
+    TipoCamarote {
+        -String nombreTipoCamarote
+        -String descripcionTipoCamarote
+    }
+    CambioEstadoNavio {
+        -String nombreEstadoNavio
+        -datetime fechaCambioEstado
+    }
+    CategoriaNavio {
+        -String nombreCategoria
+        -String descripcionCategoria
+    }
+    CategoriaItinerario {
+        -String nombreCategoria
+        -String descripcionCategoria
+    }
+    Pais {
+        -String nombrePais
+        -String descripcionPais
+        -String moneda
+        -String idioma
+    }
+    Ciudad {
+        -String nombreCiudad
+        -String descripcionCiudad
+        -Pais pais
+    }
+    CambioPuerto {
+        -Puerto puertoActual
+        -Puerto puertoAnterior
+        -Puerto puertoFuturo
+        -datetime fechaHoraLlegada
     }
 
