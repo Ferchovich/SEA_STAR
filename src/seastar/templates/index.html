@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Sea Star</title>
+        <title>{% block title %}Sea Star{% endblock%}</title>
         {% load static %}
         <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico'%}" />
         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
@@ -35,8 +35,6 @@
                             <button class="btn btn-danger btn-xl ">
                                 {% if logged_user %}
                                     {{ logged_user }}
-                                {% else %}
-                                    Iniciar Sesion
                                 {% endif %}
                             </button>
                         </a>

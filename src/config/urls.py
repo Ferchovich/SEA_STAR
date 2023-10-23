@@ -27,5 +27,7 @@ urlpatterns = [
     path("navios.html", views.products, name="navios"),
     path("store.html", views.store, name="store"),
     path("login.html", views.login_user, name="login"),
-    path("signup.html", views.signup, name="signup")
+    path("signup.html", views.signup, name="signup"),
+    path("profile.html", views.profile, name="profile"),
+
 ]
