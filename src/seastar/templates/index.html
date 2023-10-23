@@ -25,13 +25,20 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mx-auto barra">
+
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/">Home</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/itinerarios.html">Itinerarios</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/navios.html">Navios</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/store.html">Store</a></li>
 
                         <a class="loginbtn" href="login.html">
-                            <button class="btn btn-danger btn-xl ">Iniciar Sesion</button>
+                            <button class="btn btn-danger btn-xl ">
+                                {% if logged_user %}
+                                    {{ logged_user }}
+                                {% else %}
+                                    Iniciar Sesion
+                                {% endif %}
+                            </button>
                         </a>
                     </ul>
                 </div>
