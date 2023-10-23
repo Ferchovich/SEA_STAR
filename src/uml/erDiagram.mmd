@@ -1,13 +1,117 @@
 erDiagram
+    // Entidades
+    Itinerario }|..|{ SolicitudViaje : "1"   // Relación uno a muchos
+    Itinerario }|..|{ Recorrido : "1"
+    Itinerario }|..|{ Puerto : "1"
+    Recorrido }|..|{ Navio : "1"
+    Tripulante }|--|{ Pasajero : "1"
+    Puesto }|..|{ HistorialTripulante : "1"
+    TipoCamarote }|--|{ Camarote : "1"
+    Camarote }|--|{ EstadoCamarote : "1"
+    Navio }|..|{ Cubierta : "1"
+    Cubierta }|..|{ Camarote : "1"
+    Itinerario }|..|{ CategoriaItinerario : "1"
+    Pasajero }|..|{ Pais : "1"
+    Puerto }|..|{ Pais : "1"
+    Pasajero }|..|{ SolicitudViaje : "1"
+    SolicitudViaje }|..|{ ReservaCamarote : "1"
+    ReservaCamarote }|..|{ Camarote : "1"
+    Pais }|..|{ Ciudad : "1"
+    Navio }|..|{ CambioEstadoNavio : "1"
+    CambioEstadoNavio }|..|{ EstadoNavio : "1"
+    Recorrido }|..|{ CambioPuerto : "1"
+    CambioPuerto }|..|{ Puerto : "1"
+    Navio }|..|{ CategoriaNavio : "1"
+    Tripulante }|..|{ HistorialTripulante : "1"
+
+    // Atributos
     Itinerario {
-
+        - nombreItinerario : string
+        - descripcionItinerario : string
     }
-
-    SolicitudViaje {
-
-    }
-
     Recorrido {
-
+        - numeroEscala : int
+        - fechaViaje : datetime
+        - duracionViaje : float
+    }
+    Navio {
+        - codigoNavio : int
+        - nombreNavio : string
+        - altura : float
+        - eslora : float
+        - manga : float
+        - desplazamiento : float
+        - autonomiaViaje : float
+        - cantidadCamarotes : int
+        - maxCantidadPasajeros : int
+        - cantidadMotores : int
+        - cantidadTripulantes : int
+    }
+    Cubierta {
+        - numeroCubierta : int
+        - ubicacionCubierta : string
+        - descripcionCubierta : string
+    }
+    Camarote {
+        - ubicacionCamarote : string
+        - numeroCamarote : int
+    }
+    Tripulante {
+        - nombreTripulante : string
+        - legajo : string
+        - nombreJefe : string
+    }
+    HistorialTripulante {
+        - fechaCambio : datetime
+    }
+    Puesto {
+        - nombrePuesto : string
+        - descripcionPuesto : string
+    }
+    Puerto {
+        - nombrePuerto : string
+        - descripcionPuerto : string
+    }
+    Pasajero {
+        - tipoDocumento : string
+        - numeroDocumento : int
+        - nombre : string
+    }
+    EstadoNavio {
+        - nombreEstadoNavio : string
+        - descripcionEstadoNavio : string
+    }
+    EstadoCamarote {}
+    ReservaCamarote {
+        - fechaReserva : datetime
+    }
+    TipoCamarote {
+        - nombreTipoCamarote : string
+        - descripcionTipoCamarote : string
+    }
+    CambioEstadoNavio {
+        - nombreEstadoNavio : string
+        - fechaCambioEstado : datetime
+    }
+    CategoriaNavio {
+        - nombreCategoria : string
+        - descripcionCategoria : string
+    }
+    CategoriaItinerario {
+        - nombreCategoria : string
+        - descripcionCategoria : string
+    }
+    Pais {
+        - nombrePais : string
+        - descripcionPais : string
+        - moneda : string
+        - idioma : string
+    }
+    Ciudad {
+        - nombreCiudad : string
+        - descripcionCiudad : string
+    }
+    CambioPuerto {
+        - fechaHoraLlegada : datetime
     }
 
