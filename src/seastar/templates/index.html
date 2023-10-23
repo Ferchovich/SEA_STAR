@@ -5,24 +5,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Sea Star</title>
+        <title>{% block title%}Sea Star{% endblock %}</title>
         {% load static %}
         <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico'%}" />
         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
-        <!-- Google fonts-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'css/index.css' %}">
+        <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
     </head>
     <body>
-        <header>
-            <h1 class="site-heading text-center text-faded d-none d-lg-block">
-                <span class="site-heading-upper text-primary mb-3">the top Cruise Company in the world</span>
-                <span class="site-heading-lower fw-bold">{% block title%}{% endblock %}</span>
-            </h1>
-        </header>
-        <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
             <div class="container">
                 <a class="navbar-brand text-uppercase fw-bold d-lg-none" href="index.html">Start Bootstrap</a>
@@ -33,7 +27,9 @@
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/itinerarios.html">Itinerarios</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/navios.html">Navios</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/store.html">Store</a></li>
-                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/login.html">Login</a></li>
+                        <a href="login.html">
+                            <button class="btn btn-danger btn-xl loginbtn">Log In</button>
+                        </a>
                     </ul>
                 </div>
             </div>

@@ -13,7 +13,7 @@
         </script>
         <section class="page-section about-heading">
             <div class="container">
-                <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="{% static 'static/img/about.jpg'%}" alt="..." />
+                <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="{% static 'img/about.jpg'%}" alt="..." />
                 <div class="about-heading-content">
                     <div class="row">
                         <div class="col-xl-9 col-lg-10 mx-auto">
@@ -45,7 +45,8 @@
                                     <h5>{{ itinerario.nombreItinerario }}</h5>
                                     <li class="text-start" style="margin-left:20px">- Descripción del Itinerario: {{ itinerario.descripcionItinerario }} <br/>
                                         - Categoría: {{ itinerario.categoriaItinerario }} <br/>                                        
-                                        - Puertos: <br/> </li>
+                                        - Puertos: <br/> 
+                                    </li>
                                             {% for puerto in itinerario.listaPuertos.all%}
                                                 <button class="btn btn-link" onclick=hideShow('{{ puerto.id }}')>
                                                     + {{puerto.nombrePuerto}}
@@ -68,4 +69,4 @@
                 </button>
             </div>
         </section>
-{% endblock %}
+    {% endblock %}
