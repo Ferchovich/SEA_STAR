@@ -44,7 +44,8 @@
                                 <div class="carousel-caption d-none d-md-block card" style="color:black">
                                     <h5>{{ itinerario.nombreItinerario }}</h5>
                                     <li class="text-start" style="margin-left:20px">- Descripción del Itinerario: {{ itinerario.descripcionItinerario }} <br/>
-                                        - Categoría: {{ itinerario.categoriaItinerario }} <br/>                                        
+                                        - Categoría: {{ itinerario.categoriaItinerario }} <br/>
+                                        - Número de Escala: {{ itinerario.numeroEscala }} <br/>                                    
                                         - Puertos: <br/> </li>
                                             {% for puerto in itinerario.listaPuertos.all%}
                                                 <button class="btn btn-link" onclick=hideShow('{{ puerto.id }}')>

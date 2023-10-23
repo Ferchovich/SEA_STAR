@@ -105,6 +105,7 @@ class CategoriaItinerario(models.Model):
 class Itinerario(models.Model):
     nombreItinerario = models.CharField("Nombre del Itinerario", max_length=255)
     descripcionItinerario = models.TextField("Descripción del Itinerario")
+    numeroEscala = models.IntegerField("Numero Escala")
     listaPuertos = models.ManyToManyField(Puerto)
     categoriaItinerario = models.ForeignKey(CategoriaItinerario, on_delete=models.CASCADE)
 
@@ -183,7 +184,6 @@ class HistorialTripulante(models.Model):
 
 class Recorrido(models.Model):
     listaPuertos = models.ManyToManyField(Puerto)
-    numeroEscala = models.IntegerField("Numero Escala")
     itinerarioRealizado = models.ForeignKey(Itinerario, on_delete=models.CASCADE)
     navioDelViaje = models.ForeignKey(Navio, on_delete=models.CASCADE)
     fechaViaje = models.DateTimeField("Fecha de Inicio del viaje")
