@@ -1,0 +1,11 @@
+.navbar-nav {
+    position: relative;
+    width: 100%;
+}
+
+.loginbtn {
+    position: absolute;
+    top: 0px;
+    right: -100px;
+
+}
