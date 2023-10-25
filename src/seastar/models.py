@@ -65,28 +65,36 @@ class EstadoCamarote(models.Model):
 
     def __str__(self) -> str:
         return self.nombreEstadoCamarote
-
-class Camarote(models.Model):
-    ubicacion_camarote = models.IntegerField("Ubicación Camarote")
-    numero_camarote = models.IntegerField("Número Camarote")
-    tipo_camarote = models.ForeignKey(TipoCamarote, on_delete=models.CASCADE)
-    estadoCamarote = models.ForeignKey(EstadoCamarote, on_delete=models.CASCADE)
-
-    def __str__(self) -> str:
-        return f'{self.numero_camarote}'
     
 class Cubierta(models.Model):
     numeroCubierta = models.IntegerField("Numero Cubierta")
     ubicacionCubierta = models.CharField("Ubicación Cubierta", max_length=100)
     descripcionCubierta = models.CharField("Descripción Cubierta", max_length=200)
     encargado = models.ForeignKey(Tripulante, on_delete=models.CASCADE)
-    camarote = models.ManyToManyField(Camarote)
+    navioUbicado = models.ForeignKey(Navio, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return f'{self.numeroCubierta}'
+    
+class Camarote(models.Model):
+    ubicacion_camarote = models.IntegerField("Ubicación Camarote")
+    numero_camarote = models.IntegerField("Número Camarote")
+    tipo_camarote = models.ForeignKey(TipoCamarote, on_delete=models.CASCADE)
+    estadoCamarote = models.ForeignKey(EstadoCamarote, on_delete=models.CASCADE)
+    cubiertaUbicada = models.ForeignKey(Cubierta, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return f'{self.numero_camarote}'
+    
+class TipoDocumento(models.Model):
+    nombreTipoDocumento = models.CharField("Tipo de Documento", max_length=100)
+    descripcionTipoDocumento = models.CharField("Descripción del Tipo de Documento", max_length=200)
+
+    def __str__(self) -> str:
+        return self.nombreTipoDocumento
 
 class Pasajero(models.Model):
-    tipo_documento = models.CharField("Tipo de Documento", max_length=100)
+    tipo_documento = models.ForeignKey(TipoDocumento, on_delete=models.CASCADE)
     numero_documento = models.IntegerField("Numero de Documento")
     nombre = models.CharField("Nombre", max_length=100)
     pais_origen = models.ForeignKey(Pais, on_delete=models.CASCADE)

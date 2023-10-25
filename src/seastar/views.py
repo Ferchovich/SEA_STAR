@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import  messages
-from seastar.models import Navio, Itinerario, Puerto, Recorrido
+from seastar.models import Navio, Itinerario, Puerto, Recorrido, Cubierta, Camarote
 # Create your views here.
 
 def home(request):
@@ -19,7 +19,9 @@ def products(request):
 
 def reserva(request):
     recorridos = Recorrido.objects.all()
-    return render(request, "./reserva.html", { "recorridos" : recorridos })
+    cubiertas = Cubierta.objects.all()
+    camarotes = Camarote.objects.all()
+    return render(request, "./reserva.html", { "recorridos" : recorridos , "cubiertas" : cubiertas , "camarotes" : camarotes })
 
 def login_user(request):
     if request.method == 'POST':

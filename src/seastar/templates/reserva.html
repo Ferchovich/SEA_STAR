@@ -11,9 +11,8 @@
                 }
             }
         </script>
-
         <section class="page-section cta">
-            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="false" id="miCarousel">
                 <div class="carousel-inner">
                     {% for recorrido in recorridos %}
                         {% if forloop.first %}
@@ -90,10 +89,16 @@
 
         <section class="page-section about-heading">
             <div class="container">
-                <div class="row">
-                    <div class="col-xl-9 mx-auto">
-                        <div class="cta-inner bg-faded text-center rounded">
-                            <strong class="ms-auto text-start">Closed</strong>
+                <div class="card margin:auto">
+                    <strong style="margin-left:8px">Selecciónes la cubierta en el que se desee hospedar:</strong>
+                    <div class="dropdown" style="margin-left:10px;margin-bottom:10px">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          -----------
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            {% for cubierta in cubiertas %}
+                                <a class="dropdown-item">{{ cubierta.numeroCubierta }}</a>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
