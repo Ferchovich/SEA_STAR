@@ -21,7 +21,15 @@ def reserva(request):
     recorridos = Recorrido.objects.all()
     cubiertas = Cubierta.objects.all()
     camarotes = Camarote.objects.all()
-    return render(request, "./reserva.html", { "recorridos" : recorridos , "cubiertas" : cubiertas , "camarotes" : camarotes })
+    if request.method == 'POST':
+        itemNavio = request.POST['seleccion']
+        return render(request, "./reserva.html", { "recorridos" : recorridos , "cubiertas" : cubiertas , "camarotes" : camarotes , "itemNavio" : itemNavio })
+    elif request.method == 'POST2':
+        itemCubierta = request.POST['seleccion2']
+        itemNavio = Cubierta.objects.get(nombreNavio=itemCubierta)
+        return render(request, "./reserva.html", { "recorridos" : recorridos , "cubiertas" : cubiertas , "camarotes" : camarotes , "itemNavio" : itemNavio , "itemCubierta" : itemCubierta })
+    else:
+        return render(request, "./reserva.html", { "recorridos" : recorridos , "cubiertas" : cubiertas , "camarotes" : camarotes })
 
 def login_user(request):
     if request.method == 'POST':

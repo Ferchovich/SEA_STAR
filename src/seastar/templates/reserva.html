@@ -11,6 +11,7 @@
                 }
             }
         </script>
+        
         <section class="page-section cta">
             <div id="carouselExampleControls" class="carousel slide" data-bs-ride="false" id="miCarousel">
                 <div class="carousel-inner">
@@ -23,7 +24,8 @@
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-xl-9 mx-auto">
-                                            <div class="cta-inner bg-faded text-center rounded">
+                                            <form class="cta-inner bg-faded text-center rounded" method="POST" action="">
+                                                {% csrf_token %}
                                                 <h2 class="section-heading mb-5">
                                                     <span class="section-heading-upper">Itinerario a realizar</span>
                                                     <span class="section-heading-lower">{{ recorrido.itinerarioRealizado.nombreItinerario }}</span>
@@ -68,8 +70,8 @@
                                                          - {{ recorrido.duracionViaje }} minutos
                                                     </em>
                                                 </p>
-                                                <button class="btn btn-primary">Inscribirse a este Recorrido</button>
-                                            </div>
+                                                <button class="btn btn-primary" type="submit" name="seleccion" value='{{ recorrido.navioDelViaje.nombreNavio }}'>Inscribirse a este Recorrido</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -78,30 +80,71 @@
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Previous</span>
+                  <span class="visually-hidden">Anterior</span>
                 </button>
                 <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
                   <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Next</span>
+                  <span class="visually-hidden">Próximo</span>
                 </button>
             </div>
         </section>
 
-        <section class="page-section about-heading">
-            <div class="container">
-                <div class="card margin:auto">
-                    <strong style="margin-left:8px">Selecciónes la cubierta en el que se desee hospedar:</strong>
-                    <div class="dropdown" style="margin-left:10px;margin-bottom:10px">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          -----------
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            {% for cubierta in cubiertas %}
-                                <a class="dropdown-item">{{ cubierta.numeroCubierta }}</a>
-                            {% endfor %}
-                        </div>
+        {% if itemNavio is null%}
+            <section class="page-section about-heading">
+                <div class="container">
+                    <div class="card margin:auto">
+                        <strong class="text-center">Seleccióne un recorrido para continuar</strong>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        {% else %} 
+            <section class="page-section about-heading">
+                <div class="container">
+                    <div class="card margin:auto">
+                        <strong style="margin-left:8px">Selecciónes la cubierta en el que se desee hospedar:</strong>
+                        <form class="dropdown" style="margin-left:10px;margin-bottom:10px" method="POST2" action="">
+                            {% csrf_token %}
+                            <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {% if itemCubierta is null%}
+                                    -----------
+                                {% else %}
+                                    {{ itemCubierta }}
+                                {% endif %}
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> 
+                                {% for cubierta in cubiertas %}
+                                    {% if cubierta.navioUbicado.nombreNavio == itemNavio %}
+                                        <button class="dropdown-item" type="submit" name="seleccion2" value='{{ cubierta.numeroCubierta }}'>{{ cubierta.numeroCubierta }}</button>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+
+        {% if itemCubierta is not null%}
+            <section class="page-section about-heading">
+                <div class="container">
+                    <div class="card margin:auto">
+                        <strong style="margin-left:8px">Selecciónes el camarote en el que se desee hospedar:</strong>
+                        <form class="dropdown" style="margin-left:10px;margin-bottom:10px" method="POST2" action="">
+                            {% csrf_token %}
+                            <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                -----------
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> 
+                                {% for camarote in camarotes %}
+                                    {% if camarote.cubiertaUbicada.numeroCubierta == itemCubierta %}
+                                        <button class="dropdown-item">{{ camarote.numero_camarote }}</button>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+
     {% endblock %}
