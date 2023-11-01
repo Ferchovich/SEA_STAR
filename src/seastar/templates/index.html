@@ -49,6 +49,15 @@
                 {% endfor %}
             {% endif %}
         </div>
+        <script type="text/javascript">
+            function hideShow(p) {
+                if (document.getElementById(p).style.display=='none') {
+                    document.getElementById(p).style.display='inline';
+                } else {
+                    document.getElementById(p).style.display='none';
+                }
+            }
+        </script>
         {% block content %}
         <section class="page-section clearfix">
             <div class="container">

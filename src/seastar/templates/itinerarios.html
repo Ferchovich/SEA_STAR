@@ -2,15 +2,6 @@
     {% load static %}
 
     {% block content %}
-        <script type="text/javascript">
-            function hideShow(p) {
-                if (document.getElementById(p).style.display=='none') {
-                    document.getElementById(p).style.display='inline';
-                } else {
-                    document.getElementById(p).style.display='none';
-                }
-            }
-        </script>
         <section class="page-section about-heading">
             <div class="container">
                 <img class="img-fluid rounded about-heading-img mb-3 mb-lg-0" src="{% static 'static/img/about.jpg'%}" alt="..." />
