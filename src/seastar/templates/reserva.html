@@ -1,0 +1,84 @@
+{% extends "index.html" %}
+    {% load static %}
+
+    {% block content %}
+        <section class="page-section cta">
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="false" id="miCarousel">
+                <div class="carousel-inner">
+                    {% for recorrido in recorridos %}
+                        {% if forloop.first %}
+                            <div class="carousel-item active">
+                        {% else %}
+                            <div class="carousel-item">
+                        {% endif %}
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-xl-9 mx-auto">
+                                            <div class="cta-inner bg-faded text-center rounded">
+                                                <h2 class="section-heading mb-5">
+                                                    <span class="section-heading-upper">Itinerario a realizar</span>
+                                                    <span class="section-heading-lower">{{ recorrido.itinerarioRealizado.nombreItinerario }}</span>
+                                                </h2>
+                                                <div class="d-none d-md-block card mx-auto" style="width:450px;background-color:#FAEBD7">
+                                                    <img src="{% static 'img/itinerario.png' %}" class="d-block mx-auto" alt="Itinerario"  style="height:100px;width:100px;margin:center">
+                                                    <li class="text-center" style="margin-left:20px">- Descripción del Itinerario: {{ recorrido.itinerarioRealizado.descripcionItinerario }} <br/>
+                                                        - Categoría: {{ recorrido.itinerarioRealizado.categoriaItinerario }} <br/>
+                                                        - Número de Escala: {{ recorrido.itinerarioRealizado.numeroEscala }} <br/>                                    
+                                                        - Puertos: <br/> </li>
+                                                            {% for puerto in recorrido.itinerarioRealizado.listaPuertos.all%}
+                                                                <button class="btn btn-link" onclick=hideShow('{{ puerto.id }}')>
+                                                                    + {{puerto.nombrePuerto}}
+                                                                </button><br/>
+                                                                <div style="display:none" id="{{puerto.id}}">
+                                                                    * Descripcion del Puerto: {{puerto.descripcionPuerto}} <br/>
+                                                                </div>
+                                                            {% endfor %}
+                                                </div>
+                                                <br/>
+                                                <div class="d-none d-md-block card mx-auto" style="width:450px;background-color:#FAEBD7">
+                                                    <img src="{% static 'img/navio.png' %}" class="d-block mx-auto" alt="Barco" style="height:100px;width:100px;margin:center">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">{{ recorrido.navioDelViaje.nombreNavio }}</h5>
+                                                        <li >- Código: {{ recorrido.navioDelViaje.codigoNavio }}
+                                                            <br   />- Altura: {{ recorrido.navioDelViaje.altura }} <br   />- Eslora: {{ recorrido.navioDelViaje.eslora }} 
+                                                            <br   />- Manga: {{ recorrido.navioDelViaje.manga }} <br   />- Desplazamiento: {{ recorrido.navioDelViaje.desplazamiento }} 
+                                                            <br   />- Autonomía de Viajes: {{ recorrido.navioDelViaje.autonomiaViaje }} <br   />- Cantidad de Camarotes: {{ recorrido.navioDelViaje.cantidadCamarotes }} 
+                                                            <br   />- Cantidad máxima de Pasajeros: {{ recorrido.navioDelViaje.maxCantidadPasajeros }} <br   />- Cantidad de Motores: {{ recorrido.navioDelViaje.cantidadMotores }} 
+                                                            <br   />- Cantidad de Tripulantes: {{ recorrido.navioDelViaje.cantidadTripulantes }}<br   /><br   /></li>
+                                                    </div>
+                                                </div>
+                                                <br/>
+                                                <p class="address mb-5">
+                                                    <em>
+                                                        <strong>Fecha y Hora de Salida: </strong>
+                                                         - {{ recorrido.fechaViaje }}
+                                                    </em>
+                                                    <br/>
+                                                    <em>
+                                                        <strong>Duración aproximada del Viaje: </strong>
+                                                         - {{ recorrido.duracionViaje }} minutos
+                                                    </em>
+                                                </p>
+                                                <form method="POST" action="{% url 'reservaCubierta'%}">
+                                                    {% csrf_token %}
+                                                    <button class="btn btn-primary" type="submit" name="seleccion" value='{{ recorrido.navioDelViaje.nombreNavio }}'>Inscribirse a este Recorrido</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    {% endfor %}    
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Próximo</span>
+                </button>
+            </div>
+        </section>
+
+{% endblock %}

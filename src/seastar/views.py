@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import  messages
-from seastar.models import Navio, Itinerario, Puerto
+from seastar.models import Navio, Itinerario, Puerto, Recorrido, Cubierta, Camarote
 # Create your views here.
 
 def home(request):
@@ -17,8 +17,29 @@ def products(request):
     navios = Navio.objects.all()
     return render(request, "./navios.html", { "navios" : navios })
 
-def store(request):
-    return render(request, "./store.html")
+def reserva(request):
+    recorridos = Recorrido.objects.all()
+    if request.method == 'POST':
+        messages.success(request,("Yippie"))
+        return redirect('./reserva.html')
+    else :
+        return render(request, "./reserva.html", { "recorridos" : recorridos })
+    
+def reservaCubierta(request):
+    recorridos = Recorrido.objects.all()
+    cubiertas = Cubierta.objects.all()
+    camarotes = Camarote.objects.all()
+    if request.method == 'POST':
+        itemNavio = request.POST['seleccion']
+        return render(request, "./reservaCubierta.html", { "recorridos" : recorridos , "cubiertas" : cubiertas , "camarotes" : camarotes , "itemNavio" : itemNavio })
+    
+def reservaCamarote(request):
+    recorridos = Recorrido.objects.all()
+    cubiertas = Cubierta.objects.all()
+    camarotes = Camarote.objects.all()
+    if request.method == 'POST':
+        itemCubierta = int(request.POST['seleccionCubierta'])
+        return render(request, "./reservaCamarote.html", { "recorridos" : recorridos , "cubiertas" : cubiertas , "camarotes" : camarotes , "itemCubierta" : itemCubierta })
 
 def login_user(request):
     if request.method == 'POST':
@@ -28,7 +49,7 @@ def login_user(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('./store.html')  
+            return redirect('./reserva.html')  
         else:
             messages.success(request,("Sos malisimo"))
             return redirect('./login.html')
