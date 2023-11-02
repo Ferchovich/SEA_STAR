@@ -5,13 +5,15 @@ from django.contrib import  messages
 from seastar.models import Navio, Itinerario, Puerto, Recorrido, Cubierta, Camarote
 # Create your views here.
 
+logged_user = None
 def home(request):
-    return render(request, "./index.html", {})
+    
+    return render(request, "./index.html", {"logged_user" : logged_user})
 
 def about(request):
     itinerarios = Itinerario.objects.all()
     puertos = Puerto.objects.all()
-    return render(request, "./itinerarios.html", { "itinerarios" : itinerarios ,  "puertos" : puertos })
+    return render(request, "./itinerarios.html", { "itinerarios" : itinerarios ,  "puertos" : puertos , "logged_user": logged_user})
 
 def products(request):
     navios = Navio.objects.all()

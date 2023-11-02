@@ -5,39 +5,46 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Sea Star</title>
+        <title>{% block title%}Sea Star{% endblock %}</title>
         {% load static %}
         <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico'%}" />
         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
-        <!-- Google fonts-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link href="{% static 'css/index.css'%}" rel="stylesheet">
+        <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
     </head>
     <body>
-        <header>
-            <h1 class="site-heading text-center text-faded d-none d-lg-block">
-                <span class="site-heading-upper text-primary mb-3">the top Cruise Company in the world</span>
-                <span class="site-heading-lower fw-bold">{% block title%}{% endblock %}</span>
-            </h1>
-        </header>
+        
         <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
+        <nav class="navbar-nav navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
             <div class="container">
                 <a class="navbar-brand text-uppercase fw-bold d-lg-none" href="index.html">Start Bootstrap</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mx-auto">
+                    <ul class="navbar-nav mx-auto barra">
+
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/">Home</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/itinerarios.html">Itinerarios</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/navios.html">Navios</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/reserva.html">reserva</a></li>
-                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/login.html">Login</a></li>
+
+                        <a class="loginbtn" href="login.html">
+                            <button class="btn btn-danger btn-xl ">
+                                {% if logged_user %}
+                                    {{ logged_user }}
+                                {% else %}
+                                    Iniciar Sesion
+                                {% endif %}
+                            </button>
+                        </a>
                     </ul>
                 </div>
             </div>
         </nav>
+        
         <div>
             {% if messages %}
                 {% for message in messages %}
@@ -59,6 +66,11 @@
             }
         </script>
         {% block content %}
+        <header>
+            <h1 class="site-heading text-center text-faded d-none d-lg-block">
+                <span class="site-heading-upper text-primary mb-3">the top Cruise Company in the world</span>
+            </h1>
+        </header>
         <section class="page-section clearfix">
             <div class="container">
                 <div class="intro">
