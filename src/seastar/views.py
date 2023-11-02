@@ -10,14 +10,14 @@ def home(request:HttpRequest):
     logged_user = getLoggedUser(request)
     return render(request, "./index.html", {"logged_user" : logged_user})
 
-def about(request):
+def itinerarios(request):
     logged_user = getLoggedUser(request)
     
     itinerarios = Itinerario.objects.all()
     puertos = Puerto.objects.all()
     return render(request, "./itinerarios.html", { "itinerarios" : itinerarios ,  "puertos" : puertos , "logged_user": logged_user})
 
-def products(request):
+def navios(request):
     logged_user = getLoggedUser(request)
 
     navios = Navio.objects.all()
