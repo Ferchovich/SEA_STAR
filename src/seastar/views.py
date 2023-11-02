@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpRequest
 from django.contrib.auth.models import User
 from django.contrib import  messages
-from seastar.models import Navio, Itinerario, Puerto
+from seastar.models import Navio, Itinerario, Puerto, Recorrido, Cubierta, Camarote
 # Create your views here.
 
 def home(request:HttpRequest):
@@ -23,10 +23,31 @@ def products(request):
     navios = Navio.objects.all()
     return render(request, "./navios.html", { "navios" : navios, "logged_user": logged_user })
 
-def store(request):
+def reserva(request):
     logged_user = getLoggedUser(request)
 
-    return render(request, "./store.html", {"logged_user": logged_user})
+    recorridos = Recorrido.objects.all()
+    if request.method == 'POST':
+        messages.success(request,("Yippie"))
+        return redirect('./reserva.html')
+    else :
+        return render(request, "./reserva.html", { "recorridos" : recorridos, "logged_user" :logged_user })
+    
+def reservaCubierta(request):
+    recorridos = Recorrido.objects.all()
+    cubiertas = Cubierta.objects.all()
+    camarotes = Camarote.objects.all()
+    if request.method == 'POST':
+        itemNavio = request.POST['seleccion']
+        return render(request, "./reservaCubierta.html", { "recorridos" : recorridos , "cubiertas" : cubiertas , "camarotes" : camarotes , "itemNavio" : itemNavio })
+    
+def reservaCamarote(request):
+    recorridos = Recorrido.objects.all()
+    cubiertas = Cubierta.objects.all()
+    camarotes = Camarote.objects.all()
+    if request.method == 'POST':
+        itemCubierta = int(request.POST['seleccionCubierta'])
+        return render(request, "./reservaCamarote.html", { "recorridos" : recorridos , "cubiertas" : cubiertas , "camarotes" : camarotes , "itemCubierta" : itemCubierta })
 
 def login_user(request: HttpRequest):
     if request.method == "GET" and request.session.get("user"):
@@ -38,10 +59,10 @@ def login_user(request: HttpRequest):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            messages.success(request, ("Inicio de sesion satisfactorio"))
+            
             request.session["user"] = username
             request.session["password"] = password
-            return redirect('/')  
+            return redirect('/reserva.html')  
         else:
             messages.success(request,("Las credenciales no coinciden"))
             return redirect('./login.html')
