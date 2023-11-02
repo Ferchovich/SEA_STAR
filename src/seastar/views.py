@@ -1,31 +1,37 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.http import HttpRequest
 from django.contrib.auth.models import User
 from django.contrib import  messages
 from seastar.models import Navio, Itinerario, Puerto, Recorrido, Cubierta, Camarote
 # Create your views here.
 
-logged_user = None
-def home(request):
-    
+def home(request:HttpRequest):
+    logged_user = getLoggedUser(request)
     return render(request, "./index.html", {"logged_user" : logged_user})
 
 def about(request):
+    logged_user = getLoggedUser(request)
+    
     itinerarios = Itinerario.objects.all()
     puertos = Puerto.objects.all()
     return render(request, "./itinerarios.html", { "itinerarios" : itinerarios ,  "puertos" : puertos , "logged_user": logged_user})
 
 def products(request):
+    logged_user = getLoggedUser(request)
+
     navios = Navio.objects.all()
-    return render(request, "./navios.html", { "navios" : navios })
+    return render(request, "./navios.html", { "navios" : navios, "logged_user": logged_user })
 
 def reserva(request):
+    logged_user = getLoggedUser(request)
+
     recorridos = Recorrido.objects.all()
     if request.method == 'POST':
         messages.success(request,("Yippie"))
         return redirect('./reserva.html')
     else :
-        return render(request, "./reserva.html", { "recorridos" : recorridos })
+        return render(request, "./reserva.html", { "recorridos" : recorridos, "logged_user" :logged_user })
     
 def reservaCubierta(request):
     recorridos = Recorrido.objects.all()
@@ -43,7 +49,9 @@ def reservaCamarote(request):
         itemCubierta = int(request.POST['seleccionCubierta'])
         return render(request, "./reservaCamarote.html", { "recorridos" : recorridos , "cubiertas" : cubiertas , "camarotes" : camarotes , "itemCubierta" : itemCubierta })
 
-def login_user(request):
+def login_user(request: HttpRequest):
+    if request.method == "GET" and request.session.get("user"):
+        return redirect("./profile.html")
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -51,14 +59,18 @@ def login_user(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('./reserva.html')  
+            
+            request.session["user"] = username
+            request.session["password"] = password
+            return redirect('/reserva.html')  
         else:
-            messages.success(request,("Sos malisimo"))
+            messages.success(request,("Las credenciales no coinciden"))
             return redirect('./login.html')
     else:
-        return render(request, './login.html', {})
+        return render(request, './login.html', )
     
-def signup(request):
+def signup(request: HttpRequest):
+    
     if request.method == "POST":
         username = request.POST['username']
         fname = request.POST['fname']
@@ -94,3 +106,11 @@ def signup(request):
     
     else:   
         return render(request, "./signup.html", {})
+
+def profile(request: HttpRequest):
+    logged_user = getLoggedUser(request)
+
+    return render(request, "profile.html", {"logged_user": logged_user})
+
+def getLoggedUser(request: HttpRequest):
+    return request.session.get("user", "Iniciar Sesion")

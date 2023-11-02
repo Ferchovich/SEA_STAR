@@ -29,5 +29,7 @@ urlpatterns = [
     path("reservaCubierta.html", views.reservaCubierta, name="reservaCubierta"),
     path("reservaCamarote.html", views.reservaCamarote, name="reservaCamarote"),
     path("login.html", views.login_user, name="login"),
-    path("signup.html", views.signup, name="signup")
+    path("signup.html", views.signup, name="signup"),
+    path("profile.html", views.profile, name="profile"),
+
 ]
