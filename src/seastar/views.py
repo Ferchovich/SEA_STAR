@@ -109,7 +109,8 @@ def signup(request: HttpRequest):
 
 def profile(request: HttpRequest):
     logged_user = getLoggedUser(request)
+
     return render(request, "profile.html", {"logged_user": logged_user})
 
 def getLoggedUser(request: HttpRequest):
-    return request.session.get("user")
+    return request.session.get("user", "Iniciar Sesion")
