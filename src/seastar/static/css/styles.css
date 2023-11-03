@@ -10925,9 +10925,10 @@ p {
   .about-heading .about-heading-img {
     position: relative;
     z-index: 0;
+    width: 40%;
   }
   .about-heading .about-heading-content {
-    margin-top: -5rem;
+    margin-top: -10rem;
     position: relative;
     z-index: 1;
   }
