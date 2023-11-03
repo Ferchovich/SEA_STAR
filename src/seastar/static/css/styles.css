@@ -10928,7 +10928,7 @@ p {
     width: 40%;
   }
   .about-heading .about-heading-content {
-    margin-top: -10rem;
+    margin-top: -10 rem;
     position: relative;
     z-index: 1;
   }
