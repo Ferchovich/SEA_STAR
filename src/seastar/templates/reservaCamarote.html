@@ -37,7 +37,7 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> 
                                 {% for camarote in camarotes %}
-                                    {% if camarote.cubiertaUbicada.numeroCubierta ==  itemCubierta and camarote.estadoCamarote.nombreEstadoCamarote == 'Disponible' %}
+                                    {% if camarote.cubiertaUbicada.numeroCubierta == itemCubierta and camarote.estadoCamarote.nombreEstadoCamarote == 'Disponible' %}
                                         <button class="dropdown-item" onclick=changeName('{{ camarote.numero_camarote }}'),hide(sessionStorage.camaroteActual),show('{{ camarote.numero_camarote }}'),save('{{ camarote.numero_camarote }}')>{{ camarote.numero_camarote }}</button>
                                     {% endif %}
                                 {% endfor %}

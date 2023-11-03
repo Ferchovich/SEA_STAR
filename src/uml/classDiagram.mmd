@@ -9,13 +9,6 @@ classDiagram
         +conocerCategoriaItinerario()
     }
 
-    class SolicitudViaje {
-        -Pasajero pasajero
-        -Camarote camaroteAsignado
-
-        +new()
-    }
-
     class Recorrido {
         -Puerto listaPuertos
         -int numeroEscala
@@ -80,7 +73,7 @@ classDiagram
         -String legajo
         -Navio navioAsignado
         -Puesto puestoTripulante
-        -String nombreJefe
+        -Tripulante jefe
     
         +new()
         +conocerPuesto()
@@ -214,11 +207,10 @@ classDiagram
         +conocerPuerto()
     }
 
-    Itinerario --> "1..*" SolicitudViaje
+    Itinerario --> "1..*" ReservaCamarote
     Itinerario "1" <-- Recorrido
     Itinerario --> "1..*" Puerto
     Recorrido --> "1" Navio
-    Tripulante --|> Pasajero
     Puesto "1..*" <-- HistorialTripulante
     TipoCamarote "1" <-- Camarote
     Camarote --> "1" EstadoCamarote
@@ -227,8 +219,7 @@ classDiagram
     Itinerario --> "1" CategoriaItinerario
     Pasajero --> "1" Pais
     Puerto --> "1" Pais
-    Pasajero --> "1" SolicitudViaje
-    SolicitudViaje --> "1" ReservaCamarote
+    Pasajero --> "1" ReservaCamarote
     ReservaCamarote --> "1" Camarote
     Pais --> "1..*" Ciudad
     Navio --> "1..*" CambioEstadoNavio
@@ -237,4 +228,5 @@ classDiagram
     CambioPuerto --> "1..*" Puerto
     Navio --> "1" CategoriaNavio
     Tripulante --> "1..*" HistorialTripulante
+    Tripulante --> "1" Tripulante
     HistorialTripulante "1..*" <-- Navio

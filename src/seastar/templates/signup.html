@@ -3,40 +3,67 @@
 
     {% block content %}
         <section>
-            <div class="card" style="margin: auto;max-width: 450px; margin-top: 50px; margin-bottom: 250px">
+            <div class="card" style="margin: auto;max-width: 550px; margin-top: 50px; margin-bottom: 250px">
                 <div style="margin: auto;max-width: 450px;">
-                    <h1 style="margin: auto; margin-bottom: 25px;margin-top: 25px" class="h3 mb-3 font-weight-normal">Crear una cuenta</h1>
-                    <form method="POST" action="">
+                    <h1 style="margin: auto;margin-bottom: 25px;margin-top: 25px" class="h3 mb-3 font-weight-normal text-center ">Crear una cuenta</h1>
+                    <form method="POST" action="" style="margin: auto; display: grid;grid-template-columns: 1fr 1fr;grid-gap: 20px;">
                         {% csrf_token %}
-                        <div class="form-group">
-                            <label for="username">Username</label>
-                            <input type="text" class="form-control" id="username" name="username" placeholder="Create A Username (use only letters and numbers)" Required>
+                        <div class="text-left">
+                            <div class="form-group">
+                                <label for="username">Nombre de Usuario</label>
+                                <input type="text" class="form-control" id="username" name="username" placeholder="Solo letras y números" Required>
+                            </div>
+                            <div class="form-group">
+                                <label for="fname">Nombre/s</label>
+                                <input type="text" class="form-control" id="fname" name="fname" placeholder="Su nombre" Required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lname">Apellido/s</label>
+                                <input type="text" class="form-control" id="lname" name="lname" placeholder="Su apellido" Required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="pass1">Contraseña</label>
+                                <input type="password" class="form-control" id="pass1" name="pass1" placeholder="Cree una contraseña" Required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pass2">Confirmar Contraseña</label>
+                                <input type="password" class="form-control" id="pass2" name="pass2" placeholder="Confirme su contraseña" Required>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="fname">First Name</label>
-                            <input type="text" class="form-control" id="fname" name="fname" placeholder="Enter Your First Name" Required>
+                        <div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Dirección de email" Required>
+                            </div>
+                            <div class="form-group">
+                                <label for="username">Tipo de Documento</label>
+                                <select class="form-control" id="username" name="tipo_doc" placeholder="Su tipo de documento" Required>
+                                    <option value="" autofocus hidden>-</option>
+                                    {% for tipoDocumento in tipoDocumentos %}
+                                        <option value="{{ tipoDocumento.nombreTipoDocumento }}">{{ tipoDocumento.nombreTipoDocumento }}</option>
+                                    {% endfor %}
+                                </select> 
+                            </div>
+                            <div class="form-group">
+                                <label for="fname">Número de Documento</label>
+                                <input type="number" class="form-control" id="num_doc" name="num_doc" placeholder="Escriba su documento" Required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pass2">Ciudad de Origen</label>
+                                <select class="form-control" id="ciudad" name="ciudad" placeholder="Seleccióne su Ciudad" Required>
+                                    <option value="" autofocus hidden>-</option>
+                                    {% for ciudad in ciudades %}
+                                        <option value="{{ ciudad.nombre_ciudad }}">{{ ciudad.nombre_ciudad }} - {{ ciudad.pais.nombre_pais }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="lname">Last Name</label>
-                            <input type="text" class="form-control" id="lname" name="lname" placeholder="Enter Your Last Name" Required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter Your Email Address" Required>
-                        </div>
-                        <div class="form-group">
-                            <label for="pass1">Password</label>
-                            <input type="password" class="form-control" id="pass1" name="pass1" placeholder="Create Your Password" Required>
-                        </div>
-                        <div class="form-group">
-                            <label for="pass2">Confirm Password</label>
-                            <input type="password" class="form-control" id="pass2" name="pass2" placeholder="Confirm Your Password" Required>
-                        </div>
-                        <div style="margin: auto;margin-top: 15px">
+                        <div style="margin: center;margin-top: 15px">
                             <input type="submit" value="Sign Up" class="btn btn-primary btn-block">
                         </div>
                     </form>
-                    <div style="margin: auto; margin-bottom: 20px;margin-top: 15px">
+                    <div class="text-left" style="margin: center; margin-bottom: 20px;margin-top: 15px">
                         <a class="btn-link" href="/login.html">¿Ya tienes una cuenta? Inicie Sesión</a>
                     </div>
                 </div>

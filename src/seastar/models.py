@@ -99,7 +99,6 @@ class Pasajero(models.Model):
     nombre = models.CharField("Nombre", max_length=100)
     pais_origen = models.ForeignKey(Pais, on_delete=models.CASCADE)
     ciudad_origen = models.ForeignKey(Ciudad, on_delete=models.CASCADE)
-    camarote_alojado = models.ForeignKey(Camarote, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return self.nombre
@@ -208,15 +207,4 @@ class Recorrido(models.Model):
 
     def conocerCambioPuerto(self):
         pass
-
-class SolicitudViaje(models.Model):
-    pasajero = models.ManyToManyField(Pasajero)
-    camaroteAsignado = models.ForeignKey(Camarote, on_delete=models.CASCADE)
-
-    def __str__(self) -> str:
-        return f'Solicitud de Viaje de {self.pasajero}'
-
-    def asignarCamarote(self, camarote):
-        self.camaroteAsignado = camarote
-        self.save()
 
