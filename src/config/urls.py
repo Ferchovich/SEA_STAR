@@ -22,9 +22,14 @@ from seastar.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", home),
-    path("itinerarios.html", views.about, name="itinerarios"),
-    path("navios.html", views.products, name="navios"),
-    path("store.html", views.store, name="store"),
-    path("login.html", views.login, name="login")
+    path("", home, name="home"),
+    path("itinerarios.html", views.itinerarios, name="itinerarios"),
+    path("navios.html", views.navios, name="navios"),
+    path("reserva.html", views.reserva, name="reserva"),
+    path("reservaCubierta.html", views.reservaCubierta, name="reservaCubierta"),
+    path("reservaCamarote.html", views.reservaCamarote, name="reservaCamarote"),
+    path("login.html", views.login_user, name="login"),
+    path("signup.html", views.signup, name="signup"),
+    path("profile.html", views.profile, name="profile"),
+
 ]

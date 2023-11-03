@@ -1,0 +1,67 @@
+{% extends "index.html" %}
+    {% load static %}
+
+    {% block content %}
+        <script type="text/javascript">
+            function changeName(f) {
+                document.getElementById("drop").innerHTML = f;
+            }
+            function save(g) {
+                sessionStorage.cubiertaActual = g;
+                document.getElementById("cubiertaSeleccionada").value = parseInt(g);
+                document.getElementById("cubiertaSeleccionada").disabled = false;
+            }
+            function hide(h) {
+                if (h != null) {
+                    document.getElementById(h).style.display='none';
+                }
+            } 
+            function show(i) {
+                document.getElementById(i).style.display='inline';
+            }
+        </script>
+        {% if itemNavio is null%}
+            <section class="page-section about-heading" style="margin-bottom: 350px">
+                <div class="container">
+                    <div class="card margin:auto">
+                        <strong class="text-center">Se produjo un error en la carga de datos</strong>
+                    </div>
+                </div>
+            </section>
+        {% elif itemNavio is not null and itemCubierta is null %} 
+            <section class="page-section about-heading" style="margin-bottom: 350px">
+                <div class="container">
+                    <div class="card margin:auto">
+                        <h2 class="section-heading" style="margin-left:10px">
+                            <span class="section-heading-lower">{{ itemNavio }}</span>
+                        </h2>
+                        <strong style="margin-left:8px">Seleccióne la cubierta en el que se desee hospedar:<br/></strong>
+                        <div class="dropdown" style="margin-left:10px;margin-bottom:10px"> 
+                            <div class="text-right">
+                                <img align="right" style="float:right;width:400px" src="{% static 'img/cubierta.png'%}" alt="..." />
+                            </div>
+                            <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="drop">
+                                -----------
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> 
+                                {% for cubierta in cubiertas %}
+                                    {% if cubierta.navioUbicado.nombreNavio == itemNavio %}
+                                        <button class="dropdown-item" name="escondible" onclick=changeName('{{ cubierta.numeroCubierta }}'),hide(sessionStorage.cubiertaActual),show('{{ cubierta.numeroCubierta }}'),save('{{ cubierta.numeroCubierta }}')>{{ cubierta.numeroCubierta }}</button>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            {% for cubierta in cubiertas %}
+                                <li class="text-start" id="{{ cubierta.numeroCubierta }}" style="display:none"> <br/><br/> - Ubicación de la Cubierta: {{ cubierta.ubicacionCubierta }} <br/>
+                                - Categoría: {{ cubierta.descripcionCubierta }} <br/>                                    
+                                - Encargado: {{ cubierta.encargado }}<br/><br/> </li>
+                            {% endfor %}
+                        </div>
+                        <form method="POST" action="{% url 'reservaCamarote'%}">
+                            {% csrf_token %}
+                            <button id="cubiertaSeleccionada" class="btn btn-primary" type="submit" name="seleccionCubierta" value='{{ sessionStorage.cubiertaActual }}' style="margin-left:10px ; margin-bottom:10px" disabled>Ver cubiertas</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+{% endblock %}

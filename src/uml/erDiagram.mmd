@@ -1,6 +1,6 @@
 erDiagram
     // Entidades
-    Itinerario }|..|{ SolicitudViaje : "1"  
+    Itinerario }|..|{ SolicitudViaje : "1"   // Relación uno a muchos
     Itinerario }|..|{ Recorrido : "1"
     Itinerario }|..|{ Puerto : "1"
     Recorrido }|..|{ Navio : "1"
@@ -26,122 +26,92 @@ erDiagram
 
     // Atributos
     Itinerario {
-        -String nombreItinerario
-        -String descripcionItinerario
-        -Puerto listaPuertos
-        -CategoriaItinerario categoriaItinerario    
+        - nombreItinerario : string
+        - descripcionItinerario : string
     }
     Recorrido {
-        -Puerto listaPuertos
-        -int numeroEscala
-        -Itinerario itinerarioRealizado
-        -Navio navioDelViaje
-        -datetime fechaViaje
-        -float duracionViaje
-        -Pasajero listaPasajeros
+        - numeroEscala : int
+        - fechaViaje : datetime
+        - duracionViaje : float
     }
     Navio {
-        -int codigoNavio
-        -String nombreNavio
-        -float altura
-        -float eslora
-        -float manga
-        -float desplazamiento
-        -float autonomiaViaje
-        -int cantidadCamarotes
-        -int maxCantidadPasajeros
-        -int cantidadMotores
-        -int cantidadTripulantes
-        -CategoriaNavio clasificacion
-        -Tripulante listaTripulantes
-        -Cubierta listaCubiertas
+        - codigoNavio : int
+        - nombreNavio : string
+        - altura : float
+        - eslora : float
+        - manga : float
+        - desplazamiento : float
+        - autonomiaViaje : float
+        - cantidadCamarotes : int
+        - maxCantidadPasajeros : int
+        - cantidadMotores : int
+        - cantidadTripulantes : int
     }
     Cubierta {
-        -int numeroCubierta
-        -String ubicacionCubierta
-        -Tripulante encargado
-        -String descripcionCubierta
-        -Camarote camarote
+        - numeroCubierta : int
+        - ubicacionCubierta : string
+        - descripcionCubierta : string
     }
     Camarote {
-        -TipoCamarote tipoCamarote
-        -String ubicacionCamarote
-        -int numeroCamarote
+        - ubicacionCamarote : string
+        - numeroCamarote : int
     }
     Tripulante {
-        -String nombreTripulante
-        -String legajo
-        -Navio navioAsignado
-        -Puesto puestoTripulante
-        -String nombreJefe
+        - nombreTripulante : string
+        - legajo : string
+        - nombreJefe : string
     }
     HistorialTripulante {
-        -Tripulante tripulanteCambiado
-        -Puesto nuevoPuestoTripulante
-        -String nuevoNombreJefe
-        -Navio nuevoNavioAsignado
-        -datetime fechaCambio
+        - fechaCambio : datetime
     }
     Puesto {
-        -String nombrePuesto
-        -String descripcionPuesto
+        - nombrePuesto : string
+        - descripcionPuesto : string
     }
     Puerto {
-        -String nombrePuerto
-        -String descripcionPuerto
+        - nombrePuerto : string
+        - descripcionPuerto : string
     }
     Pasajero {
-        -String tipoDocumento
-        -int numeroDocumento
-        -String nombre
-        -Pais paisOrigen
-        -Ciudad ciudadOrigen
-        -Camarote camaroteAlojado
+        - tipoDocumento : string
+        - numeroDocumento : int
+        - nombre : string
     }
     EstadoNavio {
-        -String nombreEstadoNavio
-        -String descripcionEstadoNavio
+        - nombreEstadoNavio : string
+        - descripcionEstadoNavio : string
     }
-    EstadoCamarote {
-        -Pasajero ListaPasajerosOcupandoCamarote
-        -Camarote camaroteOcupado
-        -Tripulante tripulanteEncargado    
-    }
+    EstadoCamarote {}
     ReservaCamarote {
-        -datetime fechaReseva
-        -Camarote listaCamarotes
+        - fechaReserva : datetime
     }
     TipoCamarote {
-        -String nombreTipoCamarote
-        -String descripcionTipoCamarote
+        - nombreTipoCamarote : string
+        - descripcionTipoCamarote : string
     }
     CambioEstadoNavio {
-        -String nombreEstadoNavio
-        -datetime fechaCambioEstado
+        - nombreEstadoNavio : string
+        - fechaCambioEstado : datetime
     }
     CategoriaNavio {
-        -String nombreCategoria
-        -String descripcionCategoria
+        - nombreCategoria : string
+        - descripcionCategoria : string
     }
     CategoriaItinerario {
-        -String nombreCategoria
-        -String descripcionCategoria
+        - nombreCategoria : string
+        - descripcionCategoria : string
     }
     Pais {
-        -String nombrePais
-        -String descripcionPais
-        -String moneda
-        -String idioma
+        - nombrePais : string
+        - descripcionPais : string
+        - moneda : string
+        - idioma : string
     }
     Ciudad {
-        -String nombreCiudad
-        -String descripcionCiudad
-        -Pais pais
+        - nombreCiudad : string
+        - descripcionCiudad : string
     }
     CambioPuerto {
-        -Puerto puertoActual
-        -Puerto puertoAnterior
-        -Puerto puertoFuturo
-        -datetime fechaHoraLlegada
+        - fechaHoraLlegada : datetime
     }
 

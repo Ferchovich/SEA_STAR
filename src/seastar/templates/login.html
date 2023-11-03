@@ -2,23 +2,28 @@
     {% load static %}
 
     {% block content %}
-        <section style="margin-bottom: 500px">
-            <div class="card" style="margin: auto;max-width: 450px; margin-top: 50px; margin-bottom: 25px">
-                <form style="margin: auto;max-width: 450px;">
-                    <h1 style="margin-bottom: 25px;margin-top: 25px" class="h3 mb-3 font-weight-normal">Inicio de Sesión</h1>
-                    <label style="margin-bottom: 2px;margin-top: 5px">Email:</label>
-                    <input style="margin-bottom: 5px;margin-top: 10px" type="email" id="emailAddress" class="form-control" placeholder="example@mail.com" required autofocus>
-                    <label style="margin-bottom: 2px;margin-top: 5px">Contraseña:</label>
-                    <input style="margin-bottom: 5px;margin-top: 10px" type="password" id="password" class="form-control" placeholder="Contraseña" required autofocus>
-                    <div style="margin-bottom: 15px;margin-top: 15px" class="checkbox">
-                        <label>
-                            <input type="checkbox" value="remember-me"> Recordame
-                        </label>
+        <section>
+            <div class="card" style="margin: auto;max-width: 450px; margin-top: 50px; margin-bottom: 350px">
+                <div style="margin: auto;max-width: 450px;">
+                    <h1 style="margin: auto; margin-bottom: 25px;margin-top: 25px" class="h3 mb-3 font-weight-normal">Inicio de Sesión</h1>
+                    <form action="" method="POST" style="margin:auto">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Username</label>
+                            <input type="text" class="form-control" name="username" aria-describedby="emailHelp" placeholder="Enter username">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input type="password" class="form-control" name="password" placeholder="Password">
+                        </div>
+                        <div style="margin: auto;margin-top: 15px">
+                            <input type="submit" value="Sign In" class="btn btn-primary btn-block">
+                        </div>
+                    </form>
+                    <div style="margin: auto; margin-bottom: 20px;margin-top: 15px">
+                        <a class="btn-link" href="/signup.html">¿No tienes una cuenta? Créala</a>
                     </div>
-                    <div style="margin-bottom: 20px;margin-top: 15px">
-                        <button class="btn btn-lg btn-primary btn-block">Sign In</button>
-                    </div>
-                </form>
+                </div>
             </div>
         </section>
 {% endblock %}
