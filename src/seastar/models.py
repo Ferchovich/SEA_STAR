@@ -158,18 +158,6 @@ class CambioEstadoNavio(models.Model):
     def conocerEstadoNavio(self):
         pass
     
-class ReservaCamarote(models.Model):
-    fechaReserva = models.DateTimeField("Fecha de la reserva")
-    camaroteReservado = models.ForeignKey(Camarote, on_delete=models.CASCADE)
-    listaPasajeros = models.ManyToManyField(Pasajero)
-    encargadoReservado = models.ForeignKey(Tripulante, on_delete=models.CASCADE)
-
-    def __str__(self) -> str:
-        return f'Reservas de la fecha {self.fechaReserva}'
-
-    def agregarCamarote(self, camarote):
-        self.listaCamarotes.add(camarote)
-    
 class EstadoNavio(models.Model):
     nombreEstadoNavio = models.CharField("Estado del Navío", max_length=255)
     descripcionEstadoNavio = models.TextField("Descripción del Estado del Navío")
@@ -207,4 +195,17 @@ class Recorrido(models.Model):
 
     def conocerCambioPuerto(self):
         pass
+
+class ReservaCamarote(models.Model):
+    fechaReserva = models.DateTimeField("Fecha de la reserva")
+    recorridoReservado = models.ForeignKey(Recorrido, on_delete=models.CASCADE)
+    camaroteReservado = models.ForeignKey(Camarote, on_delete=models.CASCADE)
+    listaPasajeros = models.ManyToManyField(Pasajero)
+    encargadoReservado = models.ForeignKey(Tripulante, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return f'Reservas de la fecha {self.fechaReserva}'
+
+    def agregarCamarote(self, camarote):
+        self.listaCamarotes.add(camarote)
 

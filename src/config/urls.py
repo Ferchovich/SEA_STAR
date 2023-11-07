@@ -22,7 +22,7 @@ from seastar.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", home, name="home"),
+    path("", views.home, name="home"),
     path("itinerarios.html", views.itinerarios, name="itinerarios"),
     path("navios.html", views.navios, name="navios"),
     path("reserva.html", views.reserva, name="reserva"),
@@ -31,6 +31,6 @@ urlpatterns = [
     path("login.html", views.login_user, name="login"),
     path("signup.html", views.signup, name="signup"),
     path("profile.html", views.profile, name="profile"),
-    path("tripulante.html", views.profile, name="tripulante"),
+    path("tripulante.html", views.tripulante, name="tripulante"),
 
 ]
