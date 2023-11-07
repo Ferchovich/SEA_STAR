@@ -3,5 +3,83 @@
 {% block title %}Perfil{% endblock %}
 
 {% block content %}
+<div class="container bg-light m-5">
+    <div class="container emp-profile">
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="profile-img m-3">
+                        {% load static %}
+                        <img src="{% static 'img/user_icon.png' %}" alt=""/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="profile-head">
+                                <h5 class="py-5 font-weight-bold display-5">
+                                    {{ user.first_name }} {{ user.last_name }}
+                                </h5>
+                                <br><br><br>
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <p class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Datos Personales</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="tab-content profile-tab" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Nombre</label>
+                                        </div>
+                                        <div class="col-md-6 py-2">
+                                            <p>{{ user.first_name }} {{ user.last_name }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 py-2">
+                                            <label>Email</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>{{ user.email }}</p>
+                                        </div>
+                                    </div>
+                                    <!--
+
+                                        <div class="row">
+                                            <div class="col-md-6 py-2">
+                                                <label>Documento</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 py-2">
+                                                <label>Domicilio</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p></p>
+                                            </div>
+                                        </div>
+                                    -->
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-danger btn-xl m-2">
+                    <a class="text-dark" href="/logout.html">Log Out</a>
+                </button>
+            </div>
+        </form>           
+    </div>
+    </div>      
+</div>
     
 {% endblock %}

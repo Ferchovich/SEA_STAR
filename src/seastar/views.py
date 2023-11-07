@@ -60,8 +60,9 @@ def login_user(request: HttpRequest):
         if user is not None:
             login(request, user)
             
+            
             request.session["user"] = username
-            request.session["password"] = password
+            
             return redirect('/reserva.html')  
         else:
             messages.success(request,("Las credenciales no coinciden"))
@@ -120,7 +121,15 @@ def signup(request: HttpRequest):
 
 def profile(request: HttpRequest):
     logged_user = getLoggedUser(request)
-    return render(request, "profile.html", {"logged_user": logged_user})
+    user = User.objects.filter(username=logged_user)[0]
+    
+    return render(request, "profile.html", {"logged_user": logged_user, "user" : user})
+
+
+def logout_view(request:HttpRequest):
+    
+    logout(request)
+    return redirect("/")
 
 def tripulante(request):
     recorridos = Recorrido.objects.all()
@@ -128,3 +137,4 @@ def tripulante(request):
 
 def getLoggedUser(request: HttpRequest):
     return request.session.get("user", "Iniciar Sesion")
+
