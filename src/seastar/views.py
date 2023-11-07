@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpRequest
 from django.contrib.auth.models import User
 from django.contrib import  messages
-from seastar.models import Navio, Itinerario, Puerto, Recorrido, Cubierta, Camarote
+from seastar.models import Navio, Itinerario, Puerto, Recorrido, Cubierta, Camarote, Pais, Ciudad, TipoDocumento, Pasajero
 # Create your views here.
 
 def home(request:HttpRequest):
@@ -70,7 +70,9 @@ def login_user(request: HttpRequest):
         return render(request, './login.html', )
     
 def signup(request: HttpRequest):
-    
+    ciudades = Ciudad.objects.all()
+    paises = Pais.objects.all()
+    tipoDocumentos = TipoDocumento.objects.all()
     if request.method == "POST":
         username = request.POST['username']
         fname = request.POST['fname']
@@ -78,6 +80,9 @@ def signup(request: HttpRequest):
         email = request.POST['email']
         pass1 = request.POST['pass1']
         pass2 = request.POST['pass2']
+        tipo_doc = request.POST['tipo_doc']
+        num_doc = request.POST['num_doc']
+        ciudad = request.POST['ciudad']
     
         if User.objects.filter(username=username):
             messages.error(request, "Ese nombre de usuario ya existe. Elija otro.")
@@ -95,22 +100,31 @@ def signup(request: HttpRequest):
             messages.error(request, "El nombre de usuario no puede contener caracteres especiales.")
             return redirect('./signup.html')
         
+        tipo_docF = TipoDocumento.objects.get(nombreTipoDocumento=tipo_doc)
+        ciudadF = Ciudad.objects.get(nombre_ciudad=ciudad)
+        paisF = Pais.objects.get(nombre_pais=ciudadF.pais)
+        
         myuser = User.objects.create_user(username, email, pass1)
+        mypasagero = Pasajero(tipo_documento=tipo_docF, numero_documento=num_doc, nombre=fname, ciudad_origen=ciudadF, pais_origen=paisF)
         myuser.first_name = fname
         myuser.last_name = lname
         myuser.is_active = True
         myuser.save()
+        mypasagero.save()
         messages.success(request, "Su cuenta fue creada con éxito.")
         
         return redirect('./login.html')
     
     else:   
-        return render(request, "./signup.html", {})
+        return render(request, "./signup.html", {"ciudades" : ciudades ,  "paises" : paises , "tipoDocumentos" : tipoDocumentos })
 
 def profile(request: HttpRequest):
     logged_user = getLoggedUser(request)
-
     return render(request, "profile.html", {"logged_user": logged_user})
+
+def tripulante(request):
+    recorridos = Recorrido.objects.all()
+    return render(request, "tripulante.html", {"recorridos": recorridos})
 
 def getLoggedUser(request: HttpRequest):
     return request.session.get("user", "Iniciar Sesion")
