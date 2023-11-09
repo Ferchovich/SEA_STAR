@@ -3,6 +3,10 @@
 
     {% block content %}
         <script type="text/javascript">
+            document.addEventListener("DOMContentLoaded", function() {
+                valor = sessionStorage.recorridoGuardado;
+                document.getElementById('recorridoParaGuardar').value = valor;
+            });
             function changeName(f) {
                 document.getElementById("drop").innerHTML = f;
             }
@@ -49,6 +53,7 @@
                         </div>
                         <form method="POST" action="{% url 'reserva'%}">
                             {% csrf_token %}
+                            <input id="recorridoParaGuardar" name="seleccionRecorrido" style="display:none"></input>
                             <button id="camaroteSeleccionado" class="btn btn-primary" type="submit" name="seleccionCamarote" value='{{ camarote.numero_camarote }}' style="margin-left:10px ; margin-bottom:10px" disabled>Inscribirse</button>
                         </form>
                     </div>

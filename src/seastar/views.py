@@ -3,7 +3,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpRequest
 from django.contrib.auth.models import User
 from django.contrib import  messages
-from seastar.models import Navio, Itinerario, Puerto, Recorrido, Cubierta, Camarote, Pais, Ciudad, TipoDocumento, Pasajero
+from seastar.models import Navio, Itinerario, Puerto, Recorrido, Cubierta, Camarote, Pais, Ciudad, TipoDocumento, Pasajero, ReservaCamarote
+from datetime import date
 # Create your views here.
 
 def home(request:HttpRequest):
@@ -25,10 +26,21 @@ def navios(request):
 
 def reserva(request):
     logged_user = getLoggedUser(request)
+    user = User.objects.filter(username=logged_user)[0]
 
     recorridos = Recorrido.objects.all()
     if request.method == 'POST':
         messages.success(request,("Yippie"))
+
+        fecha = date.today()
+        camaroteReservado = Camarote.objects.get(numero_camarote=request.POST['seleccionCamarote'])
+        nombreUsuario = user.first_name
+        pasajero = Pasajero.objects.get(nombre=nombreUsuario)
+        recorridoReservado = Recorrido.objects.get(id=request.POST['seleccionRecorrido'])
+        listaPasajeros = []
+        miReserva = ReservaCamarote.objects.create(fechaReserva=fecha,camaroteReservado=camaroteReservado,recorridoReservado=recorridoReservado)
+        miReserva.listaPasajeros.add(pasajero)
+        miReserva.save()
         return redirect('./reserva.html')
     else :
         return render(request, "./reserva.html", { "recorridos" : recorridos, "logged_user" :logged_user })
@@ -122,7 +134,7 @@ def signup(request: HttpRequest):
 def profile(request: HttpRequest):
     logged_user = getLoggedUser(request)
     user = User.objects.filter(username=logged_user)[0]
-    
+
     return render(request, "profile.html", {"logged_user": logged_user, "user" : user})
 
 

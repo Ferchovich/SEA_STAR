@@ -82,6 +82,7 @@ class Camarote(models.Model):
     tipo_camarote = models.ForeignKey(TipoCamarote, on_delete=models.CASCADE)
     estadoCamarote = models.ForeignKey(EstadoCamarote, on_delete=models.CASCADE)
     cubiertaUbicada = models.ForeignKey(Cubierta, on_delete=models.CASCADE)
+    navioUbicado = models.ForeignKey(Navio, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return f'{self.numero_camarote}'
@@ -201,7 +202,6 @@ class ReservaCamarote(models.Model):
     recorridoReservado = models.ForeignKey(Recorrido, on_delete=models.CASCADE)
     camaroteReservado = models.ForeignKey(Camarote, on_delete=models.CASCADE)
     listaPasajeros = models.ManyToManyField(Pasajero)
-    encargadoReservado = models.ForeignKey(Tripulante, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return f'Reservas de la fecha {self.fechaReserva}'

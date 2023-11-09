@@ -2,6 +2,11 @@
     {% load static %}
 
     {% block content %}
+        <script type="text/javascript">
+            function saveRecorrido(ea) {
+                sessionStorage.recorridoGuardado = ea
+            }
+        </script>
         <section class="page-section cta">
             <div id="carouselExampleControls" class="carousel slide" data-bs-ride="false" id="miCarousel">
                 <div class="carousel-inner">
@@ -61,7 +66,7 @@
                                                 </p>
                                                 <form method="POST" action="{% url 'reservaCubierta'%}">
                                                     {% csrf_token %}
-                                                    <button class="btn btn-primary" type="submit" name="seleccion" value='{{ recorrido.navioDelViaje.nombreNavio }}'>Inscribirse a este Recorrido</button>
+                                                    <button class="btn btn-primary" type="submit" name="seleccion" value='{{ recorrido.navioDelViaje.nombreNavio }}' onclick=saveRecorrido('{{ recorrido.id }}')>Inscribirse a este Recorrido</button>
                                                 </form>
                                             </div>
                                         </div>
