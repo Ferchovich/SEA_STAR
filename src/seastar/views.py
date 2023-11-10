@@ -147,7 +147,22 @@ def logout_view(request:HttpRequest):
 def tripulante(request):
     logged_user = getLoggedUser(request)
     recorridos = Recorrido.objects.all()
-    return render(request, "tripulante.html", {"recorridos": recorridos , "logged_user": logged_user })
+    navios = Navio.objects.all()
+    itinerarios = Itinerario.objects.all()
+    if request.method == 'POST':
+        num = request.POST['num']
+        iti = request.POST['itinerario']
+        nav = request.POST['navio']
+        fecha = request.POST['fecha']
+        duracion = request.POST['duracion']
+
+        itiF = Itinerario.objects.get(nombreItinerario=iti)
+        navF = Navio.objects.get(nombreNavio=nav)
+
+        myRecorrido = Recorrido(numeroEscala=num,itinerarioRealizado=itiF,navioDelViaje=navF,fechaViaje=fecha,duracionViaje=duracion)
+        myRecorrido.save()
+
+    return render(request, "tripulante.html", { "itinerarios" : itinerarios , "navios" : navios , "recorridos": recorridos , "logged_user": logged_user })
 
 def getLoggedUser(request: HttpRequest):
     return request.session.get("user", "Iniciar Sesion")

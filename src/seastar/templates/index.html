@@ -29,10 +29,10 @@
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/">Home</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/itinerarios.html">Itinerarios</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/navios.html">Navios</a></li>
-                        {% if logged_user != "Iniciar Sesion" %}
+                        {% if logged_user != "Iniciar Sesion" and logged_user %}
                             <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/reserva.html">Reserva</a></li>
+                            <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/tripulante.html">Administración</a></li>
                         {% endif %}
-                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/tripulante.html">administración</a></li>
                         <a class="loginbtn" href="login.html">
                             <button class="btn btn-danger btn-xl">
                                 {% if logged_user %}
