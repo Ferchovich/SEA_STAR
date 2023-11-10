@@ -37,7 +37,6 @@ def reserva(request):
         nombreUsuario = user.first_name
         pasajero = Pasajero.objects.get(nombre=nombreUsuario)
         recorridoReservado = Recorrido.objects.get(id=request.POST['seleccionRecorrido'])
-        listaPasajeros = []
         miReserva = ReservaCamarote.objects.create(fechaReserva=fecha,camaroteReservado=camaroteReservado,recorridoReservado=recorridoReservado)
         miReserva.listaPasajeros.add(pasajero)
         miReserva.save()

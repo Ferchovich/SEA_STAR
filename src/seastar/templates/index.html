@@ -29,7 +29,7 @@
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/">Home</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/itinerarios.html">Itinerarios</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/navios.html">Navios</a></li>
-                        {% if logged_user %}
+                        {% if logged_user != "Iniciar Sesion" %}
                             <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/reserva.html">Reserva</a></li>
                         {% endif %}
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/tripulante.html">administración</a></li>
