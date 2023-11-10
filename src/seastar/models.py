@@ -202,7 +202,8 @@ class ReservaCamarote(models.Model):
     recorridoReservado = models.ForeignKey(Recorrido, on_delete=models.CASCADE)
     camaroteReservado = models.ForeignKey(Camarote, on_delete=models.CASCADE)
     listaPasajeros = models.ManyToManyField(Pasajero)
-
+    
+    
     def __str__(self) -> str:
         return f'Reservas de la fecha {self.fechaReserva}'
 

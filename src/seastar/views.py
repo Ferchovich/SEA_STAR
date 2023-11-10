@@ -136,12 +136,11 @@ def signup(request: HttpRequest):
 def profile(request: HttpRequest):
     logged_user = getLoggedUser(request)
     user = User.objects.filter(username=logged_user)[0]
-
+    
     return render(request, "profile.html", {"logged_user": logged_user, "user" : user})
 
 
 def logout_view(request:HttpRequest):
-    
     logout(request)
     return redirect("/")
 
