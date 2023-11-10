@@ -46,20 +46,22 @@ def reserva(request):
         return render(request, "./reserva.html", { "recorridos" : recorridos, "logged_user" :logged_user })
     
 def reservaCubierta(request):
+    logged_user = getLoggedUser(request)
     recorridos = Recorrido.objects.all()
     cubiertas = Cubierta.objects.all()
     camarotes = Camarote.objects.all()
     if request.method == 'POST':
         itemNavio = request.POST['seleccion']
-        return render(request, "./reservaCubierta.html", { "recorridos" : recorridos , "cubiertas" : cubiertas , "camarotes" : camarotes , "itemNavio" : itemNavio })
+        return render(request, "./reservaCubierta.html", { "recorridos" : recorridos , "cubiertas" : cubiertas , "camarotes" : camarotes , "itemNavio" : itemNavio , "logged_user": logged_user })
     
 def reservaCamarote(request):
+    logged_user = getLoggedUser(request)
     recorridos = Recorrido.objects.all()
     cubiertas = Cubierta.objects.all()
     camarotes = Camarote.objects.all()
     if request.method == 'POST':
         itemCubierta = int(request.POST['seleccionCubierta'])
-        return render(request, "./reservaCamarote.html", { "recorridos" : recorridos , "cubiertas" : cubiertas , "camarotes" : camarotes , "itemCubierta" : itemCubierta })
+        return render(request, "./reservaCamarote.html", { "recorridos" : recorridos , "cubiertas" : cubiertas , "camarotes" : camarotes , "itemCubierta" : itemCubierta , "logged_user": logged_user })
 
 def login_user(request: HttpRequest):
     if request.method == "GET" and request.session.get("user"):
@@ -144,8 +146,9 @@ def logout_view(request:HttpRequest):
     return redirect("/")
 
 def tripulante(request):
+    logged_user = getLoggedUser(request)
     recorridos = Recorrido.objects.all()
-    return render(request, "tripulante.html", {"recorridos": recorridos})
+    return render(request, "tripulante.html", {"recorridos": recorridos , "logged_user": logged_user })
 
 def getLoggedUser(request: HttpRequest):
     return request.session.get("user", "Iniciar Sesion")
