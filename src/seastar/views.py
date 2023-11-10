@@ -149,6 +149,7 @@ def tripulante(request):
     recorridos = Recorrido.objects.all()
     navios = Navio.objects.all()
     itinerarios = Itinerario.objects.all()
+    reservas = ReservaCamarote.objects.all()
     if request.method == 'POST':
         num = request.POST['num']
         iti = request.POST['itinerario']
@@ -162,7 +163,7 @@ def tripulante(request):
         myRecorrido = Recorrido(numeroEscala=num,itinerarioRealizado=itiF,navioDelViaje=navF,fechaViaje=fecha,duracionViaje=duracion)
         myRecorrido.save()
 
-    return render(request, "tripulante.html", { "itinerarios" : itinerarios , "navios" : navios , "recorridos": recorridos , "logged_user": logged_user })
+    return render(request, "tripulante.html", { "itinerarios" : itinerarios , "reservas" : reservas , "navios" : navios , "recorridos": recorridos , "logged_user": logged_user })
 
 def getLoggedUser(request: HttpRequest):
     return request.session.get("user", "Iniciar Sesion")

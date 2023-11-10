@@ -160,4 +160,26 @@
     </div>
     
 
+    <div class="container mt-5 bg-light bg-faded">
+        <h2 class="text-center mb-4 section-heading-lower">Lista de Reservas</h2>
+        <table class="table table-bordered table-striped">
+            {% for reserva in reservas %}
+                <tr>
+                    <td>
+                        <a>{{reserva.fechaReserva}}</a>
+                    </td>
+                    <td>
+                        <a>{{reserva.recorridoReservado}}</a>
+                    </td>
+                    <td>
+                        <a>{{reserva.camaroteReservado}}</a>
+                    </td>
+                    <td>
+                        <a>{{reserva.listaPasajeros}}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
 {% endblock %}
