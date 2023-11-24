@@ -14,6 +14,10 @@
             function show(i) {
                 document.getElementById(i).style.display='inline';
             }
+            function scroll(){
+                document.getElementById('crearRecorrido').scrollIntoView();
+                window.setTimeout( function () { top(); }, 2000 );
+            }
         </script>
     <link href="{% static 'css/tripulante.css'%}" rel="stylesheet">
 
@@ -59,7 +63,7 @@
                     <span class="visually-hidden">Next</span>
                 </button>
                 <div class="text-center" style="padding-top: 50px">
-                    <button class="btn btn-primary" onclick=hideShow("crearRecorrido")>Crear un Recorrido</button>
+                    <button class="btn btn-primary" onclick=hideShow("crearRecorrido"),scroll()>Crear un Recorrido</button>
                 </div>
             </div>
         </div>
@@ -174,8 +178,8 @@
                     <td>
                         <a>{{reserva.camaroteReservado}}</a>
                     </td>
-                    <td>
-                        <a>{{reserva.listaPasajeros}}</a>
+                    <td>    
+                        <a>{{reserva.listaPasajeros.get}}</a>
                     </td>
                 </tr>
             {% endfor %}

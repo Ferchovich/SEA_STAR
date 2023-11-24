@@ -50,11 +50,11 @@
 
         <div class="card-group" style="width:200ipx;height:90px;margin-bottom:350px;margin-top:50px;margin-left:50px;margin-right:50px" >
             {% for navio in navios %}
-            <div class="card">
-              <img src="{% static 'img/navio.png' %}" class="card-img-top" alt="Barco" style="width:95px;height:80px;">
+            <div class="card  text-center" style="background-color:#F0E68C">
+              <img src="{% static 'img/navio.png' %}" class="card-img-top" alt="Barco" style="width:95px;height:80px;display: block;margin-left: auto;margin-right: auto;">
               <div class="card-body">
                 <h5 class="card-title">{{ navio.nombreNavio }}</h5>
-                <li style="color: blue">- Código: {{ navio.codigoNavio }}
+                <li>- Código: {{ navio.codigoNavio }}
                     <br   />- Altura: {{ navio.altura }} <br   />- Eslora: {{ navio.eslora }} 
                     <br   />- Manga: {{ navio.manga }} <br   />- Desplazamiento: {{ navio.desplazamiento }} 
                     <br   />- Autonomía de Viajes: {{ navio.autonomiaViaje }} <br   />- Cantidad de Camarotes: {{ navio.cantidadCamarotes }} 
