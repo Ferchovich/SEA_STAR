@@ -166,7 +166,7 @@ def editarRecorridos(request):
     return render(request, "editarRecorridos.html", { "itinerarios" : itinerarios , "reservas" : reservas , "navios" : navios , "recorridos": recorridos , "logged_user": logged_user })
 
 def editarReserva(request):
-    return request.session.get("user", "Iniciar Sesion")
+    logged_user = getLoggedUser(request)
     recorridos = Recorrido.objects.all()
     reservas = ReservaCamarote.objects.all()
     return render(request, "editarReserva.html", { "recorridos": recorridos , "reservas" : reservas , "logged_user": logged_user })

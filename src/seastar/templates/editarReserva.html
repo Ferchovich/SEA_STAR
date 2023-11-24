@@ -2,59 +2,75 @@
     {% load static %}
 
     {% block content %}
+    <script type="text/javascript">
+        function show(i) {
+            document.getElementById(i).style.display='inline';
+        }
+        function scrollToElement(j){
+            document.getElementById(j).scrollIntoView();
+        }
+        function fillForm(a,b,c,d){
+            document.getElementById('fecha').value = a;
+            document.getElementById('recorrido').value = b;
+            document.getElementById('camarote').value = c;
+            document.getElementById('pasajeros').value = d;
+        }
+    </script>
 
-    <div class="container mt-5 bg-light bg-faded">
-        <h2 class="text-center mb-4 section-heading-lower" style="font-weight: bold;">Lista de Reservas</h2>
-        <table class="table table-bordered table-striped">
-            <tr style="text-align: center">
-                <td>
-                    <a style="font-weight: bold;">Fecha de Reserva</a>
-                </td>
-                <td>
-                    <a style="font-weight: bold;">Nombre de Reserva</a>
-                </td>
-                <td>
-                    <a style="font-weight: bold;">Camarote Reservado</a>
-                </td>
-                <td>    
-                    <a style="font-weight: bold;">Lista Pasajeros</a>
-                </td>
-                <td>    
-                    <a style="font-weight: bold;">Editar Reserva</a>
-                </td>
-                <td>    
-                    <a style="font-weight: bold;">Borrar Reserva</a>
-                </td>
-            </tr>
-            {% for reserva in reservas %}
+    <section class="page-section cta" style="background-color: rgba(255,255,255,0.5)">
+        <div class="container mt-5 bg-light bg-faded">
+            <h2 class="text-center mb-4 section-heading-lower" style="font-weight: bold;">Lista de Reservas</h2>
+            <table class="table table-bordered table-striped">
                 <tr style="text-align: center">
                     <td>
-                        <a>{{reserva.fechaReserva}}</a>
+                        <a style="font-weight: bold;">Fecha de Reserva</a>
                     </td>
                     <td>
-                        <a>{{reserva.recorridoReservado}}</a>
+                        <a style="font-weight: bold;">Nombre de Reserva</a>
                     </td>
                     <td>
-                        <a>{{reserva.camaroteReservado}}</a>
+                        <a style="font-weight: bold;">Camarote Reservado</a>
                     </td>
                     <td>    
-                        <a>{{reserva.listaPasajeros.get}}</a>
+                        <a style="font-weight: bold;">Lista Pasajeros</a>
                     </td>
                     <td>    
-                        <button class="btn btn-secondary btn-block" href="/editarReserva.html">Editar</button>
+                        <a style="font-weight: bold;">Editar Reserva</a>
                     </td>
                     <td>    
-                        <button class="btn btn-danger btn-block" href="" >Borrar</button>
+                        <a style="font-weight: bold;">Borrar Reserva</a>
                     </td>
                 </tr>
-            {% endfor %}
-        </table>
-    </div>
+                {% for reserva in reservas %}
+                    <tr style="text-align: center">
+                        <td>
+                            <a>{{reserva.fechaReserva}}</a>
+                        </td>
+                        <td>
+                            <a>{{reserva.recorridoReservado}}</a>
+                        </td>
+                        <td>
+                            <a>{{reserva.camaroteReservado}}</a>
+                        </td>
+                        <td>    
+                            <a>{{reserva.listaPasajeros.get}}</a>
+                        </td>
+                        <td>    
+                            <button class="btn btn-secondary btn-block" onclick=show("editarReserva"),scrollToElement('editarReserva')>Editar</button>
+                        </td>
+                        <td>    
+                            <button class="btn btn-danger btn-block" href="" >Borrar</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </section>
 
-    <div>
+    <div style="display:none" id="editarReserva">
         <div class="card" style="margin: auto;max-width: 550px; margin-top: 50px; margin-bottom: 250px">
             <div style="margin: auto;max-width: 450px;">
-                <h1 style="margin: auto;margin-bottom: 25px;margin-top: 25px" class="h3 mb-3 font-weight-normal text-center ">Crear un Recorrido</h1>
+                <h1 style="margin: auto;margin-bottom: 25px;margin-top: 25px" class="h3 mb-3 font-weight-normal text-center ">Editar una Reserva</h1>
                 <form method="POST" action="" style="margin: auto;">
                     {% csrf_token %}
                     <div>
@@ -72,12 +88,12 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="date">Camarote Asignado</label>
-                            <input type="date" class="form-control" id="fecha" name="fecha" placeholder="Fecha del Viaje" Required>
+                            <label for="camarote">Camarote Asignado</label>
+                            <input type="text" class="form-control" id="camarote" name="camarote" placeholder="Camarote Asignado" Required>
                         </div>
                         <div class="form-group">
-                            <label for="duracion">Lista de Pasajeros</label>
-                            <input type="number" class="form-control" id="duracion" name="duracion" placeholder="Duración del Viaje" Required>
+                            <label for="pasajeros">Lista de Pasajeros</label>
+                            <input type="text" class="form-control" id="pasajeros" name="pasajeros" placeholder="Lista de Pasajeros" Required>
                         </div>
                     </div>
                     <div style="margin: center;margin-top: 15px;margin-bottom: 15px">
