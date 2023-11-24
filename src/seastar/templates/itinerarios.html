@@ -14,7 +14,11 @@
                                     <span class="section-heading-lower">Nuestros itinerarios</span>
                                 </h2>
                                 <p>Aqui puede ver una lista de todos los itinerarios que tenemos disponibles.</p>
-                                <p class="mb-0">Para más información, inicie sesión.</p>
+                                {% if logged_user != "Iniciar Sesion" and logged_user  %}
+                                    <p class="mb-0">Puede hacer su reserva en cualquier momento prescionando el boton "Reserva".</p>
+                                {% else %}
+                                    <p class="mb-0">Para más información, inicie sesión.</p>
+                                {% endif %}
                             </div>
                         </div>
                     </div>

@@ -187,7 +187,7 @@ class Recorrido(models.Model):
     duracionViaje = models.FloatField("Duración aproximada del viaje")
 
     def __str__(self) -> str:
-        return f'Recorrido del Navío {self.navioDelViaje} en la fecha {self.fechaViaje}'
+        return f'Navío {self.navioDelViaje}, Fecha {self.fechaViaje}'
 
     def conocerNavio(self):
         pass

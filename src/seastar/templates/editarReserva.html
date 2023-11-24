@@ -1,0 +1,45 @@
+{% extends "index.html" %}
+    {% load static %}
+
+    {% block content %}
+
+    <div>
+        <div class="card" style="margin: auto;max-width: 550px; margin-top: 50px; margin-bottom: 250px">
+            <div style="margin: auto;max-width: 450px;">
+                <h1 style="margin: auto;margin-bottom: 25px;margin-top: 25px" class="h3 mb-3 font-weight-normal text-center ">Crear un Recorrido</h1>
+                <form method="POST" action="" style="margin: auto;">
+                    {% csrf_token %}
+                    <div>
+                        <div class="form-group">
+                            <label for="date">Fecha de la Reserva</label>
+                            <input type="date" class="form-control" id="fecha" name="fecha" placeholder="Fecha del Viaje" Required>
+                        </div>
+                        <div class="form-group">
+                            <label for="recorrido">Recorrido Reservado</label>
+                            <select class="form-control" id="recorrido" name="recorrido" placeholder="Recorrido" Required>
+                                <option value="" autofocus hidden>-</option>
+                                {% for recorrido in recorridos %}
+                                    <option value="{{ recorrido }}">{{ recorrido }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="date">Camarote Asignado</label>
+                            <input type="date" class="form-control" id="fecha" name="fecha" placeholder="Fecha del Viaje" Required>
+                        </div>
+                        <div class="form-group">
+                            <label for="duracion">Lista de Pasajeros</label>
+                            <input type="number" class="form-control" id="duracion" name="duracion" placeholder="Duración del Viaje" Required>
+                        </div>
+                    </div>
+                    <div style="margin: center;margin-top: 15px;margin-bottom: 15px">
+                        <input type="submit" value="Guardar" class="btn btn-primary btn-block"> <button class="btn btn-warning btn-block" onclick=hideShow("crearRecorrido")>Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+    {% endblock %}

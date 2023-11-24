@@ -165,6 +165,10 @@ def tripulante(request):
 
     return render(request, "tripulante.html", { "itinerarios" : itinerarios , "reservas" : reservas , "navios" : navios , "recorridos": recorridos , "logged_user": logged_user })
 
+def editarReserva(request):
+    recorridos = Recorrido.objects.all()
+    return render(request, "editarReserva.html", { "recorridos": recorridos})
+
 def getLoggedUser(request: HttpRequest):
     return request.session.get("user", "Iniciar Sesion")
 
