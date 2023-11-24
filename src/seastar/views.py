@@ -144,7 +144,7 @@ def logout_view(request:HttpRequest):
     logout(request)
     return redirect("/")
 
-def tripulante(request):
+def editarRecorridos(request):
     logged_user = getLoggedUser(request)
     recorridos = Recorrido.objects.all()
     navios = Navio.objects.all()
@@ -163,11 +163,13 @@ def tripulante(request):
         myRecorrido = Recorrido(numeroEscala=num,itinerarioRealizado=itiF,navioDelViaje=navF,fechaViaje=fecha,duracionViaje=duracion)
         myRecorrido.save()
 
-    return render(request, "tripulante.html", { "itinerarios" : itinerarios , "reservas" : reservas , "navios" : navios , "recorridos": recorridos , "logged_user": logged_user })
+    return render(request, "editarRecorridos.html", { "itinerarios" : itinerarios , "reservas" : reservas , "navios" : navios , "recorridos": recorridos , "logged_user": logged_user })
 
 def editarReserva(request):
+    return request.session.get("user", "Iniciar Sesion")
     recorridos = Recorrido.objects.all()
-    return render(request, "editarReserva.html", { "recorridos": recorridos})
+    reservas = ReservaCamarote.objects.all()
+    return render(request, "editarReserva.html", { "recorridos": recorridos , "reservas" : reservas , "logged_user": logged_user })
 
 def getLoggedUser(request: HttpRequest):
     return request.session.get("user", "Iniciar Sesion")

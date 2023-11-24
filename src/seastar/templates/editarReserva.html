@@ -3,6 +3,54 @@
 
     {% block content %}
 
+    <div class="container mt-5 bg-light bg-faded">
+        <h2 class="text-center mb-4 section-heading-lower" style="font-weight: bold;">Lista de Reservas</h2>
+        <table class="table table-bordered table-striped">
+            <tr style="text-align: center">
+                <td>
+                    <a style="font-weight: bold;">Fecha de Reserva</a>
+                </td>
+                <td>
+                    <a style="font-weight: bold;">Nombre de Reserva</a>
+                </td>
+                <td>
+                    <a style="font-weight: bold;">Camarote Reservado</a>
+                </td>
+                <td>    
+                    <a style="font-weight: bold;">Lista Pasajeros</a>
+                </td>
+                <td>    
+                    <a style="font-weight: bold;">Editar Reserva</a>
+                </td>
+                <td>    
+                    <a style="font-weight: bold;">Borrar Reserva</a>
+                </td>
+            </tr>
+            {% for reserva in reservas %}
+                <tr style="text-align: center">
+                    <td>
+                        <a>{{reserva.fechaReserva}}</a>
+                    </td>
+                    <td>
+                        <a>{{reserva.recorridoReservado}}</a>
+                    </td>
+                    <td>
+                        <a>{{reserva.camaroteReservado}}</a>
+                    </td>
+                    <td>    
+                        <a>{{reserva.listaPasajeros.get}}</a>
+                    </td>
+                    <td>    
+                        <button class="btn btn-secondary btn-block" href="/editarReserva.html">Editar</button>
+                    </td>
+                    <td>    
+                        <button class="btn btn-danger btn-block" href="" >Borrar</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
     <div>
         <div class="card" style="margin: auto;max-width: 550px; margin-top: 50px; margin-bottom: 250px">
             <div style="margin: auto;max-width: 450px;">
