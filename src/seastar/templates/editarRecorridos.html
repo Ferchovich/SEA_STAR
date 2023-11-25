@@ -2,25 +2,26 @@
     {% load static %}
 
     {% block content %}
-        <script type="text/javascript">
-            function save(g) {
-                sessionStorage.mostrar = g;
-                console.log(sessionStorage.mostrar)
+    <script type="text/javascript">
+        function save(g) {
+            sessionStorage.mostrar = g;
+        }
+        function hide(h) {
+            if (h != null) {
+                document.getElementById(h).style.display='none';
             }
-            function hide(h) {
-                console.log(h)
-                if (h != null) {
-                    document.getElementById(h).style.display='none';
-                }
-            } 
-            function show(i) {
-                console.log(i)
-                document.getElementById(i).style.display='inline';
-            }
-        </script>
-    <link href="{% static 'css/tripulante.css'%}" rel="stylesheet">
+        } 
+        function show(i) {
+            document.getElementById(i).style.display='inline';
+        }
+        function scrollToElement(j){
+            document.getElementById(j).scrollIntoView();
+        }
+    </script>
+    <link href="{% static 'css/editarRecorridos.css'%}" rel="stylesheet">
 
     <section class="page-section cta" style="background-color: 5">
+        <h5 class="card-title text-center" style="font-size: 50px;color:white;font-weight: bold;">Recorridos</h5>
         <div id="carouselExampleCaptions" class="carousel carousel-dark slide" data-bs-ride="false">
             <div class="carousel-inner">
                     {% for recorrido in recorridos%}
@@ -44,7 +45,8 @@
                                         </p>
                                         <img src="{% static 'img/navio.png' %}" style="width:30px"></img><a style="font-size: 20px"> Navío: {{ recorrido.navioDelViaje.nombreNavio }}</a> <br />
                                         <img src="{% static 'img/itinerario.png' %}" style="width:30px" ></img><a style="font-size: 20px"> Itinerario: {{ recorrido.itinerarioRealizado.nombreItinerario }}</a> <br />
-                                        <button class="btn-link btn" style="font-size: 20px" onclick=hide(sessionStorage.mostrar),show('{{recorrido}}'),save('{{recorrido}}')>Ver más</button>
+                                        <button class="btn-link btn" style="font-size: 20px" onclick=hide(sessionStorage.mostrar),show('{{recorrido.id}}'),save('{{recorrido.id}}')>Ver más</button>
+                                        <a>{{recorrido.id}}</a>
                                     </div>
                                 </div>
                             </div>
@@ -62,17 +64,20 @@
                     <span class="visually-hidden">Next</span>
                 </button>
                 <div class="text-center" style="padding-top: 50px">
-                    <button class="btn btn-primary">Crear un Recorrido</button>
+                    <button class="btn btn-primary" onclick=show("crearRecorrido"),scrollToElement('crearRecorrido')>Crear un Recorrido</button>
                 </div>
             </div>
         </div>
     </section>
 
-    {% for recorrido in recorridos %}
-        <div class="container" style="margin-bottom: 30px">
-            <div class="row p-2">
-                <div class="col-xl-9 mx-auto" id='{{recorrido}}' style="display:none">
+<!--Recorrido Completo-->
+
+    <div class="container" style="margin-bottom: 30px">
+        <div class="row p-2" style="margin-bottom: 30px">
+            {% for recorrido in recorridos %}
+                <div class="col-xl-9 mx-auto" id='{{recorrido.id}}' style="display:none">
                     <div class="cta-inner bg-faded text-center rounded">
+                        <a>{{recorrido.id}}</a>
                         <h2 class="section-heading mb-5">
                             <span class="section-heading-lower">{{ recorrido.itinerarioRealizado.nombreItinerario }}</span>
                         </h2>
@@ -111,8 +116,56 @@
                         </form>
                     </div>
                 </div>
+            {% endfor %}
+        </div>
+    </div>
+
+<!--Crear Recorrido-->
+
+    <div style="display:none" id="crearRecorrido">
+        <div class="card" style="margin: auto;max-width: 550px; margin-top: 50px; margin-bottom: 250px">
+            <div style="margin: auto;max-width: 450px;">
+                <h1 style="margin: auto;margin-bottom: 25px;margin-top: 25px" class="h3 mb-3 font-weight-normal text-center ">Crear un Recorrido</h1>
+                <form method="POST" action="" style="margin: auto;">
+                    {% csrf_token %}
+                    <div>
+                        <div class="form-group">
+                            <label for="num">Número Escala</label>
+                            <input type="number" class="form-control" id="num" name="num" placeholder="Número Escala" Required>
+                        </div>
+                        <div class="form-group">
+                            <label for="itinerario">Itinerario</label>
+                            <select class="form-control" id="itinerario" name="itinerario" placeholder="Itinerario" Required>
+                                <option value="" autofocus hidden>-</option>
+                                {% for itinerario in itinerarios %}
+                                    <option value="{{ itinerario.nombreItinerario }}">{{ itinerario.nombreItinerario }}</option>
+                                {% endfor %}
+                            </select> 
+                        </div>
+                        <div class="form-group">
+                            <label for="navio">Navio</label>
+                            <select class="form-control" id="navio" name="navio" placeholder="Navio" Required>
+                                <option value="" autofocus hidden>-</option>
+                                {% for navio in navios %}
+                                    <option value="{{ navio.nombreNavio }}">{{ navio.nombreNavio }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="date">Fecha del Viaje</label>
+                            <input type="date" class="form-control" id="fecha" name="fecha" placeholder="Fecha del Viaje" Required>
+                        </div>
+                        <div class="form-group">
+                            <label for="duracion">Duración del Viaje</label>
+                            <input type="number" class="form-control" id="duracion" name="duracion" placeholder="Duración del Viaje" Required>
+                        </div>
+                    </div>
+                    <div style="margin: center;margin-top: 15px;margin-bottom: 15px">
+                        <input type="submit" value="Crear" class="btn btn-primary btn-block"> <button class="btn btn-warning btn-block" onclick=hideShow("crearRecorrido")>Cancelar</button>
+                    </div>
+                </form>
             </div>
         </div>
-    {% endfor %}
-
+    </div>
+    
 {% endblock %}

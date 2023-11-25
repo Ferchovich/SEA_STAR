@@ -180,16 +180,14 @@ class HistorialTripulante(models.Model):
         pass
 
 class Recorrido(models.Model):
-    listaPuertos = models.ManyToManyField(Puerto)
     numeroEscala = models.IntegerField("Numero Escala")
     itinerarioRealizado = models.ForeignKey(Itinerario, on_delete=models.CASCADE)
     navioDelViaje = models.ForeignKey(Navio, on_delete=models.CASCADE)
     fechaViaje = models.DateTimeField("Fecha de Inicio del viaje")
     duracionViaje = models.FloatField("Duración aproximada del viaje")
-    listaPasajeros = models.ManyToManyField(Pasajero)
 
     def __str__(self) -> str:
-        return f'Recorrido del Navío {self.navioDelViaje} en la fecha {self.fechaViaje}'
+        return f'Navío {self.navioDelViaje}, Fecha {self.fechaViaje}'
 
     def conocerNavio(self):
         pass
