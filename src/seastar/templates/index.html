@@ -31,6 +31,7 @@
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/navios.html">Navios</a></li>
                         {% if logged_user != "Iniciar Sesion" and logged_user %}
                             <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/reserva.html">Reserva</a></li>
+                            {% if user and user.is_staff %}
                             <li class="nav-item px-lg-4">
                                 <div class="dropdown">
                                     <a class="dropdown-toggle nav-link text-uppercase" type="button" data-bs-toggle="dropdown" aria-expanded="false">Administración</a>
@@ -41,6 +42,7 @@
                                       </div>
                                 </div>
                             </li>
+                            {% endif %}
                         {% endif %}
                         <a class="loginbtn" href="login.html">
                             <button class="btn btn-danger btn-xl">

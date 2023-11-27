@@ -97,6 +97,7 @@ class TipoDocumento(models.Model):
 class Pasajero(models.Model):
     tipo_documento = models.ForeignKey(TipoDocumento, on_delete=models.CASCADE)
     numero_documento = models.IntegerField("Numero de Documento")
+    username = models.CharField("Usuario", max_length=50, null=False, default="default")
     nombre = models.CharField("Nombre", max_length=100)
     pais_origen = models.ForeignKey(Pais, on_delete=models.CASCADE)
     ciudad_origen = models.ForeignKey(Ciudad, on_delete=models.CASCADE)

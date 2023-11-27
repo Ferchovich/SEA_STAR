@@ -50,25 +50,22 @@
                                             <p>{{ user.email }}</p>
                                         </div>
                                     </div>
-                                    <!--
-
-                                        <div class="row">
-                                            <div class="col-md-6 py-2">
-                                                <label>Documento</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p></p>
-                                            </div>
+                                    <div class="row">
+                                        <div class="col-md-6 py-2">
+                                            <label>País</label>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6 py-2">
-                                                <label>Domicilio</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p></p>
-                                            </div>
+                                        <div class="col-md-6">
+                                            <p>{{ pasajero.pais_origen }}</p>
                                         </div>
-                                    -->
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 py-2">
+                                            <label>Ciudad</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>{{ pasajero.ciudad_origen }}</p>
+                                        </div>
+                                    </div>
                         </div>
                         </div>
                     </div>
@@ -76,11 +73,7 @@
                 <button class="btn btn-danger btn-xl my-3">
                     <a class="text-dark" href="/logout.html">Log Out</a>
                 </button>
-                <div class="row">
-                    <div class="container">
-                        <h1>Mis Camarotes</h1>
-                    </div>
-                </div>
+            
             </div>
         </form>           
     </div>
