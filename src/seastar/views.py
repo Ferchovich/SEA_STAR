@@ -34,8 +34,8 @@ def reserva(request):
 
         fecha = date.today()
         camaroteReservado = Camarote.objects.get(numero_camarote=request.POST['seleccionCamarote'])
-        nombreUsuario = user.first_name
-        pasajero = Pasajero.objects.get(nombre=nombreUsuario)
+        nombreUsuario = user.username
+        pasajero = Pasajero.objects.get(username=nombreUsuario)
         recorridoReservado = Recorrido.objects.get(id=request.POST['seleccionRecorrido'])
         miReserva = ReservaCamarote.objects.create(fechaReserva=fecha,camaroteReservado=camaroteReservado,recorridoReservado=recorridoReservado)
         miReserva.listaPasajeros.add(pasajero)
@@ -169,6 +169,9 @@ def editarReserva(request):
     logged_user = getLoggedUser(request)
     recorridos = Recorrido.objects.all()
     reservas = ReservaCamarote.objects.all()
+    if request.method == "POST":
+        reser = request.POST['reserva']
+        ReservaCamarote.objects.get(id=reser).delete()
     return render(request, "editarReserva.html", { "recorridos": recorridos , "reservas" : reservas , "logged_user": logged_user })
 
 def getLoggedUser(request: HttpRequest):
