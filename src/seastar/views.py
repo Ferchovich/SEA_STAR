@@ -9,8 +9,12 @@ from datetime import date
 
 def home(request:HttpRequest):
     logged_user = getLoggedUser(request)
-    return render(request, "./index.html", {"logged_user" : logged_user})
 
+    if not logged_user  == "Iniciar Sesion":
+        user = User.objects.get(username=logged_user)
+        
+        return render(request, "./index.html", {"logged_user" : logged_user, "user":user})
+    return render(request, "./index.html", {"logged_user" : logged_user})
 def itinerarios(request):
     logged_user = getLoggedUser(request)
     
@@ -119,7 +123,7 @@ def signup(request: HttpRequest):
         paisF = Pais.objects.get(nombre_pais=ciudadF.pais)
         
         myuser = User.objects.create_user(username, email, pass1)
-        mypasagero = Pasajero(tipo_documento=tipo_docF, numero_documento=num_doc, nombre=fname, ciudad_origen=ciudadF, pais_origen=paisF)
+        mypasagero = Pasajero(username=username ,tipo_documento=tipo_docF, numero_documento=num_doc, nombre=fname, ciudad_origen=ciudadF, pais_origen=paisF)
         myuser.first_name = fname
         myuser.last_name = lname
         myuser.is_active = True
@@ -134,18 +138,20 @@ def signup(request: HttpRequest):
 
 def profile(request: HttpRequest):
     logged_user = getLoggedUser(request)
-    user = User.objects.filter(username=logged_user)[0]
-
-    return render(request, "profile.html", {"logged_user": logged_user, "user" : user})
+    user = User.objects.get(username=logged_user)
+    pasajero = Pasajero.objects.get(username = user.username)
+    
+    return render(request, "profile.html", {"logged_user": logged_user, "user" : user, "pasajero": pasajero})
 
 
 def logout_view(request:HttpRequest):
-    
     logout(request)
     return redirect("/")
 
 def editarRecorridos(request):
     logged_user = getLoggedUser(request)
+    
+    
     recorridos = Recorrido.objects.all()
     navios = Navio.objects.all()
     itinerarios = Itinerario.objects.all()
@@ -167,6 +173,7 @@ def editarRecorridos(request):
 
 def editarReserva(request):
     logged_user = getLoggedUser(request)
+    
     recorridos = Recorrido.objects.all()
     reservas = ReservaCamarote.objects.all()
     if request.method == "POST":
