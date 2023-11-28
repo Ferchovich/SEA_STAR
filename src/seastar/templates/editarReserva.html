@@ -56,7 +56,7 @@
                             <a>{{reserva.listaPasajeros.get}}</a>
                         </td>
                         <td>    
-                            <button class="btn btn-secondary btn-block" onclick=show("editarReserva"),scrollToElement('editarReserva')>Editar</button>
+                            <button class="btn btn-secondary btn-block" onclick=show("editarReserva"),scrollToElement('editarReserva'),fillForm('{{reserva.fechaReserva}}','{{reserva.recorridoReservado}}','{{reserva.camaroteReservado}}','{{reserva.listaPasajeros.get}}')>Editar</button>
                         </td>
                         <td>    
                             <button class="btn btn-danger btn-block" href="" >Borrar</button>
@@ -97,7 +97,7 @@
                         </div>
                     </div>
                     <div style="margin: center;margin-top: 15px;margin-bottom: 15px">
-                        <input type="submit" value="Guardar" class="btn btn-primary btn-block"> <button class="btn btn-warning btn-block" onclick=hideShow("crearRecorrido")>Cancelar</button>
+                        <input type="submit" value="Guardar" class="btn btn-primary btn-block"> <button class="btn btn-warning btn-block" onclick=hideShow("editarReserva")>Cancelar</button>
                     </div>
                 </form>
             </div>
