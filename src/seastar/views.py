@@ -15,6 +15,7 @@ def home(request:HttpRequest):
         
         return render(request, "./index.html", {"logged_user" : logged_user, "user":user})
     return render(request, "./index.html", {"logged_user" : logged_user})
+
 def itinerarios(request):
     logged_user = getLoggedUser(request)
     
@@ -33,20 +34,7 @@ def reserva(request):
     user = User.objects.filter(username=logged_user)[0]
 
     recorridos = Recorrido.objects.all()
-    if request.method == 'POST':
-        messages.success(request,("Yippie"))
-
-        fecha = date.today()
-        camaroteReservado = Camarote.objects.get(numero_camarote=request.POST['seleccionCamarote'])
-        nombreUsuario = user.username
-        pasajero = Pasajero.objects.get(username=nombreUsuario)
-        recorridoReservado = Recorrido.objects.get(id=request.POST['seleccionRecorrido'])
-        miReserva = ReservaCamarote.objects.create(fechaReserva=fecha,camaroteReservado=camaroteReservado,recorridoReservado=recorridoReservado)
-        miReserva.listaPasajeros.add(pasajero)
-        miReserva.save()
-        return redirect('./reserva.html')
-    else :
-        return render(request, "./reserva.html", { "recorridos" : recorridos, "logged_user" :logged_user })
+    return render(request, "./reserva.html", { "recorridos" : recorridos, "logged_user" :logged_user })
     
 def reservaCubierta(request):
     logged_user = getLoggedUser(request)
@@ -140,17 +128,70 @@ def profile(request: HttpRequest):
     logged_user = getLoggedUser(request)
     user = User.objects.get(username=logged_user)
     pasajero = Pasajero.objects.get(username = user.username)
-    
-    return render(request, "profile.html", {"logged_user": logged_user, "user" : user, "pasajero": pasajero})
+
+    if request.method == 'POST':
+        messages.success(request,("Yippie"))
+
+        fecha = date.today()
+        camaroteReservado = Camarote.objects.get(numero_camarote=request.POST['seleccionCamarote'])
+        nombreUsuario = user.username
+        pasajero = Pasajero.objects.get(username=nombreUsuario)
+        recorridoReservado = Recorrido.objects.get(id=request.POST['seleccionRecorrido'])
+        miReserva = ReservaCamarote.objects.create(fechaReserva=fecha,camaroteReservado=camaroteReservado,recorridoReservado=recorridoReservado)
+        miReserva.listaPasajeros.add(pasajero)
+        miReserva.save()
+        return redirect('./reserva.html')
+    else :
+        return render(request, "profile.html", {"logged_user": logged_user, "user" : user, "pasajero": pasajero})
 
 
 def logout_view(request:HttpRequest):
     logout(request)
     return redirect("/")
 
-def editarRecorridos(request):
+def adminRecorridos(request):
     logged_user = getLoggedUser(request)
     
+    
+    recorridos = Recorrido.objects.all()
+    navios = Navio.objects.all()
+    itinerarios = Itinerario.objects.all()
+    reservas = ReservaCamarote.objects.all()
+    if request.method == 'POST':
+        num = request.POST['num']
+        iti = request.POST['itinerario']
+        nav = request.POST['navio']
+        fecha = request.POST['fecha']
+        duracion = request.POST['duracion']
+
+        itiF = Itinerario.objects.get(nombreItinerario=iti)
+        navF = Navio.objects.get(nombreNavio=nav)
+
+        myRecorrido = Recorrido(numeroEscala=num,itinerarioRealizado=itiF,navioDelViaje=navF,fechaViaje=fecha,duracionViaje=duracion)
+        myRecorrido.save()
+
+    return render(request, "adminRecorridos.html", { "itinerarios" : itinerarios , "reservas" : reservas , "navios" : navios , "recorridos": recorridos , "logged_user": logged_user })
+
+def adminReserva(request):
+    logged_user = getLoggedUser(request)
+    
+    recorridos = Recorrido.objects.all()
+    reservas = ReservaCamarote.objects.all()
+    if request.method == "POST":
+        reser = request.POST['reserva']
+        ReservaCamarote.objects.get(id=reser).delete()
+    elif request.method == "PUT":
+        reserva = request.PUT['reserva']
+        camarote = request.PUT['camarote']
+        pasajeros = request.PUT['pasajeros']
+        print(reserva)
+        print(camarote)
+        print(pasajeros)
+        reserva.update(camaroteReservado=camarote,listaPasajeros=pasajeros)
+    return render(request, "adminReserva.html", { "recorridos": recorridos , "reservas" : reservas , "logged_user": logged_user })
+
+def editarRecorridos(request):
+    logged_user = getLoggedUser(request)
     
     recorridos = Recorrido.objects.all()
     navios = Navio.objects.all()
@@ -176,10 +217,11 @@ def editarReserva(request):
     
     recorridos = Recorrido.objects.all()
     reservas = ReservaCamarote.objects.all()
+    camarotes = Camarote.objects.all()
+    pasajeros = Pasajero.objects.all()
     if request.method == "POST":
         reser = request.POST['reserva']
-        ReservaCamarote.objects.get(id=reser).delete()
-    return render(request, "editarReserva.html", { "recorridos": recorridos , "reservas" : reservas , "logged_user": logged_user })
+    return render(request, "editarReserva.html", { "recorridos": recorridos , "pasajeros": pasajeros , "reservas" : reservas , "camarotes" : camarotes , "logged_user": logged_user , "reservaElegida": reser })
 
 def getLoggedUser(request: HttpRequest):
     return request.session.get("user", "Iniciar Sesion")

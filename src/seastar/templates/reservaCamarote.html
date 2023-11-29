@@ -51,7 +51,7 @@
                                 - Tipo de Camarote: {{ camarote.tipo_camarote }} <br/><br/> </li>                                    
                             {% endfor %}
                         </div>
-                        <form method="POST" action="{% url 'reserva'%}">
+                        <form method="POST" action="{% url 'profile'%}">
                             {% csrf_token %}
                             <input id="recorridoParaGuardar" name="seleccionRecorrido" style="display:none"></input>
                             <button id="camaroteSeleccionado" class="btn btn-primary" type="submit" name="seleccionCamarote" value='{{ camarote.numero_camarote }}' style="margin-left:10px ; margin-bottom:10px" disabled>Inscribirse</button>
