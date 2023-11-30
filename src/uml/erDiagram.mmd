@@ -1,38 +1,39 @@
 erDiagram
-    // Entidades
-    Itinerario }|..|{ SolicitudViaje : "1"   // Relación uno a muchos
-    Itinerario }|..|{ Recorrido : "1"
+    Itinerario ||..|{ Recorrido : "1"
+    Itinerario ||..|{ ReservaCamarote : "1"
     Itinerario }|..|{ Puerto : "1"
-    Recorrido }|..|{ Navio : "1"
-    Tripulante }|--|{ Pasajero : "1"
-    Puesto }|..|{ HistorialTripulante : "1"
-    TipoCamarote }|--|{ Camarote : "1"
-    Camarote }|--|{ EstadoCamarote : "1"
-    Navio }|..|{ Cubierta : "1"
-    Cubierta }|..|{ Camarote : "1"
-    Itinerario }|..|{ CategoriaItinerario : "1"
-    Pasajero }|..|{ Pais : "1"
-    Puerto }|..|{ Pais : "1"
-    Pasajero }|..|{ SolicitudViaje : "1"
-    SolicitudViaje }|..|{ ReservaCamarote : "1"
-    ReservaCamarote }|..|{ Camarote : "1"
-    Pais }|..|{ Ciudad : "1"
-    Navio }|..|{ CambioEstadoNavio : "1"
-    CambioEstadoNavio }|..|{ EstadoNavio : "1"
-    Recorrido }|..|{ CambioPuerto : "1"
-    CambioPuerto }|..|{ Puerto : "1"
-    Navio }|..|{ CategoriaNavio : "1"
-    Tripulante }|..|{ HistorialTripulante : "1"
+    Recorrido }|..|| Navio : "1"
+    Puesto ||..|{ Tripulante : "1"
+    TipoCamarote ||--|{ Camarote : "1"
+    Camarote }|--|| EstadoCamarote : "1"
+    Navio ||..|{ Cubierta : "1"
+    Cubierta ||..|{ Camarote : "1"
+    Itinerario }|..|| CategoriaItinerario : "1"
+    Pasajero }|..|| Pais : "1"
+    Pasajero ||..|{ ReservaCamarote : "1"
+    ReservaCamarote }|..|| Camarote : "1"
+    Pais ||..|{ Ciudad : "1"
+    Navio }|..|| EstadoNavio : "1"
+    Navio }|..|| CategoriaNavio : "1"
+    Tripulante ||..|{ HistorialTripulante : "1"
+    Navio ||..|{ HistorialTripulante : "1"
+    Tripulante ||..|{ Tripulante : "1"
 
-    // Atributos
+Recorrido
     Itinerario {
         - nombreItinerario : string
         - descripcionItinerario : string
+        - listaPuertos : Puerto
+        - categoriaItinerario : CategoriaItinerario
     }
     Recorrido {
         - numeroEscala : int
         - fechaViaje : datetime
         - duracionViaje : float
+        - listaPuertos : Puerto
+        - itinerarioRealizado : Itinerario
+        - navioDelViaje : Navio
+        - listaPasajeros : Pasajero
     }
     Navio {
         - codigoNavio : int
@@ -51,17 +52,28 @@ erDiagram
         - numeroCubierta : int
         - ubicacionCubierta : string
         - descripcionCubierta : string
+        - encargado : Tripulante
+        - navioUbicado : Navio
     }
     Camarote {
         - ubicacionCamarote : string
         - numeroCamarote : int
+        - ubicacionCamarote : int
+        - estadoCamarote : EstadoCamarote
+        - cubiertaUbicada : Cubierta
     }
     Tripulante {
         - nombreTripulante : string
         - legajo : string
+        - navio_asignado : Navio
+        - puesto_tripulante : Puesto
         - nombreJefe : string
     }
     HistorialTripulante {
+        - tripulanteCambiado : Tripulante 
+        - nuevoPuestoTripulante : Puesto
+        - nuevoNombreJefe : String
+        - nuevoNavioAsignado : Navio
         - fechaCambio : datetime
     }
     Puesto {
@@ -76,14 +88,23 @@ erDiagram
         - tipoDocumento : string
         - numeroDocumento : int
         - nombre : string
+        - username : String
+        - pais_origen : Pais
+        - ciudad_origen : Ciudad
     }
     EstadoNavio {
         - nombreEstadoNavio : string
         - descripcionEstadoNavio : string
     }
-    EstadoCamarote {}
+    EstadoCamarote {
+        - nombreEstadoCamarote : string
+        - descripcionEstadoCamarote : string
+    }
     ReservaCamarote {
         - fechaReserva : datetime
+        - listaPasajeros : Pasajero
+        - camaroteReservado : Camarote
+        - recorridoReservado : Recorrido
     }
     TipoCamarote {
         - nombreTipoCamarote : string
@@ -111,7 +132,5 @@ erDiagram
         - nombreCiudad : string
         - descripcionCiudad : string
     }
-    CambioPuerto {
-        - fechaHoraLlegada : datetime
-    }
+
 

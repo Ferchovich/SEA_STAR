@@ -2,6 +2,13 @@ from django.db import models
 
 # Create your models here.
 
+class CategoriaNavio(models.Model):
+    nombreCategoria = models.CharField("Nombre de la Categoría", max_length=255)
+    descripcionCategoria = models.TextField("Descripción de la Categoría")
+
+    def __str__(self) -> str:
+        return self.nombreCategoria
+
 class Navio (models.Model):
     codigoNavio = models.IntegerField("Código")
     nombreNavio = models.CharField("Nombre", max_length=50)
@@ -14,6 +21,7 @@ class Navio (models.Model):
     maxCantidadPasajeros = models.IntegerField("Cantidad máxima de Pasajeros")
     cantidadMotores = models.IntegerField("Cantidad de Motores")
     cantidadTripulantes = models.IntegerField("Cantidad de Tripulantes")
+    categoriaNavio = models.ForeignKey(CategoriaNavio, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return self.nombreNavio
@@ -128,36 +136,7 @@ class Itinerario(models.Model):
         pass
 
     def __str__(self) -> str:
-        return self.nombreItinerario
-    
-class CategoriaNavio(models.Model):
-    nombreCategoria = models.CharField("Nombre de la Categoría", max_length=255)
-    descripcionCategoria = models.TextField("Descripción de la Categoría")
-
-    def __str__(self) -> str:
-        return self.nombreCategoria
-    
-class CambioPuerto(models.Model):
-    puertoActual = models.ForeignKey(Puerto, related_name='Puerto_Actual',on_delete=models.CASCADE)
-    puertoAnterior = models.ForeignKey(Puerto, related_name='Puerto_Anterior',on_delete=models.CASCADE)
-    puertoFuturo = models.ForeignKey(Puerto, related_name='Puerto_Futuro',on_delete=models.CASCADE)
-    fechaHoraLlegada = models.DateTimeField()
-
-    def __str__(self) -> str:
-        return f'{self.puertoAnterior} -> {self.puertoActual} -> {self.puertoFuturo}'
-
-    def conocerPuerto(self):
-        pass
-
-class CambioEstadoNavio(models.Model):
-    nombreEstadoNavio = models.CharField("Estado del Navio", max_length=255)
-    fechaCambioEstado = models.DateTimeField("Fecha del Cambio de Estado")
-
-    def __str__(self) -> str:
-        return self.nombreEstadoNavio
-
-    def conocerEstadoNavio(self):
-        pass
+        return self.nombreItinerarioz
     
 class EstadoNavio(models.Model):
     nombreEstadoNavio = models.CharField("Estado del Navío", max_length=255)
