@@ -22,18 +22,18 @@ from seastar.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", views.home, name="home"),
-    path("itinerarios.html", views.itinerarios, name="itinerarios"),
-    path("navios.html", views.navios, name="navios"),
-    path("reserva.html", views.reserva, name="reserva"),
-    path("reservaCubierta.html", views.reservaCubierta, name="reservaCubierta"),
-    path("reservaCamarote.html", views.reservaCamarote, name="reservaCamarote"),
-    path("login.html", views.login_user, name="login"),
-    path("signup.html", views.signup, name="signup"),
-    path("profile.html", views.profile, name="profile"),
-    path("adminRecorridos.html", views.adminRecorridos, name="adminRecorridos"),
-    path("adminReserva.html", views.adminReserva, name="adminReserva"),
-    path("editarRecorridos.html", views.editarRecorridos, name="editarRecorridos"),
-    path("editarReserva.html", views.editarReserva, name="editarReserva"),
-    path("logout.html", views.logout_view, name="logout")
+    path("", HomeView.as_view(), name="home"),
+    path("itinerarios.html", ItinerariosView.as_view(), name="itinerarios"),
+    path("navios.html", NaviosView.as_view(), name="navios"),
+    path("reserva.html", ReservaView.as_view(), name="reserva"),
+    path("reservaCubierta.html", ReservaCubiertaView.as_view(), name="reservaCubierta"),
+    path("reservaCamarote.html", ReservaCamaroteView.as_view(), name="reservaCamarote"),
+    path("login.html", LoginView.as_view(), name="login"),
+    path("signup.html", SignupView.as_view(), name="signup"),
+    path("profile.html", ProfileView.as_view(), name="profile"),
+    path("adminRecorridos.html", AdminRecorridosView.as_view(), name="adminRecorridos"),
+    path("adminReserva.html", AdminReservaView.as_view(), name="adminReserva"),
+    path("editarRecorridos.html", EditarRecorridosView.as_view(), name="editarRecorridos"),
+    path("editarReserva.html", EditarReservaView.as_view(), name="editarReserva"),
+    path("logout.html", LogoutView.as_view(), name="logout")
 ]
