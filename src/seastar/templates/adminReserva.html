@@ -44,13 +44,13 @@
                                 <form method="POST" action="{% url 'editarReserva'%}" style="margin: auto;">
                                     {% csrf_token %}
                                     <td>    
-                                        <button class="btn btn-secondary btn-block" name="reserva" value='{{reserva}}' type="submit">Editar</button>
+                                        <button class="btn btn-secondary btn-block" name="reserva" value='{{reserva.id}}' type="submit">Editar</button>
                                     </td>
                                 </form>
                                 <form method="POST" action="" style="margin: auto;">
                                     {% csrf_token %}
                                     <td>    
-                                        <button type="submit" class="btn btn-danger btn-block" name="reserva" value='{{reserva.id}}'>Borrar</button>
+                                        <button type="submit" class="btn btn-danger btn-block" name="reserva-borrar" value='{{reserva.id}}'>Borrar</button>
                                     </td>
                                 </form>
                             </tr>

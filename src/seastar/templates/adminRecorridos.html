@@ -46,8 +46,7 @@
                                             </p>
                                             <img src="{% static 'img/navio.png' %}" style="width:30px"></img><a style="font-size: 20px"> Navío: {{ recorrido.navioDelViaje.nombreNavio }}</a> <br />
                                             <img src="{% static 'img/itinerario.png' %}" style="width:30px" ></img><a style="font-size: 20px"> Itinerario: {{ recorrido.itinerarioRealizado.nombreItinerario }}</a> <br />
-                                            <button class="btn-link btn" style="font-size: 20px" onclick=hide(sessionStorage.mostrar),show('{{recorrido.id}}'),save('{{recorrido.id}}')>Ver más</button>
-                                            <a>{{recorrido.id}}</a>
+                                            <button class="btn-link btn" style="font-size: 20px" onclick=hide(sessionStorage.mostrar),show('{{recorrido.id}}'),save('{{recorrido.id}}'),scrollToElement('{{recorrido.id}}')>Ver más</button>
                                         </div>
                                     </div>
                                 </div>
@@ -78,7 +77,6 @@
                 {% for recorrido in recorridos %}
                     <div class="col-xl-9 mx-auto" id='{{recorrido.id}}' style="display:none">
                         <div class="cta-inner bg-faded text-center rounded">
-                            <a>{{recorrido.id}}</a>
                             <h2 class="section-heading mb-5">
                                 <span class="section-heading-lower">{{ recorrido.itinerarioRealizado.nombreItinerario }}</span>
                             </h2>
@@ -111,9 +109,13 @@
                                 </div>
                             </div>
                             <br/>
-                            <form method="POST" action="{% url 'editarRecorrido'%}">
+                            <form method="POST" action="{% url 'editarRecorridos'%}">
                                 {% csrf_token %}
-                                <button style="margin-bottom: 15px" class="btn btn-primary" type="submit" name="seleccion" value='{{ recorrido.navioDelViaje.nombreNavio }}' onclick=saveRecorrido('{{ recorrido.id }}')>Editar</button>
+                                <button style="margin-bottom: 15px" class="btn btn-primary" type="submit" name="recorrido" value='{{ recorrido.id }}'>Editar</button>
+                            </form>
+                            <form method="POST" action="">
+                                {% csrf_token %}
+                                <button style="margin-bottom: 15px" class="btn btn-danger" type="submit" name="recorrido-borrar" value='{{ recorrido.id }}'>Borrar</button>
                             </form>
                         </div>
                     </div>
@@ -154,7 +156,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="date">Fecha del Viaje</label>
-                                <input type="date" class="form-control" id="fecha" name="fecha" placeholder="Fecha del Viaje" Required>
+                                <input type="datetime-local" class="form-control" id="fecha" name="fecha" placeholder="Fecha del Viaje" Required>
                             </div>
                             <div class="form-group">
                                 <label for="duracion">Duración del Viaje</label>

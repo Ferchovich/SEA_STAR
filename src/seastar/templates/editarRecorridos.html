@@ -7,17 +7,17 @@
             <div class="card" style="margin: auto;max-width: 550px; margin-top: 50px; margin-bottom: 250px">
                 <div style="margin: auto;max-width: 450px;">
                     <h1 style="margin: auto;margin-bottom: 25px;margin-top: 25px" class="h3 mb-3 font-weight-normal text-center ">Crear un Recorrido</h1>
-                    <form method="POST" action="" style="margin: auto;">
+                    <form method="POST" action="{% url 'adminRecorridos'%}" style="margin: auto;">
                         {% csrf_token %}
                         <div>
                             <div class="form-group">
                                 <label for="num">Número Escala</label>
-                                <input type="number" class="form-control" id="num" name="num" placeholder="Número Escala" Required>
+                                <input type="number" class="form-control" id="num" name="num" placeholder="Número Escala" value='{{ recorridoElegido.numeroEscala }}' Required>
                             </div>
                             <div class="form-group">
                                 <label for="itinerario">Itinerario</label>
                                 <select class="form-control" id="itinerario" name="itinerario" placeholder="Itinerario" Required>
-                                    <option value="" autofocus hidden>-</option>
+                                    <option value='{{ recorridoElegido.itinerarioRealizado.nombreItinerario }}' autofocus hidden>{{ recorridoElegido.itinerarioRealizado.nombreItinerario }}</option>
                                     {% for itinerario in itinerarios %}
                                         <option value="{{ itinerario.nombreItinerario }}">{{ itinerario.nombreItinerario }}</option>
                                     {% endfor %}
@@ -26,7 +26,7 @@
                             <div class="form-group">
                                 <label for="navio">Navio</label>
                                 <select class="form-control" id="navio" name="navio" placeholder="Navio" Required>
-                                    <option value="" autofocus hidden>-</option>
+                                    <option value='{{ recorridoElegido.navioDelViaje.nombreNavio }}' autofocus hidden>{{ recorridoElegido.navioDelViaje.nombreNavio }}</option>
                                     {% for navio in navios %}
                                         <option value="{{ navio.nombreNavio }}">{{ navio.nombreNavio }}</option>
                                     {% endfor %}
@@ -34,15 +34,21 @@
                             </div>
                             <div class="form-group">
                                 <label for="date">Fecha del Viaje</label>
-                                <input type="date" class="form-control" id="fecha" name="fecha" placeholder="Fecha del Viaje" Required>
+                                <input type="datetime-local" class="form-control" id="fecha" name="fecha" placeholder="Fecha del Viaje" value='{{ fechaYHora }}' Required>
                             </div>
                             <div class="form-group">
                                 <label for="duracion">Duración del Viaje</label>
-                                <input type="number" class="form-control" id="duracion" name="duracion" placeholder="Duración del Viaje" Required>
+                                <input type="number" class="form-control" id="duracion" name="duracion" placeholder="Duración del Viaje" value='{{ recorridoElegido.duracionViaje }}' Required>
                             </div>
                         </div>
                         <div style="margin: center;margin-top: 15px;margin-bottom: 15px">
-                            <input type="submit" value="Crear" class="btn btn-primary btn-block"> <button class="btn btn-warning btn-block" onclick=hideShow("crearRecorrido")>Cancelar</button>
+                            <button type="submit" value='{{ recorridoElegido.id }}' name="recorrido-guardar" class="btn btn-primary btn-block">Guardar</button> 
+                        </div>
+                    </form>
+                    <form method="GET" action="{% url 'adminRecorridos'%}" style="margin: auto;">
+                        {% csrf_token %}
+                        <div style="margin: center;margin-top: 15px;margin-bottom: 15px">
+                            <button type="submit" class="btn btn-warning btn-block">Cancelar</button>
                         </div>
                     </form>
                 </div>
