@@ -26,14 +26,14 @@ class Puesto(models.Model):
         return self.nombre_puesto
 
 class Tripulante(models.Model):
-    nombre_tripulante = models.CharField("Nombre Tripulante",max_length=100)
-    legajo = models.CharField("Legajo",max_length=10)
+    legajo = models.CharField("Legajo",max_length=10, primary_key=True)
+    nombre = models.CharField("Nombre Tripulante",max_length=100)
     navio_asignado = models.ForeignKey(Navio, on_delete=models.CASCADE)
     puesto_tripulante = models.ForeignKey(Puesto, on_delete=models.CASCADE)
     nombre_jefe = models.CharField("Nombre Jefe",max_length=100)
 
     def __str__(self) -> str:
-        return self.nombre_tripulante
+        return self.nombre
 
 class Pais(models.Model):
     nombre_pais = models.CharField("Nombre Pais",max_length=100)

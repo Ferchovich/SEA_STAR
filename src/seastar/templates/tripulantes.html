@@ -1,0 +1,125 @@
+{% extends 'index.html'%}
+
+{% load static %}
+
+{% block content %}
+<script type="text/javascript"> 
+    function show(i) {
+        document.getElementById(i).style.display='inline';
+        }
+    function scrollToElement(j){
+        document.getElementById(j).scrollIntoView();
+    }
+
+
+</script>
+<section class="page-section cta" style="background-color: rgba(255,255,255,0.5)">
+    <div class="container mt-5 bg-light bg-faded">
+        <h2 class="text-center mb-4 section-heading-lower" style="font-weight: bold;">Lista de Tripulantes</h2>
+        <table class="table table-bordered table-striped">
+            <tr style="text-align: center">
+                <td>
+                    <a style="font-weight: bold;">Legajo</a>
+                </td>
+                <td>
+                    <a style="font-weight: bold;">Nombre</a>
+                </td>
+                <td>
+                    <a style="font-weight: bold;">Apellido</a>
+                </td>
+                <td>    
+                    <a style="font-weight: bold;">Navio</a>
+                </td>
+                <td>    
+                    <a style="font-weight: bold;">Puesto</a>
+                </td>
+                <td>    
+                    <a style="font-weight: bold;">Jefe</a>
+                </td>
+            </tr>
+            
+            {% for t in tripulantes %}
+                <tr style="text-align: center">
+                    <td>
+                        <a>{{t.legajo}}</a>
+                    </td>
+                    <td>
+                        <a>{{t.nombre}}</a>
+                    </td>
+                    <td>
+                        <a>{{t.apellido}}</a>
+                    </td>
+                    <td>    
+                        <a>{{t.navio_asignado}}</a>
+                    </td>
+                    <td>    
+                        <a>{{t.puesto_tripulante}}</a>
+                    </td>
+                    <td>    
+                        <a>{{t.nombre_jefe}}</a>
+                    </td>
+                </tr>
+                
+            {% endfor %}
+            
+        </table>
+    </div>
+    <div class="container d-flex align-items-center justify-content-center">
+
+        <button class="btn btn-primary"onclick=show("crearTripulante"),scrollToElement('crearTripulante')>
+            Crear un Tripulante
+        </button>
+    </div>
+    <div style="display:none" id="crearTripulante">
+        <div class="card" style="margin: auto;max-width: 550px; margin-top: 50px; margin-bottom: 250px">
+            <div style="margin: auto;max-width: 450px;">
+                <h1 style="margin: auto;margin-bottom: 25px;margin-top: 25px" class="h3 mb-3 font-weight-normal text-center ">Crear un recorrido</h1>
+                <form method="POST" action="" style="margin: auto;">
+                    {% csrf_token %}
+                    <div>
+                        <div class="form-group">
+                            <label for="legajo">Legajo</label>
+                            <input type="text" class="form-control" id="legajo" name="legajo" placeholder="Ingrese el legajo" Required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese el nombre" Required>
+                        </div>
+                        <div class="form-group">
+                            <label for="apellido">Apellido</label>
+                            <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Ingrese el apellido" Required>
+                        </div>
+                        <div class="form-group">
+                            <label for="navio">Navio Asignado</label>
+                            <select class="form-control" id="navio" name="navio" placeholder="Navio" Required>
+                                <option value="" autofocus hidden>-</option>
+                                {% for n in navios %}
+                                    <option value="{{ n }}">{{ n.nombreNavio }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="puesto">Puesto</label>
+                            <select class="form-control" id="puesto" name="puesto" placeholder="Puesto" Required>
+                                <option value="" autofocus hidden>-</option>
+                                {% for p in puestos %}
+                                    <option value="{{ p }}">{{ p.nombre_puesto }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="jefe">Nombre Jefe</label>
+                            <input type="text" class="form-control" id="jefe" name="jefe" placeholder="Ingrese el nombre del jefe" Required>
+                        </div>
+                        <div style="margin: center;margin-top: 15px;margin-bottom: 15px">
+                            <button class="btn btn-primary btn-block">Crear</button>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

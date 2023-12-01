@@ -33,5 +33,6 @@ urlpatterns = [
     path("profile.html", views.profile, name="profile"),
     path("editarRecorridos.html", views.editarRecorridos, name="editarRecorridos"),
     path("editarReserva.html", views.editarReserva, name="editarReserva"),
+    path("tripulantes.html", views.tripulantes, name="tripulantes"),
     path("logout.html", views.logout_view, name="logout")
 ]

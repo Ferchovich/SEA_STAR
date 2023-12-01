@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import  messages
-from seastar.models import Navio, Itinerario, Puerto, Recorrido, Cubierta, Camarote, Pais, Ciudad, TipoDocumento, Pasajero, ReservaCamarote
+from seastar.models import *
 from datetime import date
 # Create your views here.
 
@@ -67,6 +67,7 @@ def reservaCamarote(request):
         return render(request, "./reservaCamarote.html", { "recorridos" : recorridos , "cubiertas" : cubiertas , "camarotes" : camarotes , "itemCubierta" : itemCubierta , "logged_user": logged_user })
 
 def login_user(request: HttpRequest):
+    logged_user = getLoggedUser(request)
     if request.method == "GET" and request.session.get("user"):
         return redirect("./profile.html")
     if request.method == 'POST':
@@ -85,12 +86,13 @@ def login_user(request: HttpRequest):
             messages.success(request,("Las credenciales no coinciden"))
             return redirect('./login.html')
     else:
-        return render(request, './login.html', )
+        return render(request, './login.html', {"logged_user" :logged_user})
     
 def signup(request: HttpRequest):
     ciudades = Ciudad.objects.all()
     paises = Pais.objects.all()
     tipoDocumentos = TipoDocumento.objects.all()
+    logged_user = getLoggedUser(request)
     if request.method == "POST":
         username = request.POST['username']
         fname = request.POST['fname']
@@ -133,8 +135,8 @@ def signup(request: HttpRequest):
         
         return redirect('./login.html')
     
-    else:   
-        return render(request, "./signup.html", {"ciudades" : ciudades ,  "paises" : paises , "tipoDocumentos" : tipoDocumentos })
+    elif request.method == "GET":   
+        return render(request, "./signup.html", {"ciudades" : ciudades ,  "paises" : paises , "tipoDocumentos" : tipoDocumentos , "logged_user" : logged_user})
 
 def profile(request: HttpRequest):
     logged_user = getLoggedUser(request)
@@ -144,13 +146,41 @@ def profile(request: HttpRequest):
     return render(request, "profile.html", {"logged_user": logged_user, "user" : user, "pasajero": pasajero})
 
 
+def tripulantes(request):
+    logged_user = getLoggedUser(request)
+    user = User.objects.get(username = logged_user)
+    puestos = Puesto.objects.all()
+    navios = Navio.objects.all()
+    if not user.is_staff:
+        messages.warning(request, ("No tienes los permisos para ingresar a esa página"))
+        return redirect("/")
+    if request.method == "GET":
+        tripulantes = Tripulante.objects.all()
+        
+        return render(request, "tripulantes.html", {"logged_user" : logged_user, "tripulantes" : tripulantes, "puestos" : puestos, "navios" : navios})
+    elif request.method == "POST":
+        legajo = request.POST["legajo"]
+        nombre = request.POST["nombre"]
+        apellido = request.POST["apellido"]
+        navio = request.POST["navio"]
+        puesto = request.POST["puesto"]
+        jefe = request.POST["jefe"]
+        naviofull = Navio.objects.get(nombreNavio = navio)
+        puestofull = Puesto.objects.get(nombre_puesto = puesto)
+
+        Tripulante.objects.create(legajo=legajo, nombre=nombre, apellido=apellido, navio_asignado = naviofull, puesto_tripulante = puestofull, nombre_jefe = jefe)
+        return redirect("/tripulantes.html")
+        
 def logout_view(request:HttpRequest):
     logout(request)
     return redirect("/")
 
 def editarRecorridos(request):
     logged_user = getLoggedUser(request)
-    
+    user = User.objects.get(username = logged_user)
+    if not user.is_staff:
+        messages.warning(request, ("No tienes los permisos para ingresar a esa página"))
+        return redirect("/")
     
     recorridos = Recorrido.objects.all()
     navios = Navio.objects.all()
@@ -173,7 +203,10 @@ def editarRecorridos(request):
 
 def editarReserva(request):
     logged_user = getLoggedUser(request)
-    
+    user = User.objects.get(username = logged_user)
+    if not user.is_staff:
+        messages.warning(request, ("No tienes los permisos para ingresar a esa página"))
+        return redirect("/")
     recorridos = Recorrido.objects.all()
     reservas = ReservaCamarote.objects.all()
     return render(request, "editarReserva.html", { "recorridos": recorridos , "reservas" : reservas , "logged_user": logged_user })

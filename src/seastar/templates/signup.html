@@ -49,15 +49,15 @@
                                 <label for="fname">Número de Documento</label>
                                 <input type="number" class="form-control" id="num_doc" name="num_doc" placeholder="Escriba su documento" Required>
                             </div>
-                            <div class="form-group">
-                                <label for="pass2">Ciudad de Origen</label>
-                                <select class="form-control" id="ciudad" name="ciudad" placeholder="Seleccióne su Ciudad" Required>
-                                    <option value="" autofocus hidden>-</option>
-                                    {% for ciudad in ciudades %}
-                                        <option value="{{ ciudad.nombre_ciudad }}">{{ ciudad.nombre_ciudad }} - {{ ciudad.pais.nombre_pais }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
+                                <div class="form-group">
+                                    <label for="ciudad">Ciudad de Origen</label>
+                                    <select class="form-control" id="ciudad" name="ciudad" placeholder="Seleccióne su Ciudad" Required>
+                                        <option value="" autofocus hidden>-</option>
+                                        {% for ciudad in ciudades %}
+                                            <option value="{{ ciudad.nombre_ciudad }}">{{ ciudad.nombre_ciudad }} - {{ ciudad.pais.nombre_pais }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
                         </div>
                         <div style="margin: center;margin-top: 15px">
                             <input type="submit" value="Sign Up" class="btn btn-primary btn-block">
