@@ -82,7 +82,7 @@ class Cubierta(models.Model):
     navioUbicado = models.ForeignKey(Navio, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
-        return f'{self.numeroCubierta}'
+        return f'{self.ubicacionCubierta} en {self.navioUbicado}'
     
 class Camarote(models.Model):
     ubicacion_camarote = models.IntegerField("Ubicación Camarote")
@@ -92,7 +92,7 @@ class Camarote(models.Model):
     cubiertaUbicada = models.ForeignKey(Cubierta, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
-        return f'{self.numero_camarote}'
+        return f'{self.numero_camarote} en {self.cubiertaUbicada.navioUbicado}'
     
 class TipoDocumento(models.Model):
     nombreTipoDocumento = models.CharField("Tipo de Documento", max_length=100)
@@ -136,7 +136,7 @@ class Itinerario(models.Model):
         pass
 
     def __str__(self) -> str:
-        return self.nombreItinerarioz
+        return self.nombreItinerario
     
 class EstadoNavio(models.Model):
     nombreEstadoNavio = models.CharField("Estado del Navío", max_length=255)
