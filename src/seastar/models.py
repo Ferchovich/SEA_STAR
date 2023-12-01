@@ -1,6 +1,4 @@
 from django.db import models
-amarote
-# Create your models here.
 
 class Navio (models.Model):
     codigoNavio = models.IntegerField("Código")
