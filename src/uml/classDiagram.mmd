@@ -10,13 +10,11 @@ classDiagram
     }
 
     class Recorrido {
-        -Puerto listaPuertos
         -int numeroEscala
         -Itinerario itinerarioRealizado
         -Navio navioDelViaje
         -datetime fechaViaje
         -float duracionViaje
-        -Pasajero listaPasajeros
 
         +new()
         +conocerNavio()
@@ -35,9 +33,7 @@ classDiagram
         -int maxCantidadPasajeros
         -int cantidadMotores
         -int cantidadTripulantes
-        -CategoriaNavio clasificacion
-        -Tripulante listaTripulantes
-        -Cubierta listaCubiertas
+        
 
         +new()
         +conocerHistorialTripulantes()
@@ -52,7 +48,7 @@ classDiagram
         -String ubicacionCubierta
         -Tripulante encargado
         -String descripcionCubierta
-        -Camarote camarote
+        -Navio navioUbicado
     
         +new()
         +conocerCamarote()
@@ -62,6 +58,9 @@ classDiagram
         -TipoCamarote tipoCamarote
         -String ubicacionCamarote
         -int numeroCamarote
+        -EstadoCamarote estadoCamarote
+        -Cubierta cubiertaUbicada
+        -Navio navioUbicado
     
         +new()
         +conocerTipoCamarote()
@@ -127,16 +126,17 @@ classDiagram
     }
 
     class EstadoCamarote {
-        -Pasajero ListaPasajerosOcupandoCamarote
-        -Camarote camaroteOcupado
-        -Tripulante tripulanteEncargado
+        -String nombreEstadoCamarote
+        -String descripcionEstadoCamarote
     
         +new()
     }
 
     class ReservaCamarote {
         -datetime fechaReseva
-        -Camarote listaCamarotes
+        -Camarote camarotereservado
+        -Pasajero listaPasajeros
+        -Recorrido recorridoreservado
     
         +new()
     }
