@@ -20,7 +20,7 @@
                             <div class="form-group">
                                 <label for="camarote">Camarote Asignado</label>
                                 <select class="form-control" id="camarote" name="camarote" placeholder="Camarote Asignado" Required>
-                                    <option value="" autofocus hidden>-</option>
+                                    <option value={{ reservaElegida.camaroteReservado }} autofocus hidden>{{ reservaElegida.camaroteReservado }}</option>
                                     {% for camarote in camarotes %}
                                         {% if camarote.cubiertaUbicada.navioUbicado.nombreNavio == navio and camarote.estadoCamarote.nombreEstadoCamarote == 'Disponible'%}
                                             <option value="{{ camarote }}">{{ camarote }}</option>
@@ -31,7 +31,7 @@
                             <div class="form-group">
                                 <label for="pasajeros">Lista de Pasajeros</label>
                                 <select class="form-control" id="pasajeros" name="pasajeros" placeholder="Lista de Pasajeros" Required>
-                                    <option value="" autofocus hidden>-</option>
+                                    <option value={{ reservaElegida.listaPasajeros.get }} autofocus hidden>{{ reservaElegida.listaPasajeros.get }}</option>
                                     {% for pasajero in pasajeros %}
                                         <option value="{{ pasajero }}">{{ pasajero }}</option>
                                     {% endfor %}

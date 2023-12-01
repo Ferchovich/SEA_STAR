@@ -4,7 +4,7 @@ from django.http import HttpRequest
 from django.contrib.auth.models import User
 from django.contrib import  messages
 from django.views import View
-from seastar.models import Navio, Itinerario, Puerto, Recorrido, Cubierta, Camarote, Pais, Ciudad, TipoDocumento, Pasajero, ReservaCamarote
+from seastar.models import Navio, Itinerario, Puerto, Recorrido, Cubierta, Camarote, Pais, Ciudad, TipoDocumento, Pasajero, ReservaCamarote, EstadoCamarote
 from datetime import datetime
 # Create your views here.
 
@@ -218,6 +218,8 @@ class ProfileView(View):
             pasajero = Pasajero.objects.get(username=nombreUsuario)
             recorridoReservado = Recorrido.objects.get(id=request.POST['seleccionRecorrido'])
             miReserva = ReservaCamarote.objects.create(fechaReserva=fecha, camaroteReservado=camaroteReservado, recorridoReservado=recorridoReservado)
+            cambioEstado = EstadoCamarote.objects.get(nombreEstadoCamarote='Reservado')
+            Camarote.objects.filter(numero_camarote=request.POST['seleccionCamarote']).update(estadoCamarote=cambioEstado)
             miReserva.listaPasajeros.add(pasajero)
             miReserva.save()
             return redirect('./profile.html')
@@ -312,8 +314,8 @@ class AdminReservaView(View):
             reser = request.POST['reserva-guardar']
             camarote = request.POST['camarote']
             pasajeros = request.POST['pasajeros']
-            pasajerosF = Pasajero.objects.get(nombre=pasajeros)  # Asegúrate de importar el modelo Pasajero si es necesario
-            camaroteF = Camarote.objects.get(numero_camarote=camarote)  # Asegúrate de importar el modelo Camarote si es necesario
+            pasajerosF = Pasajero.objects.get(nombre=pasajeros)
+            camaroteF = Camarote.objects.get(numero_camarote=camarote)
             reserva = ReservaCamarote.objects.get(id=reser)
             reserva.camaroteReservado = camaroteF
             reserva.listaPasajeros.clear()
