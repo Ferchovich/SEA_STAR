@@ -35,5 +35,6 @@ urlpatterns = [
     path("adminReserva.html", AdminReservaView.as_view(), name="adminReserva"),
     path("editarRecorridos.html", EditarRecorridosView.as_view(), name="editarRecorridos"),
     path("editarReserva.html", EditarReservaView.as_view(), name="editarReserva"),
+    path("tripulantes.html", TripulantesView.as_view(), name="tripulantes"),
     path("logout.html", LogoutView.as_view(), name="logout")
 ]

@@ -4,7 +4,7 @@ from django.http import HttpRequest
 from django.contrib.auth.models import User
 from django.contrib import  messages
 from django.views import View
-from seastar.models import Navio, Itinerario, Puerto, Recorrido, Cubierta, Camarote, Pais, Ciudad, TipoDocumento, Pasajero, ReservaCamarote, EstadoCamarote
+from seastar.models import *
 from datetime import datetime
 # Create your views here.
 
@@ -232,6 +232,10 @@ class LogoutView(View):
 
 class AdminRecorridosView(View):
     def get(self, request):
+        user = User.objects.get(username = logged_user)
+        if not user.is_staff:
+            messages.warning(request, ("No tienes los permisos para ingresar a esa página"))
+            return redirect("/")
         logged_user = getLoggedUser(request)
         recorridos = Recorrido.objects.all()
         navios = Navio.objects.all()
@@ -293,6 +297,10 @@ class AdminRecorridosView(View):
 
 class AdminReservaView(View):
     def get(self, request):
+        user = User.objects.get(username = logged_user)
+        if not user.is_staff:
+            messages.warning(request, ("No tienes los permisos para ingresar a esa página"))
+            return redirect("/")
         logged_user = getLoggedUser(request)
         recorridos = Recorrido.objects.all()
         reservas = ReservaCamarote.objects.all()
@@ -330,6 +338,10 @@ class AdminReservaView(View):
 
 class EditarRecorridosView(View):
     def get(self, request):
+        user = User.objects.get(username = logged_user)
+        if not user.is_staff:
+            messages.warning(request, ("No tienes los permisos para ingresar a esa página"))
+            return redirect("/")
         logged_user = getLoggedUser(request)
         recorridos = Recorrido.objects.all()
         navios = Navio.objects.all()
@@ -367,6 +379,10 @@ class EditarRecorridosView(View):
 
 class EditarReservaView(View):
     def get(self, request):
+        user = User.objects.get(username = logged_user)
+        if not user.is_staff:
+            messages.warning(request, ("No tienes los permisos para ingresar a esa página"))
+            return redirect("/")
         logged_user = getLoggedUser(request)
         recorridos = Recorrido.objects.all()
         reservas = ReservaCamarote.objects.all()
@@ -399,6 +415,56 @@ class EditarReservaView(View):
                 "reservaElegida": reservaElegida,
                 "navio": navio
             })
+        
+class TripulantesView(View):
+    template_name = 'tripulantes.html'
+
+    def get(self, request):
+        logged_user = getLoggedUser(request)
+        user = User.objects.get(username=logged_user)
+        puestos = Puesto.objects.all()
+        navios = Navio.objects.all()
+        
+        if not user.is_staff:
+            messages.warning(request, ("No tienes los permisos para ingresar a esa página"))
+            return redirect("/")
+        
+        tripulantes = Tripulante.objects.all()
+        
+        return render(request, self.template_name, {
+            "logged_user": logged_user,
+            "tripulantes": tripulantes,
+            "puestos": puestos,
+            "navios": navios
+        })
+
+    def post(self, request):
+        logged_user = getLoggedUser(request)
+        user = User.objects.get(username=logged_user)
+        
+        if not user.is_staff:
+            messages.warning(request, ("No tienes los permisos para ingresar a esa página"))
+            return redirect("/")
+        
+        legajo = request.POST["legajo"]
+        nombre = request.POST["nombre"]
+        navio = request.POST["navio"]
+        puesto = request.POST["puesto"]
+        jefe = request.POST["jefe"]
+        
+        naviofull = Navio.objects.get(nombreNavio=navio)
+        puestofull = Puesto.objects.get(nombre_puesto=puesto)
+
+        Tripulante.objects.create(
+            legajo=legajo,
+            nombre_tripulante=nombre,
+            navio_asignado=naviofull,
+            puesto_tripulante=puestofull,
+            nombre_jefe=jefe
+        )
+        
+        return redirect("/tripulantes.html")
+
         
 def getLoggedUser(request: HttpRequest):
     return request.session.get("user", "Iniciar Sesion")

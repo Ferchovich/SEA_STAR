@@ -19,7 +19,6 @@ admin.site.register(TipoCamarote,)
 admin.site.register(ReservaCamarote,)
 admin.site.register(EstadoCamarote,)
 admin.site.register(EstadoNavio,)
-admin.site.register(HistorialTripulante,)
 admin.site.register(Recorrido,)
 admin.site.register(TipoDocumento,)
 

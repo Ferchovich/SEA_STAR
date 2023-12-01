@@ -143,19 +143,6 @@ class EstadoNavio(models.Model):
     def __str__(self) -> str:
         return self.nombreEstadoNavio
 
-class HistorialTripulante(models.Model):
-    tripulanteCambiado = models.ForeignKey(Tripulante, on_delete=models.CASCADE)
-    nuevoPuestoTripulante = models.ForeignKey(Puesto, on_delete=models.CASCADE)
-    nuevoNombreJefe = models.CharField("Nuevo Jefe", max_length=255)
-    nuevoNavioAsignado = models.ForeignKey(Navio, on_delete=models.CASCADE)
-    fechaCambio = models.DateTimeField("Fecha del cambio")
-
-    def __str__(self) -> str:
-        return f'{self.tripulanteCambiado} movído a {self.nuevoNavioAsignado}'
-
-    def conocerPuesto(self):
-        pass
-
 class Recorrido(models.Model):
     numeroEscala = models.IntegerField("Numero Escala")
     itinerarioRealizado = models.ForeignKey(Itinerario, on_delete=models.CASCADE)
