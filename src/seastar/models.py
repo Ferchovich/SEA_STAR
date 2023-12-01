@@ -1,5 +1,4 @@
 from django.db import models
-# Create your models here.
 
 class CategoriaNavio(models.Model):
     nombreCategoria = models.CharField("Nombre de la Categoría", max_length=255)
