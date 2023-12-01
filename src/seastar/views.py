@@ -211,7 +211,7 @@ class ProfileView(View):
 
     def post(self, request: HttpRequest, *args, **kwargs):
         if request.method == 'POST':
-            messages.success(request, "Yippie")
+            messages.success(request, "La reserva fue guardada con exito")
 
             fecha = datetime.today()
             camaroteReservado = Camarote.objects.get(numero_camarote=request.POST['seleccionCamarote'])
@@ -233,11 +233,15 @@ class LogoutView(View):
 
 class AdminRecorridosView(View):
     def get(self, request):
-        user = User.objects.get(username = logged_user)
+        logged_user = getLoggedUser(request)
+        if logged_user != "Iniciar Sesion":
+            user = User.objects.get(username = logged_user)
+        else:
+            messages.warning(request, ("Debes ingresar sesión con una cuenta de administrador para ingresar a esa página"))
+            return redirect("/")
         if not user.is_staff:
             messages.warning(request, ("No tienes los permisos para ingresar a esa página"))
             return redirect("/")
-        logged_user = getLoggedUser(request)
         recorridos = Recorrido.objects.all()
         navios = Navio.objects.all()
         itinerarios = Itinerario.objects.all()
@@ -298,11 +302,15 @@ class AdminRecorridosView(View):
 
 class AdminReservaView(View):
     def get(self, request):
-        user = User.objects.get(username = logged_user)
+        logged_user = getLoggedUser(request)
+        if logged_user != "Iniciar Sesion":
+            user = User.objects.get(username = logged_user)
+        else:
+            messages.warning(request, ("Debes ingresar sesión con una cuenta de administrador para ingresar a esa página"))
+            return redirect("/")
         if not user.is_staff:
             messages.warning(request, ("No tienes los permisos para ingresar a esa página"))
             return redirect("/")
-        logged_user = getLoggedUser(request)
         recorridos = Recorrido.objects.all()
         reservas = ReservaCamarote.objects.all()
         return render(request, "adminReserva.html", {
@@ -339,11 +347,15 @@ class AdminReservaView(View):
 
 class EditarRecorridosView(View):
     def get(self, request):
-        user = User.objects.get(username = logged_user)
+        logged_user = getLoggedUser(request)
+        if logged_user != "Iniciar Sesion":
+            user = User.objects.get(username = logged_user)
+        else:
+            messages.warning(request, ("Debes ingresar sesión con una cuenta de administrador para ingresar a esa página"))
+            return redirect("/")
         if not user.is_staff:
             messages.warning(request, ("No tienes los permisos para ingresar a esa página"))
             return redirect("/")
-        logged_user = getLoggedUser(request)
         recorridos = Recorrido.objects.all()
         navios = Navio.objects.all()
         itinerarios = Itinerario.objects.all()
@@ -380,11 +392,15 @@ class EditarRecorridosView(View):
 
 class EditarReservaView(View):
     def get(self, request):
-        user = User.objects.get(username = logged_user)
+        logged_user = getLoggedUser(request)
+        if logged_user != "Iniciar Sesion":
+            user = User.objects.get(username = logged_user)
+        else:
+            messages.warning(request, ("Debes ingresar sesión con una cuenta de administrador para ingresar a esa página"))
+            return redirect("/")
         if not user.is_staff:
             messages.warning(request, ("No tienes los permisos para ingresar a esa página"))
             return redirect("/")
-        logged_user = getLoggedUser(request)
         recorridos = Recorrido.objects.all()
         reservas = ReservaCamarote.objects.all()
         camarotes = Camarote.objects.all()
