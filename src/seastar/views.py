@@ -206,7 +206,8 @@ class ProfileView(View):
         logged_user = getLoggedUser(request)
         user = User.objects.get(username=logged_user)
         pasajero = Pasajero.objects.get(username=user.username)
-        return render(request, "profile.html", {"logged_user": logged_user, "user": user, "pasajero": pasajero})
+        reserva = ReservaCamarote.objects.all()
+        return render(request, "profile.html", {"logged_user": logged_user, "user": user, "pasajero": pasajero, "reserva": reserva})
 
     def post(self, request: HttpRequest, *args, **kwargs):
         if request.method == 'POST':
