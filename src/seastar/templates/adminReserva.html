@@ -1,0 +1,62 @@
+{% extends "index.html" %}
+    {% load static %}
+
+    {% block content %}
+
+        <section class="page-section cta" style="background-color: rgba(255,255,255,0.5);margin-bottom:350px">
+            <div class="container mt-5 bg-light bg-faded">
+                <h2 class="text-center mb-4 section-heading-lower" style="font-weight: bold;">Lista de Reservas</h2>
+                <table class="table table-bordered table-striped">
+                    <tr style="text-align: center">
+                        <td>
+                            <a style="font-weight: bold;">Fecha de Reserva</a>
+                        </td>
+                        <td>
+                            <a style="font-weight: bold;">Nombre de Reserva</a>
+                        </td>
+                        <td>
+                            <a style="font-weight: bold;">Camarote Reservado</a>
+                        </td>
+                        <td>    
+                            <a style="font-weight: bold;">Lista Pasajeros</a>
+                        </td>
+                        <td>    
+                            <a style="font-weight: bold;">Editar Reserva</a>
+                        </td>
+                        <td>    
+                            <a style="font-weight: bold;">Borrar Reserva</a>
+                        </td>
+                    </tr>
+                    {% for reserva in reservas %}
+                        <tr style="text-align: center">
+                            <td>
+                                <a>{{reserva.fechaReserva}}</a>
+                            </td>
+                            <td>
+                                <a>{{reserva.recorridoReservado}}</a>
+                            </td>
+                            <td>
+                                <a>{{reserva.camaroteReservado}}</a>
+                            </td>
+                            <td>    
+                                <a>{{reserva.listaPasajeros.get}}</a>
+                            </td>
+                                <form method="POST" action="{% url 'editarReserva'%}" style="margin: auto;">
+                                    {% csrf_token %}
+                                    <td>    
+                                        <button class="btn btn-secondary btn-block" name="reserva" value='{{reserva.id}}' type="submit">Editar</button>
+                                    </td>
+                                </form>
+                                <form method="POST" action="" style="margin: auto;">
+                                    {% csrf_token %}
+                                    <td>    
+                                        <button type="submit" class="btn btn-danger btn-block" name="reserva-borrar" value='{{reserva.id}}'>Borrar</button>
+                                    </td>
+                                </form>
+                            </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </section>
+
+    {% endblock %}

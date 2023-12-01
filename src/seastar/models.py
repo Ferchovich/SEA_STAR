@@ -82,7 +82,6 @@ class Camarote(models.Model):
     tipo_camarote = models.ForeignKey(TipoCamarote, on_delete=models.CASCADE)
     estadoCamarote = models.ForeignKey(EstadoCamarote, on_delete=models.CASCADE)
     cubiertaUbicada = models.ForeignKey(Cubierta, on_delete=models.CASCADE)
-    navioUbicado = models.ForeignKey(Navio, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return f'{self.numero_camarote}'
