@@ -1,4 +1,4 @@
-# Sistema de Peaje - Programación III
+# SEA STAR - Programación III
 
 [Introduccion](#introduccion)
 
@@ -68,8 +68,8 @@ Una vez que estamos dentro del entorno virtual, debemos instalar todos los paque
 >Una vez hayas seguido estos pasos, podrás ejecutar y/o trabajar en el proyecto sin ningún problema.
 
 ## Diagrama Entidad-Relacion Del Sistema
-![Imagen Diagrama Entidad-Relacion](src\seastar\static\img\erDiagram.jpg)
+![Imagen Diagrama Entidad-Relacion](src/seastar/static/img/erDiagram.jpg)
 
 
 ## Diagrama De Clases Del Sistema
-![Imagen Diagrama de Clases](src\seastar\static\img\classDiagram.jpg)
+![Imagen Diagrama de Clases](src/seastar/static/img/classDiagram.jpg)
